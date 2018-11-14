@@ -1,4 +1,4 @@
-#' export
+#' @export
 log_value <- function(...) {
 
   session <- shiny::getDefaultReactiveDomain()

@@ -1,0 +1,25 @@
+Package: shinyEventLogger
+Type: Package
+Title: Logging and Analysing Events in Shiny Apps
+Version: 0.0.0.9000
+Authors@R: person("Kamil", "Wais", email = "kamil.wais@gmail.com",
+           role = c("aut", "cre"))
+Description: Logging dedicated to Shiny apps. You can log different types
+    of events: character string, current value of a variable, 
+    multiline output of a function (eg. str(data.frame) or head(data.frame)), 
+    result of a unit test, errors, warnings, diagnostic messages, etc.
+    Logging can be done simultaneously to R console, 
+    JavaScript console in a browser, or to a file log.
+    Log data can be analysed with the help of dedicated functions 
+    and process-mining techniques.
+URL: https://github.com/kalimu/shinyEventLogger
+BugReports: https://github.com/kalimu/shinyEventLogger/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 3.5.1)
+Imports:
+    shiny
+Suggests:
+    testthat
+LazyData: true
+RoxygenNote: 6.1.1

@@ -1,6 +1,8 @@
-
-#' export
-
+#' Logging Output of a Function
+#'
+#'
+#' @export
+#'
 log_output <- function(..., event_type = "OUTPUT") {
 
   session <- shiny::getDefaultReactiveDomain()

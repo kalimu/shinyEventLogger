@@ -1,4 +1,4 @@
-#' export
+#' @export
 log_test <- function(...) {
 
   log_output(..., event_type = "TEST")
@@ -6,7 +6,7 @@ log_test <- function(...) {
 }
 
 
-#' export
+#' @export
 log_message <- function(...) {
 
   log_this(..., event_type = "MESSAGE")
@@ -14,7 +14,7 @@ log_message <- function(...) {
 
 }
 
-#' export
+#' @export
 log_warning <- function(...) {
 
   log_this(..., event_type = "WARNING")
@@ -23,7 +23,7 @@ log_warning <- function(...) {
 }
 
 
-#' export
+#' @export
 log_error <- function(...) {
 
   log_this(..., event_type = "ERROR")

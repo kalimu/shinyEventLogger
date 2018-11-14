@@ -2,10 +2,10 @@
 % Please edit documentation in R/log_output.R
 \name{log_output}
 \alias{log_output}
-\title{export}
+\title{Logging Output of a Function}
 \usage{
 log_output(..., event_type = "OUTPUT")
 }
 \description{
-export
+Logging Output of a Function
 }

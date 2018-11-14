@@ -7,7 +7,7 @@ library(shinyEventLogger)
 set_logging(
   r_console = TRUE,
   js_console = TRUE
-   ,file = "events.log"
+   # ,file = "events.log"
 )
 
 
