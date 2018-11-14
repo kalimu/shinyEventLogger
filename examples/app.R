@@ -1,0 +1,88 @@
+
+
+library(shiny)
+library(shinyEventLogger)
+
+# Setting up different kinds of logging
+set_logging(
+  r_console = TRUE,
+  js_console = TRUE
+   ,file = "events.log"
+)
+
+
+
+# Logging outside reactive session
+log_this("Starting the app...")
+
+ui <- fluidPage(
+
+  # Initiate shinyLogger
+  log_init(),
+
+  titlePanel("Old Faithful Geyser Data"),
+
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("bins", "Number of bins:",
+                  min = 1, max = 50, value = 30)
+      ),
+
+      mainPanel(
+        plotOutput("distPlot"),
+        tableOutput("events")
+        )
+
+    )
+)
+
+server <- function(input, output, session) {
+
+  log_this("Starting the server function...")
+
+  output$events <- renderTable({
+    log_this(session$token)
+
+    input$bins
+    # events_table <- table(read_log(file = "events.log"))
+    # events_table <- as.data.frame(events_table )
+    # events_table[order(events_table$Freq, decreasing = T),]
+
+  })
+
+   output$distPlot <- renderPlot({
+
+      x    <- faithful[, 2]
+      bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+      # Logging character string
+      log_this("Number of bins selected:", input$bins)
+
+      # Logging function output
+      log_output(str(faithful))
+
+      # Logging data.frame
+      log_output(head(faithful))
+
+      # Logging current value
+      log_value(input$bins)
+
+      # Logging unit tests
+      log_test(testthat::expect_gte(object = input$bins , expected = 25))
+
+      # Logging and rising a diagnostic message
+      if (input$bins == 48) log_message("50 bins are comming!")
+
+      # Logging and rising a warning
+      if (input$bins == 49) log_warning("Very close to 50 bins!")
+
+      # Logging and rising an error
+      if (input$bins == 50) log_error("50 bins are not allowed!")
+
+      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+
+   })
+}
+
+shinyApp(ui = ui, server = server)
+
