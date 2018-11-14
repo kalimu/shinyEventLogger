@@ -2,16 +2,17 @@
 
 log_to_r_console <- function(...,
                              event_name = NULL,
-                             event_type = "EVENT"
+                             event_type = "EVENT",
+                             event_counter = -1
                              ) {
 
-  counter <- getOption("shinyEventLogger_counter")
+
 
   args <- list(...)
 
   event_to_log <- paste0(args, collapse = " ")
 
-  event_counter <- paste0("|#", counter, "|")
+  event_counter <- paste0("|#", event_counter, "|")
   event_meta <- paste0(event_counter, event_type, "|")
 
   if (!is.null(event_name)) {
@@ -38,6 +39,5 @@ log_to_r_console <- function(...,
 
   }
 
-  options('shinyEventLogger_counter' = counter + 1)
 
 } # end of log_to_r_console()
