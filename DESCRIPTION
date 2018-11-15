@@ -2,8 +2,13 @@ Package: shinyEventLogger
 Type: Package
 Title: Logging and Analysing Events in Shiny Apps
 Version: 0.0.0.9000
-Authors@R: person("Kamil", "Wais", email = "kamil.wais@gmail.com",
-           role = c("aut", "cre"))
+Authors@R: c(
+    person(given = "Kamil", family = "Wais", 
+           email = "kamil.wais@gmail.com",
+           role = c("aut", "cre"),
+           comment = c("ORICID = 0000-0002-4062-055X")
+           )
+    )
 Description: Logging dedicated to Shiny apps. You can log different types
     of events: character string, current value of a variable, 
     multiline output of a function (eg. str(data.frame) or head(data.frame)), 
@@ -16,7 +21,6 @@ URL: https://github.com/kalimu/shinyEventLogger
 BugReports: https://github.com/kalimu/shinyEventLogger/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
-Depends: R (>= 3.5.1)
 Imports:
     shiny
 Suggests:
