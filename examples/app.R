@@ -6,14 +6,14 @@ library(shinyEventLogger)
 # Setting up different kinds of logging
 set_logging(
   r_console = TRUE,
-  js_console = TRUE
-   # ,file = "events.log"
+  js_console = TRUE,
+  file = "events.log"
 )
 
 
 
 # Logging outside reactive session
-log_this("Starting the app...")
+log_this("Starting the app...", event_type = "NONREACTIVE")
 
 ui <- fluidPage(
 
@@ -41,12 +41,17 @@ server <- function(input, output, session) {
   log_this("Starting the server function...")
 
   output$events <- renderTable({
-    log_this(session$token)
 
-    input$bins
-    # events_table <- table(read_log(file = "events.log"))
-    # events_table <- as.data.frame(events_table )
-    # events_table[order(events_table$Freq, decreasing = T),]
+    log_this("Rendering table", status = "STARTED")
+
+    bins = input$bins
+
+    Sys.sleep(2)
+
+    log_this("Rendering table", status = "DONE")
+
+    bins
+
 
   })
 
@@ -56,7 +61,9 @@ server <- function(input, output, session) {
       bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
       # Logging character string
-      log_this("Number of bins selected:", input$bins)
+      if (input$bins > 40)
+        log_this(event_name = "Number of bins more than 40",
+                 input$bins)
 
       # Logging function output
       log_output(str(faithful))
