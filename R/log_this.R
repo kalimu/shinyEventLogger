@@ -3,7 +3,10 @@
 
 
 
-log_this <- function(..., event_type = "EVENT") {
+log_this <- function(...,
+                     event_name = NULL,
+                     event_type = "EVENT"
+                     ) {
 
   r_console  <- getOption("shinyEventLogger_r_console")
   js_console <- getOption("shinyEventLogger_js_console")
@@ -15,6 +18,7 @@ log_this <- function(..., event_type = "EVENT") {
   if (r_console) {
 
     log_to_r_console(...,
+                     event_name = event_name,
                      event_type = event_type,
                      event_counter = counter
                      )
@@ -24,6 +28,7 @@ log_this <- function(..., event_type = "EVENT") {
   if (js_console) {
 
     log_to_js_console(...,
+                      event_name = event_name,
                       event_type = event_type,
                       event_counter = counter
                       )
@@ -32,6 +37,7 @@ log_this <- function(..., event_type = "EVENT") {
   if ((is.logical(file) && file) || is.character(file)) {
 
     log_to_file(...,
+                event_name = event_name,
                 event_type = event_type,
                 event_counter = counter
                 )
