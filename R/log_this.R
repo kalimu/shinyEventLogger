@@ -17,6 +17,8 @@ log_this <- function(...,
 
   if (!r_console & !js_console & (is.logical(file) && !file)) return()
 
+  if (status == "DONE") options('shinyEventLogger_counter' = counter + 1)
+
   if (r_console) {
 
     log_to_r_console(...,
@@ -49,7 +51,7 @@ log_this <- function(...,
 
   } # end of if file
 
-  if (status == "DONE") options('shinyEventLogger_counter' = counter + 1)
+
 
   list('event_counter' = counter)
 
