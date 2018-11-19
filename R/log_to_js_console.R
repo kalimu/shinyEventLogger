@@ -15,7 +15,8 @@ log_to_js_console <- function(...,
 
   event_to_log <- paste0(args, collapse = " ")
   event_counter <- paste0("|#", event_counter, "|")
-  event_meta <- paste0(event_counter, event_type, "|", status, "|")
+  # event_meta <- paste0(event_counter, event_type, "|", status, "|")
+  event_meta <- paste0(event_counter, event_type, "|")
 
   if (!is.null(event_name)) {
 
@@ -32,7 +33,7 @@ log_to_js_console <- function(...,
 
     session$sendCustomMessage(
       type = "log_this",
-      message = paste0(event_meta, event_name, "\n", event_to_log,
+      message = paste0(event_meta, event_name, "\n", event_to_log, "|", status,
                        collapse = "\n")
       )
 
@@ -40,7 +41,7 @@ log_to_js_console <- function(...,
 
     session$sendCustomMessage(
       type = "log_this",
-      message = paste0(event_meta, event_to_log, "\n", collapse = " ")
+      message = paste0(event_meta, event_to_log, "|", status, "\n", collapse = " ")
       )
 
   }

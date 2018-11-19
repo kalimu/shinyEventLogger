@@ -14,12 +14,13 @@ log_to_r_console <- function(...,
   event_to_log <- paste0(args, collapse = " ")
 
   event_counter <- paste0("|#", event_counter, "|")
-  event_meta <- paste0(event_counter, event_type, "|", status, "|")
+  # event_meta <- paste0(event_counter, event_type, "|", status, "|")
+  event_meta <- paste0(event_counter, event_type, "|")
 
   if (!is.null(event_name)) {
 
     cat(file = stderr(),
-        paste0(event_meta, event_name, "\n", collapse = " "))
+        paste0(event_meta, event_name, "|" , status, "\n", collapse = " "))
 
     event_to_log <- gsub(x = event_to_log,
                          pattern = "\n",
@@ -36,7 +37,7 @@ log_to_r_console <- function(...,
   } else {
 
     cat(file = stderr(),
-        paste0(event_meta, event_to_log, "\n", collapse = " "))
+        paste0(event_meta, event_to_log, "|", status, "\n", collapse = " "))
 
   }
 

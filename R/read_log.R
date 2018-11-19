@@ -27,8 +27,8 @@ read_log <- function(file = getOption("shinyEventLogger_file")) {
                         stringsAsFactors = FALSE)
 
   names(datalog) <-
-    c("event_id", "event_type", "event_status",
-      "event", "session_id", "timestamp", "output")
+    c("event_id", "event_type", "event", "event_status",
+      "session_id", "timestamp", "output")
 
   datalog$timestamp <-
     as.POSIXct(as.numeric(as.character(datalog$timestamp)),

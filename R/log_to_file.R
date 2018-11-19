@@ -38,7 +38,7 @@ log_to_file <- function(...,
   event_to_log <- paste0(args, collapse = " ")
 
   event_counter <- paste0("#", event_counter, "|")
-  event_meta <- paste0(event_counter, event_type, "|", status, "|")
+  event_meta <- paste0(event_counter, event_type, "|")
 
   if (!is.null(event_name)) {
 
@@ -53,14 +53,16 @@ log_to_file <- function(...,
     }
 
     event_to_log <-
-      paste0(event_meta, event_name, session_id, event_timestamp, "|",
+      paste0(event_meta, event_name, "|", status,
+             session_id, event_timestamp, "|",
              event_to_log, "\n",
              collapse = " ")
 
   } else {
 
     event_to_log <-
-      paste0(event_meta, event_to_log, session_id, event_timestamp, "|NA\n",
+      paste0(event_meta, event_to_log, "|", status,
+             session_id, event_timestamp, "|NA\n",
              collapse = " ")
 
   }
