@@ -9,7 +9,7 @@ log_output <- function(..., event_type = "OUTPUT") {
 
   input <- session$input
 
-  args <- tryCatch(expr = capture.output(...),
+  args <- tryCatch(expr = capture.output(eval(...)),
                    error = function(e) {
 
                      gsub(x = e, pattern = "\n",replacement = "")

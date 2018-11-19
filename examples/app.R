@@ -40,6 +40,8 @@ server <- function(input, output, session) {
 
   log_this("Starting the server function...")
 
+  rv <- reactiveValues(a = 36)
+
   output$events <- renderTable({
 
     log_this("Rendering table", status = "STARTED")
@@ -65,6 +67,8 @@ server <- function(input, output, session) {
         log_this(event_name = "Number of bins more than 40",
                  input$bins)
 
+
+
       # Logging function output
       log_output(str(faithful))
 
@@ -86,9 +90,23 @@ server <- function(input, output, session) {
       # Logging and rising an error
       if (input$bins == 50) log_error("50 bins are not allowed!")
 
+      log_output(rv$a)
+
       hist(x, breaks = bins, col = 'darkgray', border = 'white')
 
    })
+
+   observe({
+
+     input$bins
+
+     cat(rv$a, "\n")
+     log_value(rv$a)
+
+
+
+   })
+
 }
 
 shinyApp(ui = ui, server = server)
