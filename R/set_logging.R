@@ -8,7 +8,7 @@ set_logging <- function(r_console = TRUE,
   options('shinyEventLogger_r_console'  = FALSE)
   options('shinyEventLogger_js_console' = FALSE)
   options('shinyEventLogger_file'       = FALSE)
-  options('shinyEventLogger_counter'    = 0)
+  options('shinyEventLogger_counter'    = 1)
 
   if (r_console)  {
 
