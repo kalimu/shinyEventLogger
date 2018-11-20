@@ -1,7 +1,7 @@
 Package: shinyEventLogger
 Type: Package
 Title: Logging and Analysing Events in Shiny Apps
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person(given = "Kamil", family = "Wais", 
            email = "kamil.wais@gmail.com",
@@ -22,7 +22,9 @@ BugReports: https://github.com/kalimu/shinyEventLogger/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Imports:
-    shiny
+    shiny,
+    purrr,
+    bupaR
 Suggests:
     testthat
 LazyData: true
