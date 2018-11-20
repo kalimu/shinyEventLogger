@@ -44,13 +44,15 @@ server <- function(input, output, session) {
 
   output$events <- renderTable({
 
-    log_this("Rendering table", status = "STARTED")
+    # log_this("Rendering table", status = "STARTED")
+    log_started("Rendering table")
 
     bins = input$bins
 
     Sys.sleep(2)
 
-    log_this("Rendering table", status = "DONE")
+    # log_this("Rendering table", status = "DONE")
+    log_done("Rendering table")
 
     bins
 

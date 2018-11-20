@@ -1,4 +1,18 @@
 #' @export
+log_started <- function(...) {
+
+  log_this("Rendering table", status = "STARTED")
+
+}
+
+#' @export
+log_done <- function(...) {
+
+  log_this("Rendering table", status = "DONE")
+
+}
+
+#' @export
 log_test <- function(...) {
 
   log_output(..., event_type = "TEST")
