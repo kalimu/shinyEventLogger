@@ -7,7 +7,7 @@
 log_this <- function(...,
                      event_name = NULL,
                      event_type = "EVENT",
-                     status = "SNAPSHOT"
+                     status = "FIRED"
                      ) {
 
   r_console  <- getOption("shinyEventLogger_r_console")
