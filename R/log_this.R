@@ -7,7 +7,8 @@
 log_this <- function(...,
                      event_name = NULL,
                      event_type = "EVENT",
-                     status = "FIRED"
+                     status = "FIRED",
+                     params = NULL
                      ) {
 
   r_console  <- getOption("shinyEventLogger_r_console")
@@ -17,7 +18,11 @@ log_this <- function(...,
 
   if (!r_console & !js_console & (is.logical(file) && !file)) return()
 
-  if (status == "DONE") options('shinyEventLogger_counter' = counter + 1)
+  if (!status %in% c("STARTED")) {
+
+    options('shinyEventLogger_counter' = counter + 1)
+
+  }
 
   if (r_console) {
 
@@ -25,7 +30,8 @@ log_this <- function(...,
                      event_name = event_name,
                      event_type = event_type,
                      event_counter = counter,
-                     status = status
+                     status = status,
+                     params = params
                      )
 
   } # end of if r_console
@@ -36,7 +42,8 @@ log_this <- function(...,
                       event_name = event_name,
                       event_type = event_type,
                       event_counter = counter,
-                      status = status
+                      status = status,
+                      params = params
                       )
   } # end of if js_console
 
@@ -46,7 +53,8 @@ log_this <- function(...,
                 event_name = event_name,
                 event_type = event_type,
                 event_counter = counter,
-                status = status
+                status = status,
+                params = params
                 )
 
   } # end of if file
