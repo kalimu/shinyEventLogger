@@ -5,14 +5,14 @@ set_logging <- function(r_console = TRUE,
                         js_console = TRUE,
                         file = FALSE) {
 
-  options('shinyEventLogger_r_console'  = FALSE)
-  options('shinyEventLogger_js_console' = FALSE)
-  options('shinyEventLogger_file'       = FALSE)
-  options('shinyEventLogger_counter'    = 1)
+  options('shinyEventLogger.r_console'  = FALSE)
+  options('shinyEventLogger.js_console' = FALSE)
+  options('shinyEventLogger.file'       = FALSE)
+  options('shinyEventLogger.counter'    = 1)
 
   if (r_console)  {
 
-    options('shinyEventLogger_r_console'  = TRUE)
+    options('shinyEventLogger.r_console'  = TRUE)
     message("Logging to R console:          ENABLED")
 
   } else {
@@ -23,7 +23,7 @@ set_logging <- function(r_console = TRUE,
 
   if (js_console) {
 
-    options('shinyEventLogger_js_console' = TRUE)
+    options('shinyEventLogger.js_console' = TRUE)
     message("Logging to JavaScript console: ENABLED")
 
   } else {
@@ -48,7 +48,7 @@ set_logging <- function(r_console = TRUE,
 
     if ((is.logical(file) && file) || is.character(file)) {
 
-      options('shinyEventLogger_file' = log_file_name)
+      options('shinyEventLogger.file' = log_file_name)
       message("Logging to the file:           ", log_file_name)
 
     }
