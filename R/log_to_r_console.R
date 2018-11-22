@@ -28,17 +28,19 @@ log_to_r_console <- function(...,
   }
 
   log_entry <- create_log_entry(
+
     event_counter = event_counter,
     event_type    = event_type,
     event_name    = event_name,
     event_status  = status,
     event_params  = event_params,
     event_to_log  = event_to_log
+
   )
 
   message(log_entry$header)
 
-  if (!is.null(log_entry$body)) {
+  if (log_entry$body != "") {
 
     cat(file = stdout(),
         log_entry$body)
