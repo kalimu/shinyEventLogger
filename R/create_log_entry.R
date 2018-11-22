@@ -1,40 +1,45 @@
 
 
-create_log_entry <- function(event_counter,
-                             event_type,
-                             event_name,
-                             event_status,
-                             event_params,
-                             event_to_log,
+create_log_entry <- function(event_name = NULL,
+                             event_body = NULL,
+                             event_type = "EVENT",
+                             event_status = "DONE",
+                             event_params = NULL,
+                             event_counter = -1,
                              separator = "|"
                              ) {
 
   event_counter <- paste0("#", event_counter)
 
-  event_to_log <- gsub(x = event_to_log,
-                       pattern = "\n",
-                       replacement =
-                         paste0("\n", separator, event_counter, separator)
-                       )
-
   log_entry_header <- paste0(
+
     separator, event_counter,
     separator, event_type,
     separator, event_name,
     separator, event_status,
     separator, event_params
+
     )
 
-  if (event_to_log == "") {
+  if (!is.null(event_body) && is.character(event_body) && event_body != "") {
 
-    log_entry_body <- ""
 
-  } else {
+  event_body <-
+
+    gsub(x = event_body,
+         pattern = "\n",
+         replacement = paste0("\n", separator, event_counter, separator)
+         )
+
 
     log_entry_body <- paste0(
       separator, event_counter,
-      separator, event_to_log,
+      separator, event_body,
       "\n")
+
+  } else {
+
+    log_entry_body <- ""
 
   } # end if
 

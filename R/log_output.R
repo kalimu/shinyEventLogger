@@ -3,7 +3,7 @@
 #'
 #' @export
 #'
-log_output <- function(..., event_type = "OUTPUT") {
+log_output <- function(..., type = "OUTPUT") {
 
   session <- shiny::getDefaultReactiveDomain()
 
@@ -20,8 +20,10 @@ log_output <- function(..., event_type = "OUTPUT") {
 
   event_to_log <- paste0(args, collapse = "\n")
 
-  log_this(event_to_log,
-           event_name = event_name,
-           event_type = event_type)
+  log_event(
+    event_to_log,
+    name = event_name,
+    type = type
+    )
 
 } # end of log_output()

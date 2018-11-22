@@ -11,8 +11,10 @@ log_value <- function(...) {
 
   event_to_log <- paste0(args, collapse = "\n")
 
-  log_this(event_to_log,
-           event_name = event_name,
-           event_type = "VALUE")
+  log_event(
+    event_to_log,
+    name = event_name,
+    type = "VALUE"
+    )
 
 }

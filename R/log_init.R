@@ -3,8 +3,8 @@
 
 log_init <- function() {
 
-  jscode_log_this <- '
-    Shiny.addCustomMessageHandler("log_this",
+  jscode_log_event <- '
+    Shiny.addCustomMessageHandler("log_event",
       function(message) {
         console.log(message);
       }
@@ -21,7 +21,7 @@ log_init <- function() {
 
   shiny::tagList(
     shiny::tags$head(shiny::tags$script(
-      shiny::HTML(jscode_log_this)
+      shiny::HTML(jscode_log_event)
       # shiny::HTML(jscode_log_df)
       )
     )

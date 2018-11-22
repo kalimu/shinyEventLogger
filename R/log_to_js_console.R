@@ -1,68 +1,32 @@
 
 
 
-log_to_js_console <- function(...,
-                              event_name = NULL,
-                              event_type = "EVENT",
-                              event_counter = -1,
-                              status = "DONE",
-                              params = NULL
+log_to_js_console <- function(header,
+                              body = ""
                               ) {
 
+  if (missing(header)) stop("A header of log entry is missing.")
+
   session <- shiny::getDefaultReactiveDomain()
-  if (is.null(session)) return()
 
-  args <- list(...)
+  if (is.null(session)) return(FALSE)
 
-  event_to_log <- paste0(args, collapse = " ")
+  custom_message <-
 
-  event_counter <- paste0("|#", event_counter, "|")
+    if (body == "") {
 
-  event_meta <- paste0(event_counter, event_type, "|")
+      header
 
-  event_params <- ""
+    } else {
 
-  if (is.list(params)) {
-
-    event_params <- deparse(params)
-
-  }
-
-  if (!is.null(event_name)) {
-
-    event_to_log <- gsub(x = event_to_log,
-                         pattern = "\n",
-                         replacement = paste0("\n", event_counter))
-
-    if (event_to_log != "") {
-
-      event_to_log <-
-        paste0(event_counter, event_to_log, "\n", collapse = "\n")
+      paste0(header, "\n", body)
 
     }
 
-    session$sendCustomMessage(
-      type = "log_this",
-      message = paste0(event_meta,
-                       event_name, "|",
-                       status, "|",
-                       event_params, "\n",
-                       event_to_log,
-                       collapse = "\n")
-      )
+  session$sendCustomMessage(type = "log_event",
+                            message = custom_message)
 
-  } else {
-
-    session$sendCustomMessage(
-      type = "log_this",
-      message = paste0(event_meta,
-                       event_to_log, "|",
-                       status, "|",
-                       event_params, "\n",
-                       collapse = " ")
-      )
-
-  }
+  return(TRUE)
 
 } # end of log_to_js_console()
 

@@ -1,13 +1,11 @@
 
-log_to_file <- function(...,
-                        event_name = NULL,
-                        event_type = "EVENT",
-                        event_counter = -1,
-                        status = "DONE",
-                        params = NULL
+log_to_file <- function(header,
+                        body = ""
                         ) {
 
-  file <- getOption("shinyEventLogger_file")
+  if (missing(header)) stop("A header of log entry is missing.")
+
+  file <- getOption("shinyEventLogger.file")
 
   if (!file.exists(file)) {
 
@@ -19,75 +17,49 @@ log_to_file <- function(...,
 
       warning("Unable to create log file.")
 
-    }
+      return(FALSE)
 
-  }
+    } # end of if
 
-  session_id <- NA
+  } # end of if
+
   session <- shiny::getDefaultReactiveDomain()
 
   if (!is.null(session)) {
 
     session_id <- session$token
 
-  }
-
-  # session_id <- paste0("|", session_id)
-  event_timestamp <- paste0(format(as.numeric(Sys.time()), nsmall = 10))
-
-  args <- list(...)
-  event_to_log <- paste0(args, collapse = " ")
-
-  event_counter <- paste0("#", event_counter, "|")
-
-  event_meta <- paste0(event_counter, event_type, "|")
-
-  event_params <- ""
-
-  if (is.list(params)) {
-
-    event_params <- deparse(params)
-
-  }
-
-  if (!is.null(event_name)) {
-
-    event_to_log <- gsub(x = event_to_log,
-                         pattern = "\n",
-                         replacement = " ")
-
-    if (event_to_log == "") {
-
-      event_to_log <- "NA"
-
-    }
-
-    event_to_log <-
-      paste0(event_meta,
-             event_name, "|",
-             status, "|",
-             event_params, "|",
-             session_id, "|",
-             event_timestamp, "|",
-             event_to_log,
-             "|", "\n",
-             collapse = " ")
-
   } else {
 
-    event_to_log <-
-      paste0(event_meta,
-             event_to_log, "|",
-             status, "|",
-             event_params, "|",
+    session_id <- ""
+
+  } # end of if
+
+  event_timestamp <- paste0(format(as.numeric(Sys.time()), nsmall = 10))
+
+  if (body != "") {
+
+    body <- gsub(x = body,
+                 pattern = "\n",
+                 replacement = "")
+
+    body <- paste0(
+      deparse(as.list(strsplit(body, split = "\\|#.{1,}?\\|")[[1]][-1])),
+      collapse = ""
+      )
+
+  } # end of if
+
+  cat(paste0(header,
              session_id, "|",
              event_timestamp, "|",
-             "|", "\n",
-             collapse = " ")
+             body, "\n"
+             ),
+      file = file,
+      append = TRUE
+      )
 
-  }
-
-  cat(event_to_log, file = file, append = TRUE)
+  return(TRUE)
 
 } # end of log_to_file
 

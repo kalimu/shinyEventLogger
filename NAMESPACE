@@ -2,12 +2,12 @@
 
 export(log_done)
 export(log_error)
+export(log_event)
 export(log_init)
 export(log_message)
 export(log_output)
 export(log_started)
 export(log_test)
-export(log_this)
 export(log_value)
 export(log_warning)
 export(read_log)
