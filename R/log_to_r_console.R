@@ -8,15 +8,9 @@ log_to_r_console <- function(...,
                              params = NULL
                              ) {
 
-
-
   args <- list(...)
 
   event_to_log <- paste0(args, collapse = " ")
-
-  event_counter <- paste0("|#", event_counter, "|")
-
-  event_meta <- paste0(event_counter, event_type, "|")
 
   event_params <- ""
 
@@ -24,41 +18,41 @@ log_to_r_console <- function(...,
 
     event_params <- deparse(params)
 
-  }
+  } else if (!is.null(params)) {
 
-  if (!is.null(event_name)) {
-
-    cat(file = stderr(),
-        paste0(event_meta,
-               event_name, "|" ,
-               status, "|",
-               event_params, "\n",
-               collapse = " ")
-        )
-
-    event_to_log <- gsub(x = event_to_log,
-                         pattern = "\n",
-                         replacement = paste0("\n", event_counter))
-
-    if (event_to_log != "") {
-
-      cat(file = stdout(),
-          paste0(event_counter, event_to_log, "\n",
-                 collapse = paste0("\n"))
-          )
-    }
-
-  } else {
-
-    cat(file = stderr(),
-        paste0(event_meta,
-               event_to_log, "|",
-               status, "|",
-               event_params, "\n",
-               collapse = " ")
-        )
+    stop("The 'params' argument should be a list, not a ", class(params))
 
   }
 
+  if (is.null(event_name)) {
+
+    event_name <- event_to_log
+    event_to_log <- ""
+
+  }
+
+  log_entry <- create_log_entry(
+    event_counter = event_counter,
+    event_type    = event_type,
+    event_name    = event_name,
+    event_status  = status,
+    event_params  = event_params,
+    event_to_log  = event_to_log
+  )
+
+  message(log_entry$header)
+
+  if (!is.null(log_entry$body)) {
+
+    cat(file = stdout(),
+        log_entry$body)
+
+  }
+
+  return(
+    paste0(log_entry$header,
+           ifelse(log_entry$body != "", paste0("\n", log_entry$body), "")
+    )
+  )
 
 } # end of log_to_r_console()
