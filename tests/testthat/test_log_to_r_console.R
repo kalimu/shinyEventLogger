@@ -58,11 +58,6 @@ test_that("logging events", {capture.output({
     "|#-1|EVENT||DONE|list(a = 1, b = 2, c = 3)"
     )
 
-  expect_error(fixed = TRUE,
-    shinyEventLogger:::log_to_r_console(params = "a = 1"),
-    "The 'params' argument should be a list, not a character"
-    )
-
 })})
 
 test_that("returned values", {capture.output({

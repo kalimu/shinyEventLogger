@@ -18,10 +18,6 @@ log_to_r_console <- function(...,
 
     event_params <- deparse(params)
 
-  } else if (!is.null(params)) {
-
-    stop("The 'params' argument should be a list, not a ", class(params))
-
   }
 
   if (is.null(event_name)) {

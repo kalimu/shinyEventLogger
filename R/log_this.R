@@ -11,16 +11,22 @@ log_this <- function(...,
                      params = NULL
                      ) {
 
-  r_console  <- getOption("shinyEventLogger_r_console")
-  js_console <- getOption("shinyEventLogger_js_console")
-  file       <- getOption("shinyEventLogger_file")
-  counter    <- getOption("shinyEventLogger_counter")
+  r_console  <- getOption("shinyEventLogger.r_console")
+  js_console <- getOption("shinyEventLogger.js_console")
+  file       <- getOption("shinyEventLogger.file")
+  counter    <- getOption("shinyEventLogger.counter")
 
   if (!r_console & !js_console & (is.logical(file) && !file)) return()
 
   if (!status %in% c("STARTED")) {
 
-    options('shinyEventLogger_counter' = counter + 1)
+    options('shinyEventLogger.counter' = counter + 1)
+
+  }
+
+  if (!is.null(params) && !is.list(params)) {
+
+    stop("The 'params' argument should be a list, not a ", class(params))
 
   }
 
