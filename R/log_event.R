@@ -1,7 +1,3 @@
-
-
-
-
 #' @export
 
 log_event <- function(...,
@@ -16,20 +12,32 @@ log_event <- function(...,
   file             <- getOption("shinyEventLogger.file")
   event_counter    <- getOption("shinyEventLogger.counter")
 
-  if (!r_console & !js_console & (is.logical(file) && !file)) return()
+  to_return <-
+    list(
+      counter = NULL,
+      entry   = NULL
+    )
+
+  if (!r_console &
+      !js_console &
+      (is.logical(file) && !file)
+      ) {
+
+    return(to_return)
+
+  } # end if
 
   if (!status %in% c("STARTED")) {
 
     options('shinyEventLogger.counter' = event_counter + 1)
 
-  }
+  } # end if
 
-
+  # event_body ###############################################################
   args <- list(...)
-
   event_body <- paste0(args, collapse = " ")
 
-
+  # event_params #############################################################
   if (!is.null(params) && !is.list(params)) {
 
     stop("The 'params' argument should be a list, not a ", class(params))
@@ -44,7 +52,7 @@ log_event <- function(...,
 
   } # end if
 
-
+  # event_name ################################################################
   if (is.null(name)) {
 
     event_name <- event_body
@@ -56,9 +64,13 @@ log_event <- function(...,
 
   } # end if
 
+  # event_status ##############################################################
   event_status <- status
+
+  # event_type ################################################################
   event_type   <- type
 
+  # log_entry #################################################################
   log_entry <- create_log_entry(
 
     event_counter = event_counter,
@@ -70,44 +82,37 @@ log_event <- function(...,
 
   ) # end of create_log_entry
 
-
-
-
-  # TODO: expect_error(fixed = TRUE,
-  #   shinyEventLogger:::log_to_r_console(params = "a = 1"),
-  #   "The 'params' argument should be a list, not a character"
-  #   )
-
-  #
-  # expect_message(fixed = TRUE,
-  #   shinyEventLogger:::log_to_r_console("Test", "compound", "event"),
-  #   "|#-1|EVENT|Test compound event|DONE|"
-  #   )
+  # log_to_[...] ##############################################################
   if (r_console) {
 
-    log_to_r_console(header = log_entry$header, body = log_entry$body)
+    result_r_console <-
+      log_to_r_console(header = log_entry$header,
+                       body = log_entry$body)
 
-  } # end of if r_console
+  } # end if
 
   if (js_console) {
 
-    log_to_js_console(header = log_entry$header, body = log_entry$body)
+    result_js_console <-
+      log_to_js_console(header = log_entry$header,
+                        body = log_entry$body)
 
-  } # end of if js_console
+  } # end if
 
   if ((is.logical(file) && file) || is.character(file)) {
 
-    log_to_file(header = log_entry$header, body = log_entry$body)
+    result_file <-
+      log_to_file(header = log_entry$header,
+                  body = log_entry$body)
 
-  } # end of if file
+  } # end if
 
+  to_return$counter <- event_counter
+  to_return$entry   <- result_r_console
 
-
-  list('event_counter' = event_counter)
+  return(to_return)
 
 } # end of log_event()
-
-
 
 
 
