@@ -2,28 +2,36 @@
 #'
 #'
 #' @export
-#'
-log_output <- function(..., type = "OUTPUT") {
+
+log_output <- function(...,
+                       type   = "OUTPUT",
+                       status = "FIRED",
+                       params = NULL
+                       ) {
 
   session <- shiny::getDefaultReactiveDomain()
-
   input <- session$input
 
-  args <- tryCatch(expr = capture.output(eval(...)),
-                   error = function(e) {
+  args <- tryCatch(
 
-                     gsub(x = e, pattern = "\n",replacement = "")
+    expr = capture.output(invisible(eval(...))),
 
-                   })
+    error = function(e) {
+
+      gsub(x = e, pattern = "\n",replacement = "")
+
+    }) # end of tryCatch
+
+  event_body <- paste0(args, collapse = "\n")
 
   event_name <- deparse(substitute(...))
 
-  event_to_log <- paste0(args, collapse = "\n")
-
   log_event(
-    event_to_log,
+    event_body,
     name = event_name,
-    type = type
+    type = type,
+    status = status,
+    params = params
     )
 
 } # end of log_output()
