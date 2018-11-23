@@ -7,19 +7,15 @@ log_to_file <- function(header,
 
   file <- getOption("shinyEventLogger.file")
 
+  if (is.null(file)) {
+
+    stop("Use set_logging() to define log file.")
+
+  }
+
   if (!file.exists(file)) {
 
-    if (file.create(file)) {
-
-      message("New log file: ", file, " has been created.")
-
-    } else {
-
-      warning("Unable to create log file.")
-
-      return(FALSE)
-
-    } # end of if
+    stop("File log '", file ,"' does NOT exist!")
 
   } # end of if
 

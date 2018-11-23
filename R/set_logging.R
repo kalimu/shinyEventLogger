@@ -10,6 +10,18 @@ set_logging <- function(r_console = TRUE,
   options('shinyEventLogger.file'       = FALSE)
   options('shinyEventLogger.counter'    = 1)
 
+
+  if (!r_console &
+      !js_console &
+      (is.logical(file) && !file)
+      ) {
+
+    message("All types of logging are disabled!")
+    return(FALSE)
+
+  } # end of if
+
+  # r_console ################################################################
   if (r_console)  {
 
     options('shinyEventLogger.r_console'  = TRUE)
@@ -21,6 +33,7 @@ set_logging <- function(r_console = TRUE,
 
   }
 
+  # js_console ###############################################################
   if (js_console) {
 
     options('shinyEventLogger.js_console' = TRUE)
@@ -32,37 +45,47 @@ set_logging <- function(r_console = TRUE,
 
   }
 
+  # file #####################################################################
   if (is.logical(file) && !file) {
 
     message("Logging to a file:             DISABLED")
 
   } else {
 
-    log_file_name <- 'events.log'
+    if (is.logical(file) && file) {
 
-    if (is.character(file)) {
-
-      log_file_name <- file
+      file  <- 'events.log'
 
     }
 
-    if ((is.logical(file) && file) || is.character(file)) {
+    options('shinyEventLogger.file' = file)
+    message("Logging to the file:           ", file)
 
-      options('shinyEventLogger.file' = log_file_name)
-      message("Logging to the file:           ", log_file_name)
+    if (!file.exists(file)) {
 
-    }
+      message("File log doesn't exist.\n",
+              "Your current working directory:\n",
+              getwd())
 
-  }
+      if (file.create(file)) {
 
-  if (!r_console &
-      !js_console &
-      (is.logical(file) && !file)
-      ) {
+        message("New log file: '", file, "' has been created.")
 
-    message("All types of logging are disabled!")
+      } else {
 
-  }
+        warning("Unable to create log file.",
+                "Please check file path and permissions.")
+
+        return(FALSE)
+
+      } # end of if
+
+    } # end of if
+
+  } # end of if
+
+  return(TRUE)
+
 
 } # end of set_logging()
 
