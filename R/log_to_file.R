@@ -7,7 +7,7 @@ log_to_file <- function(header,
 
   file <- getOption("shinyEventLogger.file")
 
-  if (is.null(file)) {
+  if (is.null(file) || !is.character(file)) {
 
     stop("Use set_logging() to define log file.")
 
