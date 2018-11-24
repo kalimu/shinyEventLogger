@@ -12,6 +12,16 @@ log_event <- function(...,
   file             <- getOption("shinyEventLogger.file")
   event_counter    <- getOption("shinyEventLogger.counter")
 
+  if (any(c(is.null(r_console),
+            is.null(js_console),
+            is.null(file),
+            is.null(event_counter)
+            ))) {
+
+   stop("Use set_logging() before logging events.")
+
+  }
+
   to_return <-
     list(
       counter = NULL,

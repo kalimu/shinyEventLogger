@@ -1,6 +1,11 @@
 context("test_log_event")
 
-test_that("logging events", {
+test_that("logging events", {capture.output({
+
+  expect_error(fixed = TRUE,
+    log_event(),
+    "Use set_logging() before logging events."
+  )
 
   set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
 
@@ -35,5 +40,5 @@ test_that("logging events", {
     "The 'params' argument should be a list, not a character"
     )
 
-}) # end of test_that
+})}) # end of test_that
 
