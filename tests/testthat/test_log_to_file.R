@@ -20,22 +20,26 @@ test_that("missing params", {
 
 }) # end of test_that
 
-test_that("logging events", {
+test_that("logging to a file", {
 
-  set_logging(r_console = FALSE, js_console = FALSE, file = TRUE)
+  temp_file <- tempfile()
 
-  expect_identical(
-    getOption("shinyEventLogger.file"),
-    "events.log"
-    )
+  set_logging(r_console = FALSE, js_console = FALSE, file = temp_file)
 
-  #  TODO: shinyEventLogger:::log_to_file(header = "test")
+  expect_true(file.exists(temp_file))
 
+  expect_true(log_to_file(header = "test1"))
+  expect_true(log_to_file(header = "test2"))
 
+  eventlog <- strsplit(x = readLines(con = temp_file),
+                       split = "|",
+                       fixed = TRUE)
 
+  expect_length(eventlog, 2)
 
+  expect_identical(eventlog[[1]][1], "test1")
+  expect_identical(eventlog[[2]][1], "test2")
 
-
-
+  unlink(temp_file)
 
 }) # end of test_that

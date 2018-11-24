@@ -46,10 +46,11 @@ log_to_file <- function(header,
 
   } # end of if
 
-  cat(paste0(header,
+  cat(paste0(header, "|",
              session_id, "|",
              event_timestamp, "|",
-             body, "\n"
+             body, "|",
+             "\n"
              ),
       file = file,
       append = TRUE

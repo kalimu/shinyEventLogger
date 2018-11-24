@@ -54,6 +54,14 @@ test_that("default settings", {
 
 test_that("creating log file", {
 
+
+  set_logging(r_console = FALSE, js_console = FALSE, file = TRUE)
+
+  expect_identical(
+    getOption("shinyEventLogger.file"),
+    "events.log"
+    )
+
   if (file.exists("events.log")) unlink("events.log")
   expect_message(fixed = TRUE,
     set_logging(r_console = FALSE, js_console = FALSE, file = TRUE),
@@ -96,3 +104,4 @@ test_that("creating log file", {
   unlink(temp_file)
 
 }) # end of test_that
+

@@ -4,7 +4,7 @@
 \alias{log_output}
 \title{Logging Output of a Function}
 \usage{
-log_output(..., type = "OUTPUT")
+log_output(..., type = "OUTPUT", status = "FIRED", params = NULL)
 }
 \description{
 Logging Output of a Function
