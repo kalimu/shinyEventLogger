@@ -1,14 +1,14 @@
 #' @export
 log_started <- function(...) {
 
-  log_event("Rendering table", status = "STARTED")
+  log_event(..., status = "STARTED")
 
 }
 
 #' @export
 log_done <- function(...) {
 
-  log_event("Rendering table", status = "DONE")
+  log_event(..., status = "DONE")
 
 }
 
@@ -24,6 +24,7 @@ log_test <- function(...) {
 log_message <- function(...) {
 
   log_event(..., type = "MESSAGE")
+
   message(...)
 
 }
@@ -32,6 +33,7 @@ log_message <- function(...) {
 log_warning <- function(...) {
 
   log_event(..., type = "WARNING")
+
   warning(...)
 
 }
@@ -41,6 +43,7 @@ log_warning <- function(...) {
 log_error <- function(...) {
 
   log_event(..., type = "ERROR")
+
   stop(...)
 
 }
