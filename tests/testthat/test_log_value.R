@@ -25,7 +25,8 @@ test_that("logging multiline output events", {capture.output({
               ),
     list(
      counter = 3,
-     entry = "|#3|NEWTYPE|env$a|NEWSTATUS|list(a = 1, b = 2)\n|#3|23\n"
+     entry =
+       "|#3|NEWTYPE|env$a|NEWSTATUS|\n|#3|PARAMS|list(a = 1, b = 2)\n|#3|23\n"
     ))
 
 })})

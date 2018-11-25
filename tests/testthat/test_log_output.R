@@ -12,7 +12,8 @@ test_that("logging multiline output events", {capture.output({
         "|#1|OUTPUT|str(mtcars[1:2])|FIRED|\n",
         "|#1|'data.frame':\t32 obs. of  2 variables:\n",
         "|#1| $ mpg: num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...\n",
-        "|#1| $ cyl: num  6 6 4 6 8 6 8 4 4 6 ...\n"
+        "|#1| $ cyl: num  6 6 4 6 8 6 8 4 4 6 ...\n",
+        "|#1|NULL\n"
         )
       )
     ) # end of expect_identical
@@ -64,7 +65,19 @@ test_that("logging output with different params", {capture.output({
                status = "NEWSTATUS",
                params = list(a = 1, b = 2)
                ),
-    "|#1|NEWTYPE|str(mtcars[1:2])|NEWSTATUS|list(a = 1, b = 2)"
+    "|#1|NEWTYPE|str(mtcars[1:2])|NEWSTATUS|"
+    )
+
+  expect_output(fixed = TRUE,
+    log_output(str(mtcars[1:2]),
+               type = "NEWTYPE",
+               status = "NEWSTATUS",
+               params = list(a = 1, b = 2)
+               ),
+    "|#2|PARAMS|list(a = 1, b = 2)",
+    "|#2|'data.frame':\t32 obs. of  2 variables:\n",
+    "|#2| $ mpg: num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...\n",
+    "|#2| $ cyl: num  6 6 4 6 8 6 8 4 4 6 ...\n"
     )
 
 })})

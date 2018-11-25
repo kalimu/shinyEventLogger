@@ -33,23 +33,42 @@ log_to_file <- function(header,
 
   event_timestamp <- paste0(format(as.numeric(Sys.time()), nsmall = 10))
 
+  params <- ""
+  output <- ""
+
   if (body != "") {
 
-    body <- gsub(x = body,
-                 pattern = "\n",
-                 replacement = "")
+    body <- as.list(strsplit(body, split = "\\|#.{1,}?\\|")[[1]][-1])
 
-    body <- paste0(
-      deparse(as.list(strsplit(body, split = "\\|#.{1,}?\\|")[[1]][-1])),
-      collapse = ""
-      )
+    if (any(grepl(x = body, pattern = "PARAMS"))) {
+
+      params <- body[grep(x = body, pattern = "PARAMS")]
+
+      params <- gsub(x = params,
+                     pattern = "PARAMS\\|",
+                     replacement = "")
+
+      params <- gsub(x = params,
+                     pattern = "\n",
+                     replacement = "")
+
+    }
+
+    output <-  body[!grepl(x = body, pattern = "PARAMS")]
+
+    output <- gsub(x = output,
+                   pattern = "\n",
+                   replacement = "")
+
+    output <- paste0(output, collapse = "\t")
 
   } # end of if
 
-  cat(paste0(header, "|",
+  cat(paste0(header,
+             params, "|",
              session_id, "|",
              event_timestamp, "|",
-             body, "|",
+             output, "|",
              "\n"
              ),
       file = file,

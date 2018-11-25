@@ -39,7 +39,9 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-  log_event("Starting the server function...")
+  log_params(resource = "server")
+
+  log_event("Shiny server started")
 
   log_event("Logging done with shinyEventLogger",
            params = list(
@@ -54,6 +56,8 @@ server <- function(input, output, session) {
   rv <- reactiveValues(a = 36)
 
   output$events <- renderTable({
+
+    log_params(resource = "output$events", fun = "renderTable")
 
     # log_event("Rendering table", status = "STARTED")
     log_started("Rendering table")
@@ -71,6 +75,8 @@ server <- function(input, output, session) {
   })
 
    output$distPlot <- renderPlot({
+
+     log_params(resource = "output$distPlot", fun = "renderPlot")
 
       x    <- faithful[, 2]
       bins <- seq(min(x), max(x), length.out = input$bins + 1)
@@ -111,14 +117,16 @@ server <- function(input, output, session) {
 
    observe({
 
+     log_params(resource = "input$bins", fun = "observe")
      input$bins
 
-     cat(rv$a, "\n")
      log_value(rv$a)
 
 
 
    })
+
+   log_event("Shiny server finished")
 
 }
 

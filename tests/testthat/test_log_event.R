@@ -26,7 +26,7 @@ test_that("logging events", {capture.output({
               ),
     list(
       counter = 2,
-      entry = "|#2|TYPE|Event name|DONE|list(a = 1, b = 2)\n|#2|Event body\n"
+      entry = "|#2|TYPE|Event name|DONE|\n|#2|PARAMS|list(a = 1, b = 2)\n|#2|Event body\n"
       )
     )
 

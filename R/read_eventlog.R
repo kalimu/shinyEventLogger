@@ -52,11 +52,23 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file")) {
                              )
 
   event_params <-
-    purrr::map_dfr(event_params, function(x) {as.data.frame(x)})
+    purrr::map_dfr(event_params, function(x) {
+
+      as.data.frame(x, stringsAsFactors = FALSE)
+
+      })
 
   event_params$x <- NULL
 
   eventlog <- cbind(eventlog, event_params)
+
+  eventlog$event_params <- NULL
+
+  if (!"resource" %in% names(eventlog)) {
+
+    eventlog$resource <- eventlog$event_type
+
+  }
 
   eventlog <-
     bupaR::eventlog(
@@ -66,7 +78,7 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file")) {
       activity_instance_id = 'event_id',
       lifecycle_id = 'event_status',
       timestamp = 'timestamp',
-      resource_id = 'event_type',
+      resource_id = 'resource',
       order = "auto"
       )
 

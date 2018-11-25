@@ -10,6 +10,7 @@ set_logging <- function(r_console = TRUE,
   options('shinyEventLogger.file'       = FALSE)
   options('shinyEventLogger.counter'    = 1)
 
+  log_params()
 
   if (!r_console &
       !js_console &

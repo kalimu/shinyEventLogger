@@ -54,13 +54,25 @@ log_event <- function(...,
 
   } else if (is.list(params)) {
 
-    event_params <- deparse(params)
 
   } else {
 
     event_params <- NULL
 
   } # end if
+
+# print(as.list(log_settings)  )
+  event_params <- c(params, as.list(log_settings))
+
+  if (NROW(event_params) > 0) {
+
+    event_params <- deparse(event_params)
+
+  } else {
+
+    event_params <- NULL
+
+  }
 
   # event_name ################################################################
   if (is.null(name)) {
@@ -119,6 +131,10 @@ log_event <- function(...,
 
   to_return$counter <- event_counter
   to_return$entry   <- result_r_console
+
+  # to_return$log_settings <- as.list(log_settings)
+
+  # cat(to_return$log_settings$resource, "\n")
 
   return(to_return)
 

@@ -17,29 +17,36 @@ create_log_entry <- function(event_name = NULL,
     separator, event_type,
     separator, event_name,
     separator, event_status,
-    separator, event_params
+    separator
 
     )
 
-  if (!is.null(event_body) && is.character(event_body) && event_body != "") {
+  log_entry_body <- ""
 
-
-  event_body <-
-
-    gsub(x = event_body,
-         pattern = "\n",
-         replacement = paste0("\n", separator, event_counter, separator)
-         )
-
+  if (!is.null(event_params)) {
 
     log_entry_body <- paste0(
       separator, event_counter,
-      separator, event_body,
-      "\n")
+      separator, "PARAMS",
+      separator, event_params,
+      "\n"
+      )
 
-  } else {
+  }
 
-    log_entry_body <- ""
+  if (!is.null(event_body) && is.character(event_body) && event_body != "") {
+
+    event_body <- gsub(
+      x = event_body,
+      pattern = "\n",
+      replacement = paste0("\n", separator, event_counter, separator)
+      )
+
+    log_entry_body <- paste0(
+      log_entry_body,
+      separator, event_counter,
+      separator, event_body, "\n"
+      )
 
   } # end if
 

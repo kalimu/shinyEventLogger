@@ -14,7 +14,9 @@ log_output <- function(...,
 
   args <- tryCatch(
 
-    expr = capture.output(invisible(eval(...))),
+    expr = capture.output(eval(...)),
+    # expr = capture.output(invisible(eval(...))),
+    # expr = testthat::capture_output(eval(...)),
 
     error = function(e) {
 

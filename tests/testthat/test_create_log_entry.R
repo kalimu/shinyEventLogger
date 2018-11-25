@@ -19,8 +19,8 @@ test_that("creating log entries", {
       event_params = "list(a=1)"
     ),
     list(
-      header = "|#23|NEWTYPE|Simple event|STARTED|list(a=1)",
-      body = ""
+      header = "|#23|NEWTYPE|Simple event|STARTED|",
+      body = "|#23|PARAMS|list(a=1)\n"
     )
   )
 
@@ -34,8 +34,8 @@ test_that("creating log entries", {
       event_body = "First line\nSecond line"
     ),
     list(
-      header = "|#23|NEWTYPE|Multiple-line event|STARTED|list(a=1)",
-      body = "|#23|First line\n|#23|Second line\n"
+      header = "|#23|NEWTYPE|Multiple-line event|STARTED|",
+      body = "|#23|PARAMS|list(a=1)\n|#23|First line\n|#23|Second line\n"
     )
   )
 
