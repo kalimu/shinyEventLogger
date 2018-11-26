@@ -2,10 +2,8 @@
 
 log_params <- function(...) {
 
-    log_settings <- new.env(parent = parent.frame(2))
+  params <- eval(list(...))
 
-    params <- as.list(match.call())
-
-    log_settings <<- list2env(x = params[-1], parent = parent.frame(2))
+  assign("log_settings", params, pos = parent.frame())
 
 } # end of log_params
