@@ -1,16 +1,4 @@
-#' @export
-log_started <- function(...) {
 
-  log_event(..., status = "STARTED")
-
-}
-
-#' @export
-log_done <- function(...) {
-
-  log_event(..., status = "DONE")
-
-}
 
 #' @export
 log_test <- function(...) {
