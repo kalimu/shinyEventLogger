@@ -4,13 +4,13 @@ log_event <- function(...,
                      name = NULL,
                      type = "EVENT",
                      status = "FIRED",
-                     params = NULL
+                     params = NULL,
+                     event_counter = getOption("shinyEventLogger.counter")
                      ) {
 
   r_console        <- getOption("shinyEventLogger.r_console")
   js_console       <- getOption("shinyEventLogger.js_console")
   file             <- getOption("shinyEventLogger.file")
-  event_counter    <- getOption("shinyEventLogger.counter")
 
   if (any(c(is.null(r_console),
             is.null(js_console),
@@ -37,12 +37,6 @@ log_event <- function(...,
 
   } # end if
 
-  if (!status %in% c("STARTED")) {
-
-    options('shinyEventLogger.counter' = event_counter + 1)
-
-  } # end if
-
   # event_body ###############################################################
   args <- list(...)
   event_body <- paste0(args, collapse = " ")
@@ -54,6 +48,7 @@ log_event <- function(...,
 
   } else if (is.list(params)) {
 
+    event_params <- params
 
   } else {
 
@@ -61,8 +56,19 @@ log_event <- function(...,
 
   } # end if
 
-# print(as.list(log_settings)  )
-  event_params <- c(params, as.list(log_settings))
+  if (exists('log_settings', envir = parent.frame(1))) {
+
+    event_params <- c(params, get('log_settings', envir = parent.frame(1)))
+
+  } else if (exists('log_settings', envir = parent.frame(2))) {
+
+    event_params <- c(params, get('log_settings', envir = parent.frame(2)))
+
+  } else if (exists('log_settings', envir = parent.frame(3))) {
+
+    event_params <- c(params, get('log_settings', envir = parent.frame(3)))
+
+  } # end if
 
   if (NROW(event_params) > 0) {
 
@@ -132,9 +138,14 @@ log_event <- function(...,
   to_return$counter <- event_counter
   to_return$entry   <- result_r_console
 
-  # to_return$log_settings <- as.list(log_settings)
+  if (event_counter == getOption("shinyEventLogger.counter")) {
 
-  # cat(to_return$log_settings$resource, "\n")
+    options(
+      'shinyEventLogger.counter' =
+        getOption("shinyEventLogger.counter") + 1
+      )
+
+  } # end of if
 
   return(to_return)
 
