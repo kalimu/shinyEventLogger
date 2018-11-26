@@ -2,6 +2,7 @@
 
 library(shiny)
 library(shinyEventLogger)
+
 devtools::load_all(".")
 
 # Setting up different kinds of logging
@@ -11,74 +12,99 @@ set_logging(
   file = "events.log"
 )
 
-
-
-# Logging outside reactive session
-log_event("Starting the app...", type = "NONREACTIVE")
-
 ui <- fluidPage(
 
-  # Initiate shinyLogger
+  # Initiate shinyEventLogger
   log_init(),
 
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("ShinyEventLogger DEMO"),
 
   sidebarLayout(
-    sidebarPanel(
+
+    sidebarPanel(width = 3,
+
+      selectInput("dataset", "Select dataset:",
+                  choices = c("faithful", "mtcars", "iris")
+                  ),
+
+
+
+
       sliderInput("bins", "Number of bins:",
                   min = 1, max = 50, value = 30)
-      ),
 
-      mainPanel(
-        plotOutput("distPlot"),
-        tableOutput("events")
-        )
+    ), # end of sidebarPanel
 
-    )
-)
+    mainPanel(
+
+      plotOutput("distPlot"),
+      tableOutput("events")
+
+    ) # end of mainPanel
+  ) # end of sidebarLayout
+) # end of FLuidPage
 
 server <- function(input, output, session) {
 
-  log_params(resource = "server")
+  # log_params(resource = "server")
 
-  log_event("Shiny server started")
+  # log_event("Shiny server started")
 
-  log_event("Logging done with shinyEventLogger",
-           params = list(
-             package_version = paste0(packageVersion("shinyEventLogger"),
-                              collapse = ".")
-                )
+  # log_event("Logging done with shinyEventLogger",
+  #          params = list(
+  #            package_version = paste0(packageVersion("shinyEventLogger"),
+  #                             collapse = ".")
+  #               )
+  #
+  #          )
 
-           )
-
-  packageVersion("shinyEventLogger")
+  # packageVersion("shinyEventLogger")
 
   rv <- reactiveValues(a = 36)
 
+  dataset <- reactive({
+
+    log_params(resource = "dataset()",
+               fun = "reactive",
+               dataset = input$dataset)
+
+    log_started("Loading dataset")
+
+    dataset <- eval(base::parse(text = input$dataset))
+
+    log_done("Loading dataset")
+
+    log_value(NROW(dataset), params = list(a = 'aaaa'))
+
+    dataset
+
+  })
+
+
   output$events <- renderTable({
 
-    log_params(resource = "output$events", fun = "renderTable")
+    log_params(resource = "output$events",
+               fun = "renderTable",
+               dataset = input$dataset)
 
-    # log_event("Rendering table", status = "STARTED")
     log_started("Rendering table")
 
-    bins = input$bins
+      Sys.sleep(2)
+      tab <- dataset()
 
-    Sys.sleep(2)
-
-    # log_event("Rendering table", status = "DONE")
     log_done("Rendering table")
 
-    bins
+    tab
 
 
   })
 
-   output$distPlot <- renderPlot({
+  output$distPlot <- renderPlot({
 
-     log_params(resource = "output$distPlot", fun = "renderPlot")
+    log_params(resource = "output$distPlot", fun = "renderPlot")
 
-      x    <- faithful[, 2]
+
+      x    <- dataset()[, 2]
       bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
       # Logging character string
@@ -118,6 +144,7 @@ server <- function(input, output, session) {
    observe({
 
      log_params(resource = "input$bins", fun = "observe")
+
      input$bins
 
      log_value(rv$a)
@@ -126,7 +153,7 @@ server <- function(input, output, session) {
 
    })
 
-   log_event("Shiny server finished")
+   # log_event("Shiny server finished")
 
 }
 
