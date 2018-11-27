@@ -76,9 +76,9 @@ log_event <- function(...,
 
   } # end if
 
-  if (NROW(event_params) > 0) {
+  if (NROW(event_params) > 0 || is.environment(event_params)) {
 
-    event_params <- deparse(event_params)
+    event_params <- deparse(as.list(event_params))
 
   } else {
 
