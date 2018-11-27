@@ -29,6 +29,13 @@ log_started <- function(...,
 
   event_id <- create_event_id(..., name = name)
 
+  if (is.null(event_id) || event_id == "") {
+
+    stop("Event must have some kind of unique 'name'",
+         "or body passed to the '...' argument.")
+
+  }
+
   log_event_register[[event_id]] <<-
 
     list(
@@ -55,7 +62,6 @@ log_done <- function(...,
                      ) {
 
   event_counter <- getOption("shinyEventLogger.counter")
-
   event_id <- create_event_id(..., name = name)
 
   register <- log_event_register[[event_id]]
