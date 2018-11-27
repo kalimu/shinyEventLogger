@@ -1,8 +1,8 @@
 #' @export
 
-read_eventlog <- function(file = getOption("shinyEventLogger.file")) {
-
-  # file = "examples/events.log"
+read_eventlog <- function(file = getOption("shinyEventLogger.file"),
+                          last_n = Inf
+                          ) {
 
   if (!file.exists(file)) {
 
@@ -18,7 +18,24 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file")) {
 
   }
 
-  eventlog  <- readLines(con = file)
+  if (last_n != Inf) {
+
+    n_lines <- R.utils::countLines(file)
+
+    eventlog <-
+      scan(file,
+           what = "",
+           skip = n_lines - last_n,
+           nlines = last_n,
+           sep = "\n",
+           quiet = FALSE)
+
+  } else {
+
+    eventlog  <- readLines(con = file)
+
+  }
+
   eventlog  <- strsplit(eventlog , split = "|", fixed = TRUE)
 
   if (any(lapply(eventlog , length) != 9)) {
