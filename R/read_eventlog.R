@@ -2,6 +2,8 @@
 
 read_eventlog <- function(file = getOption("shinyEventLogger.file")) {
 
+  # file = "examples/events.log"
+
   if (!file.exists(file)) {
 
     message("Log file: '", file, "' DOES NOT exist.")
@@ -69,6 +71,8 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file")) {
     eventlog$resource <- eventlog$event_type
 
   }
+
+  # View(eventlog)
 
   eventlog <-
     bupaR::eventlog(
