@@ -10,7 +10,7 @@ set_logging <- function(r_console = TRUE,
   options('shinyEventLogger.file'       = FALSE)
   options('shinyEventLogger.counter'    = 1)
 
-  log_event_register <- new.env(parent = parent.frame(1))
+  assign("log_event_register", new.env(), envir = .GlobalEnv)
 
   log_params()
 

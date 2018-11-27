@@ -58,15 +58,21 @@ log_event <- function(...,
 
   if (exists('log_settings', envir = parent.frame(1))) {
 
-    event_params <- c(params, get('log_settings', envir = parent.frame(1)))
+    event_params <- c(params,
+                      as.list(get('log_settings', envir = parent.frame(1)))
+                      )
 
   } else if (exists('log_settings', envir = parent.frame(2))) {
 
-    event_params <- c(params, get('log_settings', envir = parent.frame(2)))
+    event_params <- c(params,
+                      as.list(get('log_settings', envir = parent.frame(2)))
+                      )
 
   } else if (exists('log_settings', envir = parent.frame(3))) {
 
-    event_params <- c(params, get('log_settings', envir = parent.frame(3)))
+    event_params <- c(params,
+                      as.list(get('log_settings', envir = parent.frame(3)))
+                      )
 
   } # end if
 
