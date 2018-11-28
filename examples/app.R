@@ -9,7 +9,10 @@ devtools::load_all(".")
 set_logging(
   r_console = TRUE,
   js_console = TRUE,
-  file = "events.log"
+  file = "events.log",
+
+  logger_ver = as.character(packageVersion("ShinyEventLogger")),
+  build = 004
 )
 
 ui <- fluidPage(

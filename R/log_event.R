@@ -56,29 +56,38 @@ log_event <- function(...,
 
   } # end if
 
+
   if (exists('log_settings', envir = parent.frame(1))) {
 
-    event_params <- c(params,
-                      as.list(get('log_settings', envir = parent.frame(1)))
-                      )
+    event_params <- c(event_params,
+                      as.list(get('log_settings', envir = parent.frame(1))))
 
   } else if (exists('log_settings', envir = parent.frame(2))) {
 
-    event_params <- c(params,
-                      as.list(get('log_settings', envir = parent.frame(2)))
-                      )
+    event_params <- c(event_params,
+                      as.list(get('log_settings', envir = parent.frame(2))))
 
   } else if (exists('log_settings', envir = parent.frame(3))) {
 
-    event_params <- c(params,
-                      as.list(get('log_settings', envir = parent.frame(3)))
+    event_params <- c(event_params,
+                      as.list(get('log_settings', envir = parent.frame(3))))
+
+  } # end if
+
+
+  if (exists('log_settings_global', envir = .GlobalEnv)) {
+
+    event_params <- c(event_params,
+                      as.list(get('log_settings_global',
+                                  envir = .GlobalEnv))
                       )
 
   } # end if
 
+
   if (NROW(event_params) > 0 || is.environment(event_params)) {
 
-    event_params <- deparse(as.list(event_params))
+    event_params <- deparse(as.list(event_params), width.cutoff = 500)
 
   } else {
 

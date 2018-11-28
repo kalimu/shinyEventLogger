@@ -1,7 +1,7 @@
 Package: shinyEventLogger
 Type: Package
 Title: Logging and Analysing Events in Shiny Apps
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: c(
     person(given = "Kamil", family = "Wais", 
            email = "kamil.wais@gmail.com",

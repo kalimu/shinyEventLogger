@@ -3,16 +3,19 @@
 
 set_logging <- function(r_console = TRUE,
                         js_console = TRUE,
-                        file = FALSE) {
+                        file = FALSE,
+                        ...
+                        ) {
 
   options('shinyEventLogger.r_console'  = FALSE)
   options('shinyEventLogger.js_console' = FALSE)
   options('shinyEventLogger.file'       = FALSE)
   options('shinyEventLogger.counter'    = 1)
 
-  assign("log_event_register", new.env(), envir = .GlobalEnv)
+  global_params <- eval(list(...))
+  assign("log_settings_global", list2env(global_params), envir = .GlobalEnv)
 
-  log_params()
+  assign("log_event_register", new.env(), envir = .GlobalEnv)
 
   if (!r_console &
       !js_console &
