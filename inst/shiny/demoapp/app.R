@@ -26,12 +26,12 @@ ui <- fluidPage(
 
     sidebarPanel(width = 3,
 
-      selectInput("dataset", "Select dataset:",
-                  choices = c("faithful", "mtcars", "iris")
-                  ),
+      selectInput("dataset", "Dataset:",
+                  choices = c("faithful", "mtcars", "iris"),
+                  selected = "faithful"),
 
-
-
+      selectInput("variable", "Variable:",
+                  choices = ""),
 
       sliderInput("bins", "Number of bins:",
                   min = 1, max = 50, value = 30)
@@ -48,20 +48,6 @@ ui <- fluidPage(
 ) # end of FLuidPage
 
 server <- function(input, output, session) {
-
-  # log_params(resource = "server")
-
-  # log_event("Shiny server started")
-
-  # log_event("Logging done with shinyEventLogger",
-  #          params = list(
-  #            package_version = paste0(packageVersion("shinyEventLogger"),
-  #                             collapse = ".")
-  #               )
-  #
-  #          )
-
-  # packageVersion("shinyEventLogger")
 
   rv <- reactiveValues(a = 36)
 
@@ -83,6 +69,13 @@ server <- function(input, output, session) {
 
   })
 
+  observeEvent(input$dataset, {
+
+    log_value(input$dataset)
+    updateSelectInput(session, "variable",
+                    choices = names(dataset()))
+
+  })
 
   output$events <- renderTable({
 
@@ -107,7 +100,7 @@ server <- function(input, output, session) {
     log_params(resource = "output$distPlot", fun = "renderPlot")
 
 
-      x    <- dataset()[, 2]
+      x    <- dataset()[, input$variable]
       bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
       # Logging character string
@@ -138,9 +131,16 @@ server <- function(input, output, session) {
       # Logging and rising an error
       if (input$bins == 50) log_error("50 bins are not allowed!")
 
+      hist(x, breaks = bins, col = 'darkgray', border = 'white', main = paste0("Histogram of ", input$variable))
+
       log_output(rv$a)
 
-      hist(x, breaks = bins, col = 'darkgray', border = 'white')
+      log_started("Plotting")
+x = rnorm(10000000)
+hist(x)
+
+      log_done("Plotting")
+
 
    })
 
