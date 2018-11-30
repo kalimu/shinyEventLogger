@@ -89,8 +89,6 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file"),
 
   }
 
-  # View(eventlog)
-
   eventlog <-
     bupaR::eventlog(
       eventlog = eventlog,
@@ -102,6 +100,11 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file"),
       resource_id = 'resource',
       order = "auto"
       )
+
+  eventlog$event <- gsub(eventlog$event, pattern = '"', replacement = "`")
+  eventlog$event <- gsub(eventlog$event, pattern = "'", replacement = "`")
+
+  eventlog
 
 } # end of read_log
 
