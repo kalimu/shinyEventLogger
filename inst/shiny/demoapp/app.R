@@ -5,19 +5,21 @@ library(shinyEventLogger)
 
 devtools::load_all(".")
 
-# Setting up different kinds of logging
 set_logging(
+
+  # Setting up different kinds of logging
   r_console = TRUE,
   js_console = TRUE,
   file = "events.log",
 
+  # Adding global parameters to all events
   logger_ver = as.character(packageVersion("ShinyEventLogger")),
-  build = 004
+  build = 008
 )
 
 ui <- fluidPage(
 
-  # Initiate shinyEventLogger
+  # Initiate shinyEventLogger JavaScripts
   log_init(),
 
   titlePanel("ShinyEventLogger DEMO"),
@@ -27,43 +29,63 @@ ui <- fluidPage(
     sidebarPanel(width = 3,
 
       selectInput("dataset", "Dataset:",
-                  choices = c("faithful", "mtcars", "iris"),
+                  choices = c("faithful", "mtcars", "iris", "random"),
                   selected = "faithful"),
 
       selectInput("variable", "Variable:",
                   choices = ""),
 
       sliderInput("bins", "Number of bins:",
-                  min = 1, max = 50, value = 30)
+                  min = 1, max = 50, value = 10)
 
-    ), # end of sidebarPanel
+    ),
 
     mainPanel(
 
-      plotOutput("distPlot"),
-      tableOutput("events")
+      plotOutput("histogram"),
+      verbatimTextOutput("debugging")
 
-    ) # end of mainPanel
-  ) # end of sidebarLayout
-) # end of FLuidPage
+    )
+  )
+) # end of ui
 
 server <- function(input, output, session) {
 
-  rv <- reactiveValues(a = 36)
+  log_event("App (re)started")
 
   dataset <- reactive({
 
-    log_params(resource = "dataset()",
-               fun = "reactive",
-               dataset = input$dataset)
+    req(input$dataset)
 
+    # Setting local logging parameters
+    log_params(resource = "dataset()",
+               fun      = "reactive",
+               dataset  = input$dataset)
+
+    # Starting timing the event
     log_started("Loading dataset")
 
-    dataset <- eval(base::parse(text = input$dataset))
+      if (input$dataset == "random") {
 
+        dataset <- data.frame("RandomValue" = rnorm(n = 10000000))
+
+      } else {
+
+        dataset <- eval(base::parse(text = input$dataset))
+
+      }
+
+    # Stopping timing the event
     log_done("Loading dataset")
 
-    log_value(NROW(dataset), params = list(a = 'aaaa'))
+    # Logging a value of n rows
+    log_value(NROW(dataset))
+
+    # Logging function output
+    log_output(str(dataset))
+
+    # Logging data.frame
+    log_output(head(dataset))
 
     dataset
 
@@ -71,94 +93,91 @@ server <- function(input, output, session) {
 
   observeEvent(input$dataset, {
 
-    log_value(input$dataset)
+    # Logging arbitratry event
+    log_event(input$dataset, name = "Dataset was selected")
+
     updateSelectInput(session, "variable",
-                    choices = names(dataset()))
+                      choices = names(dataset()))
 
   })
 
-  output$events <- renderTable({
+  output$histogram <- renderPlot({
 
-    log_params(resource = "output$events",
-               fun = "renderTable",
-               dataset = input$dataset)
+    req(input$variable)
+    req(input$bins)
 
-    log_started("Rendering table")
+    log_params(resource = "output$histogram", fun = "renderPlot")
 
-      Sys.sleep(2)
-      tab <- dataset()
+    # Debugging the error:
+      # Error in [.data.frame: undefined columns selected
+      # while changing datasets
 
-    log_done("Rendering table")
+      # log_value(names(dataset()))
+      # log_value(input$variable)
 
-    tab
+    # Fixing the error
+    req(input$variable %in% names(dataset()))
 
+    x <- dataset()[, input$variable]
 
-  })
+    # Logging inside-app unit test
+    # This one logs silent error when variable Species from iris is selected.
+    log_test(testthat::expect_is(x, "numeric"))
 
-  output$distPlot <- renderPlot({
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
-    log_params(resource = "output$distPlot", fun = "renderPlot")
-
-
-      x    <- dataset()[, input$variable]
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-      # Logging character string
-      if (input$bins > 40)
-        log_event(name = "Number of bins more than 40",
-                 input$bins)
-
-
-
-      # Logging function output
-      log_output(str(faithful))
-
-      # Logging data.frame
-      log_output(head(faithful))
-
-      # Logging current value
-      log_value(input$bins)
-
-      # Logging unit tests
-      log_test(testthat::expect_gte(object = input$bins , expected = 25))
-
-      # Logging and rising a diagnostic message
-      if (input$bins == 48) log_message("50 bins are comming!")
-
-      # Logging and rising a warning
-      if (input$bins == 49) log_warning("Very close to 50 bins!")
-
-      # Logging and rising an error
-      if (input$bins == 50) log_error("50 bins are not allowed!")
-
-      hist(x, breaks = bins, col = 'darkgray', border = 'white', main = paste0("Histogram of ", input$variable))
-
-      log_output(rv$a)
-
-      log_started("Plotting")
-x = rnorm(10000000)
-hist(x)
-
-      log_done("Plotting")
-
+    hist(x,
+         breaks = bins,
+         col = 'darkgray',
+         border = 'white',
+         main = paste0("Histogram of ", input$variable)
+         )
 
    })
+
 
    observe({
 
      log_params(resource = "input$bins", fun = "observe")
 
-     input$bins
+     # Logging current input value
+     log_value(input$bins)
 
-     log_value(rv$a)
+     # Logging conditional named event
+      if (input$bins < 20) log_event(name = "Number of bins are safe",
+                                     input$bins)
 
+     # Logging and rising a diagnostic message
+      if (input$bins >= 30) log_message("50 bins are comming...")
 
+      # Logging and rising a warning
+      if (input$bins >= 40) log_warning("Very close to 50 bins!")
+
+      # Logging and rising an error
+      if (input$bins == 50) log_error("50 bins are not allowed!")
 
    })
 
-   # log_event("Shiny server finished")
 
-}
+  # output$events <- renderTable({
+  #
+  #   log_params(resource = "output$events",
+  #              fun = "renderTable",
+  #              dataset = input$dataset)
+  #
+  #   log_started("Rendering table")
+  #
+  #     Sys.sleep(2)
+  #     tab <- dataset()
+  #
+  #   log_done("Rendering table")
+  #
+  #   tab
+  #
+  #
+  # })
+
+} # end of server
 
 shinyApp(ui = ui, server = server)
 
