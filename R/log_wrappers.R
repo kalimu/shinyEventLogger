@@ -1,14 +1,6 @@
 
 
 #' @export
-log_test <- function(...) {
-
-  log_output(..., type = "TEST")
-
-}
-
-
-#' @export
 log_message <- function(...) {
 
   log_event(..., type = "MESSAGE")
