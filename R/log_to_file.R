@@ -9,13 +9,15 @@ log_to_file <- function(header,
 
   if (is.null(file) || !is.character(file)) {
 
-    stop("Use set_logging() to define log file.")
+    warning("Use set_logging() to define log file.")
+    return(FALSE)
 
   }
 
   if (!file.exists(file)) {
 
-    stop("File log '", file ,"' does NOT exist!")
+    warning("File log '", file ,"' does NOT exist!")
+    return(FALSE)
 
   } # end of if
 
