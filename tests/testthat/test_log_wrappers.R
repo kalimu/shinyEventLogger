@@ -1,20 +1,10 @@
-context("test_log_wrappers")
+context("log_wrappers")
 
 test_that("logging wrapper functions", {capture.output({
 
   set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
 
-  options("shinyEventLogger.counter" = 2)
-
-  expect_message(fixed = TRUE,
-    log_test(expect_true(FALSE)),
-    "|#2|TEST|expect_true(FALSE)|FIRED|"
-    )
-
-  expect_output(
-    log_test(expect_true(FALSE)),
-    "|#3|Error: FALSE isn't true."
-    )
+  options("shinyEventLogger.counter" = 4)
 
   expect_message(fixed = TRUE,
     log_message("Message"),

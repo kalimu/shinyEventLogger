@@ -7,13 +7,13 @@ test_that("missing params", {
     "A header of log entry is missing."
     )
 
-  expect_error(fixed = TRUE,
+  expect_warning(fixed = TRUE,
     shinyEventLogger:::log_to_file(header = "test"),
     "Use set_logging() to define log file."
     )
 
   options(shinyEventLogger.file = "nonexisting_file.log")
-  expect_error(fixed = TRUE,
+  expect_warning(fixed = TRUE,
     shinyEventLogger:::log_to_file(header = "test"),
     "File log 'nonexisting_file.log' does NOT exist!"
     )

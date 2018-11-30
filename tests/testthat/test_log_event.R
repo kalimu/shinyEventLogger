@@ -1,4 +1,4 @@
-context("test_log_event")
+context("log_event")
 
 test_that("logging events", {capture.output({
 

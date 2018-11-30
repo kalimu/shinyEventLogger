@@ -1,4 +1,4 @@
-context("test_log_started_done")
+context("log_started_done")
 
 test_that("logging wrapper functions", {capture.output({
 

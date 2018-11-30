@@ -1,4 +1,4 @@
-context("test_log_value")
+context("log_value")
 
 test_that("logging multiline output events", {capture.output({
 
