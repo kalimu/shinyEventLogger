@@ -42,9 +42,26 @@ ui <- fluidPage(
 
     mainPanel(
 
-      plotOutput("histogram"),
-      verbatimTextOutput("debugging")
+      tabsetPanel(
+        type = "pills",
+        tabPanel(
+          title = "Histogram",
 
+
+            plotOutput("histogram")
+
+
+          ),
+        tabPanel(
+          title = "Last N Events",
+
+          fluidPage(fluidRow(column(width = 12,
+
+            br(), tableOutput("last_events")
+
+          )))
+        )
+      )
     )
   )
 ) # end of ui
@@ -78,7 +95,7 @@ server <- function(input, output, session) {
     # Stopping timing the event
     log_done("Loading dataset")
 
-    # Logging a value of n rows
+    # Logging a value of number of rows
     log_value(NROW(dataset))
 
     # Logging function output
@@ -93,11 +110,28 @@ server <- function(input, output, session) {
 
   observeEvent(input$dataset, {
 
-    # Logging arbitratry event
+        log_params(resource = "observe:input$dataset",
+               fun = "observeEvent",
+               dataset = input$dataset)
+
+    # Logging arbitratry named event with value in output
     log_event(input$dataset, name = "Dataset was selected")
+    # Logging the same value using deparsed expression as event name
+    log_value(input$dataset)
 
     updateSelectInput(session, "variable",
                       choices = names(dataset()))
+
+  })
+
+  observeEvent(input$variable, {
+
+      log_params(resource = "observe:input$variable",
+                 fun = "observeEvent",
+                 dataset = input$dataset)
+
+      log_event(input$variable, name = "Variable was selected")
+      log_value(input$variable)
 
   })
 
@@ -106,7 +140,9 @@ server <- function(input, output, session) {
     req(input$variable)
     req(input$bins)
 
-    log_params(resource = "output$histogram", fun = "renderPlot")
+    log_params(resource = "output$histogram",
+               fun = "renderPlot",
+               dataset = input$dataset)
 
     # Debugging the error:
       # Error in [.data.frame: undefined columns selected
@@ -138,44 +174,51 @@ server <- function(input, output, session) {
 
    observe({
 
-     log_params(resource = "input$bins", fun = "observe")
+     log_params(resource = "input$bins",
+                fun = "observe",
+                dataset = input$dataset)
 
      # Logging current input value
      log_value(input$bins)
 
      # Logging conditional named event
-      if (input$bins < 20) log_event(name = "Number of bins are safe",
-                                     input$bins)
+     if (input$bins < 20)
+       log_event(name = "Number of bins are safe", input$bins)
 
      # Logging and rising a diagnostic message
-      if (input$bins >= 30) log_message("50 bins are comming...")
+     if (input$bins >= 30 & input$bins < 40)
+       log_message("50 bins are comming...")
 
-      # Logging and rising a warning
-      if (input$bins >= 40) log_warning("Very close to 50 bins!")
+     # Logging and rising a non-critical warning
+     if (input$bins >= 40 & input$bins < 50)
+       log_warning("Very close to 50 bins!")
 
-      # Logging and rising an error
-      if (input$bins == 50) log_error("50 bins are not allowed!")
+     # Logging and rising a critical error
+     if (input$bins == 50) log_error("50 bins are not allowed!")
 
    })
 
 
-  # output$events <- renderTable({
-  #
-  #   log_params(resource = "output$events",
-  #              fun = "renderTable",
-  #              dataset = input$dataset)
-  #
-  #   log_started("Rendering table")
-  #
-  #     Sys.sleep(2)
-  #     tab <- dataset()
-  #
-  #   log_done("Rendering table")
-  #
-  #   tab
-  #
-  #
-  # })
+  output$last_events <- renderTable({
+
+    invalidateLater(2000)
+
+    data <- read_eventlog(last_n = 20,
+                          verbose = FALSE)
+
+    data <- data[, c("event_id", "event_type", "event",
+                     "event_status", "output",
+                     "dataset", "fun", "resource", "build", "logger_ver")]
+
+    data$output <-
+      ifelse(nchar(data$output) <= 8, data$output, "[...]")
+
+    data$event_id <-
+      gsub(data$event_id, pattern = "^.*#", replacement =  "")
+
+    data
+
+  })
 
 } # end of server
 
