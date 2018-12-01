@@ -107,7 +107,7 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file"),
 
   if (last_n != Inf) {
 
-    message("The last event is at the top.")
+    if (verbose) message("The last event is at the top.")
 
     eventlog <-
       eventlog[order(eventlog$`.order`,decreasing = TRUE), ]
