@@ -1,7 +1,8 @@
 #' @export
 
 read_eventlog <- function(file = getOption("shinyEventLogger.file"),
-                          last_n = Inf
+                          last_n = Inf,
+                          verbose = TRUE
                           ) {
 
   if (!file.exists(file)) {
@@ -12,7 +13,7 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file"),
             getwd())
     return()
 
-  } else {
+  } else if (verbose) {
 
     message("Reading log file: ", file)
 
@@ -28,7 +29,7 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file"),
            skip = n_lines - last_n,
            nlines = last_n,
            sep = "\n",
-           quiet = FALSE)
+           quiet = !verbose)
 
   } else {
 
@@ -103,6 +104,15 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file"),
 
   eventlog$event <- gsub(eventlog$event, pattern = '"', replacement = "`")
   eventlog$event <- gsub(eventlog$event, pattern = "'", replacement = "`")
+
+  if (last_n != Inf) {
+
+    message("The last event is at the top.")
+
+    eventlog <-
+      eventlog[order(eventlog$`.order`,decreasing = TRUE), ]
+
+  }
 
   eventlog
 
