@@ -3,7 +3,10 @@
 library(shiny)
 library(shinyEventLogger)
 
-devtools::load_all(".")
+library(dplyr)
+
+# TODO: remove load_all as it breaks package namespace
+# devtools::load_all(".")
 
 set_logging(
 
@@ -14,7 +17,7 @@ set_logging(
 
   # Adding global parameters to all events
   logger_ver = as.character(packageVersion("ShinyEventLogger")),
-  build = 008
+  build = 010
 )
 
 ui <- fluidPage(
@@ -30,7 +33,7 @@ ui <- fluidPage(
 
       selectInput("dataset", "Dataset:",
                   choices = c("faithful", "mtcars", "iris", "random"),
-                  selected = "faithful"),
+                  selected = "iris"),
 
       selectInput("variable", "Variable:",
                   choices = ""),
@@ -44,14 +47,14 @@ ui <- fluidPage(
 
       tabsetPanel(
         type = "pills",
+
         tabPanel(
           title = "Histogram",
 
-
             plotOutput("histogram")
 
-
           ),
+
         tabPanel(
           title = "Last N Events",
 
@@ -60,6 +63,14 @@ ui <- fluidPage(
             br(), tableOutput("last_events")
 
           )))
+        ),
+
+        tabPanel(
+          title = "Top users' actions",
+
+          plotOutput("top_datasets"),
+          plotOutput("top_variables"),
+          plotOutput("top_bins")
         )
       )
     )
@@ -217,6 +228,64 @@ server <- function(input, output, session) {
       gsub(data$event_id, pattern = "^.*#", replacement =  "")
 
     data
+
+  })
+
+  eventlog <- reactive({
+
+    read_eventlog(verbose = FALSE) %>%
+      filter(build >= 8)
+
+  })
+
+  output$top_datasets <- renderPlot({
+
+    data <-
+      eventlog() %>%
+      filter(event == "Dataset was selected" & !is.na(dataset)) %>%
+      count(dataset) %>%
+      arrange(desc(n))
+
+    barplot(data$n,
+            names.arg = data$dataset,
+            col = 'darkgray',
+            border = 'white',
+            main = paste0("Dataset most often selected"))
+
+  })
+
+  output$top_variables <- renderPlot({
+
+    data <-
+      eventlog() %>%
+      filter(event == "input$variable" & output != "") %>%
+      filter(!is.na(dataset)) %>%
+      count(output, dataset) %>%
+      arrange(desc(n))
+
+    barplot(data$n,
+            names.arg = paste0(data$output, " (", data$dataset, ")"),
+            col = 'darkgray',
+            border = 'white',
+            main = paste0("Variables most often selected"))
+
+  })
+
+  output$top_bins <- renderPlot({
+
+    data <-
+      eventlog() %>%
+      filter(event == "input$bins") %>%
+      count(output) %>%
+      mutate(output = as.integer(output)) %>%
+      filter(output != 10) %>%
+      arrange(output)
+
+    barplot(data$n,
+            names.arg = data$output,
+            col = 'darkgray',
+            border = 'white',
+            main = paste0("Number of bins most often selected"))
 
   })
 
