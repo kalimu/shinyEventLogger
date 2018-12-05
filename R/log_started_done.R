@@ -36,7 +36,9 @@ log_started <- function(...,
 
   }
 
-  log_event_register[[event_id]] <<-
+  log_event_register <- get('log_event_register', envir = parent.frame())
+
+  log_event_register[[event_id]] <-
 
     list(
       status = status,
@@ -61,8 +63,9 @@ log_done <- function(...,
                      params = NULL
                      ) {
 
-  event_counter <- getOption("shinyEventLogger.counter")
   event_id <- create_event_id(..., name = name)
+
+  log_event_register <- get('log_event_register', envir = parent.frame())
 
   register <- log_event_register[[event_id]]
 

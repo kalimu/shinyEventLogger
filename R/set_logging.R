@@ -16,11 +16,11 @@ set_logging <- function(r_console = TRUE,
 
   assign("log_settings_global",
          list2env(global_params),
-         envir = .GlobalEnv)
+         envir = parent.frame())
 
   assign("log_event_register",
          new.env(parent = emptyenv()),
-         envir = .GlobalEnv)
+         envir = parent.frame())
 
   if (!r_console &
       !js_console &

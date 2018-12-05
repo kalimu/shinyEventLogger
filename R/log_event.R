@@ -77,10 +77,10 @@ log_event <- function(...,
 
   if (exists('log_settings_global', envir = .GlobalEnv)) {
 
-    event_params <- c(event_params,
-                      as.list(get('log_settings_global',
-                                  envir = .GlobalEnv))
-                      )
+    event_params <-
+      c(event_params,
+        as.list(get('log_settings_global', envir = parent.frame()))
+        )
 
   } # end if
 
