@@ -56,33 +56,34 @@ log_event <- function(...,
 
   } # end if
 
+  add_parent_params <- function(envir_name, event_params) {
 
-  if (exists('log_settings', envir = parent.frame(1))) {
+    if (exists(envir_name, envir = parent.frame(1))) {
 
-    event_params <- c(event_params,
-                      as.list(get('log_settings', envir = parent.frame(1))))
+      event_params <- c(event_params,
+                        as.list(get(envir_name, envir = parent.frame(1))))
 
-  } else if (exists('log_settings', envir = parent.frame(2))) {
+    } else if (exists(envir_name, envir = parent.frame(2))) {
 
-    event_params <- c(event_params,
-                      as.list(get('log_settings', envir = parent.frame(2))))
+      event_params <- c(event_params,
+                        as.list(get(envir_name, envir = parent.frame(2))))
 
-  } else if (exists('log_settings', envir = parent.frame(3))) {
+    } else if (exists(envir_name, envir = parent.frame(3))) {
 
-    event_params <- c(event_params,
-                      as.list(get('log_settings', envir = parent.frame(3))))
+      event_params <- c(event_params,
+                        as.list(get(envir_name, envir = parent.frame(3))))
 
-  } # end if
+    } # end if
 
+      event_params
 
-  if (exists('log_settings_global', envir = .GlobalEnv)) {
+  } # end of add_parent_params
 
-    event_params <-
-      c(event_params,
-        as.list(get('log_settings_global', envir = parent.frame()))
-        )
+  event_params <- add_parent_params(envir_name = "log_settings",
+                                    event_params)
 
-  } # end if
+  event_params <- add_parent_params(envir_name = "log_settings_global",
+                                    event_params)
 
 
   if (NROW(event_params) > 0 || is.environment(event_params)) {
