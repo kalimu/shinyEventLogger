@@ -1,31 +1,12 @@
-
-
 library(shiny)
 library(shinyEventLogger)
 
-library(dplyr)
-
-# TODO: remove load_all as it breaks package namespace
-# devtools::load_all(".")
-
-set_logging(
-
-  # Setting up different kinds of logging
-  r_console = TRUE,
-  js_console = TRUE,
-  file = "events.log",
-
-  # Adding global parameters to all events
-  logger_ver = as.character(packageVersion("ShinyEventLogger")),
-  build = 010
-)
-
 ui <- fluidPage(
 
-  # Initiate shinyEventLogger JavaScripts
+  # Initiate shinyEventLogger (JavaScripts)
   log_init(),
 
-  titlePanel("ShinyEventLogger DEMO"),
+  titlePanel("ShinyEventLogger: DEMO APP"),
 
   sidebarLayout(
 
@@ -45,39 +26,30 @@ ui <- fluidPage(
 
     mainPanel(
 
-      tabsetPanel(
-        type = "pills",
+      tabsetPanel(type = "pills",
 
-        tabPanel(
-          title = "Histogram",
+        tabPanel(title = "Histogram", plotOutput("histogram")),
 
-            plotOutput("histogram")
+        tabPanel(title = "Last N Events", tableOutput("last_events"))
 
-          ),
-
-        tabPanel(
-          title = "Last N Events",
-
-          fluidPage(fluidRow(column(width = 12,
-
-            br(), tableOutput("last_events")
-
-          )))
-        ),
-
-        tabPanel(
-          title = "Top users' actions",
-
-          plotOutput("top_datasets"),
-          plotOutput("top_variables"),
-          plotOutput("top_bins")
-        )
       )
     )
   )
 ) # end of ui
 
 server <- function(input, output, session) {
+
+
+  set_logging(
+    # Setting up different kinds of logging
+    r_console = TRUE,
+    js_console = TRUE,
+    file = "events.log",
+
+    # Adding global parameters to all events
+    logger_ver = as.character(packageVersion("ShinyEventLogger")),
+    build = 015L
+    )
 
   log_event("App (re)started")
 
@@ -95,7 +67,7 @@ server <- function(input, output, session) {
 
       if (input$dataset == "random") {
 
-        dataset <- data.frame("RandomValue" = rnorm(n = 10000000))
+        dataset <- data.frame("RandomValue" = rnorm(n = 50000000))
 
       } else {
 
@@ -107,7 +79,7 @@ server <- function(input, output, session) {
     log_done("Loading dataset")
 
     # Logging a value of number of rows
-    log_value(NROW(dataset))
+    log_value(NROW(dataset), params = list(n_rows = NROW(dataset)))
 
     # Logging function output
     log_output(str(dataset))
@@ -146,7 +118,7 @@ server <- function(input, output, session) {
 
   })
 
-  output$histogram <- renderPlot({
+  output$histogram <- renderPlot(height = 600, {
 
     req(input$variable)
     req(input$bins)
@@ -173,6 +145,8 @@ server <- function(input, output, session) {
 
     bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
+    log_event("Plotting histogram")
+
     hist(x,
          breaks = bins,
          col = 'darkgray',
@@ -181,7 +155,6 @@ server <- function(input, output, session) {
          )
 
    })
-
 
    observe({
 
@@ -209,83 +182,33 @@ server <- function(input, output, session) {
 
    })
 
-
   output$last_events <- renderTable({
 
     invalidateLater(2000)
 
-    data <- read_eventlog(last_n = 20,
-                          verbose = FALSE)
+    data <- read_eventlog(
+      last_n = 25,
+      verbose = FALSE,
+      file = system.file("shiny", "demoapp/events.log",
+                         package = "shinyEventLogger")
+      )
 
     data <- data[, c("event_id", "event_type", "event",
                      "event_status", "output",
                      "dataset", "fun", "resource", "build", "logger_ver")]
 
+    # trimming the output length
+    output_length <- 12
     data$output <-
-      ifelse(nchar(data$output) <= 8, data$output, "[...]")
+      ifelse(nchar(data$output) <= output_length, data$output,
+             paste(strtrim(data$output, width = output_length - 5), "[...]")
+             )
 
+    # removing session id from event id
     data$event_id <-
       gsub(data$event_id, pattern = "^.*#", replacement =  "")
 
     data
-
-  })
-
-  eventlog <- reactive({
-
-    read_eventlog(verbose = FALSE) %>%
-      filter(build >= 8)
-
-  })
-
-  output$top_datasets <- renderPlot({
-
-    data <-
-      eventlog() %>%
-      filter(event == "Dataset was selected" & !is.na(dataset)) %>%
-      count(dataset) %>%
-      arrange(desc(n))
-
-    barplot(data$n,
-            names.arg = data$dataset,
-            col = 'darkgray',
-            border = 'white',
-            main = paste0("Dataset most often selected"))
-
-  })
-
-  output$top_variables <- renderPlot({
-
-    data <-
-      eventlog() %>%
-      filter(event == "input$variable" & output != "") %>%
-      filter(!is.na(dataset)) %>%
-      count(output, dataset) %>%
-      arrange(desc(n))
-
-    barplot(data$n,
-            names.arg = paste0(data$output, " (", data$dataset, ")"),
-            col = 'darkgray',
-            border = 'white',
-            main = paste0("Variables most often selected"))
-
-  })
-
-  output$top_bins <- renderPlot({
-
-    data <-
-      eventlog() %>%
-      filter(event == "input$bins") %>%
-      count(output) %>%
-      mutate(output = as.integer(output)) %>%
-      filter(output != 10) %>%
-      arrange(output)
-
-    barplot(data$n,
-            names.arg = data$output,
-            col = 'darkgray',
-            border = 'white',
-            main = paste0("Number of bins most often selected"))
 
   })
 
