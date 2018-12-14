@@ -28,9 +28,7 @@ ui <- fluidPage(
 
       tabsetPanel(type = "pills",
 
-        tabPanel(title = "Histogram", plotOutput("histogram")),
-
-        tabPanel(title = "Last N Events", tableOutput("last_events"))
+        tabPanel(title = "Histogram", plotOutput("histogram"))
 
       )
     )
@@ -48,7 +46,7 @@ server <- function(input, output, session) {
 
     # Adding global parameters to all events
     logger_ver = as.character(packageVersion("ShinyEventLogger")),
-    build = 015L
+    build = 022L
     )
 
   log_event("App (re)started")
@@ -58,7 +56,7 @@ server <- function(input, output, session) {
     req(input$dataset)
 
     # Setting local logging parameters
-    log_params(resource = "dataset()",
+    log_params(resource = "dataset",
                fun      = "reactive",
                dataset  = input$dataset)
 
@@ -93,8 +91,8 @@ server <- function(input, output, session) {
 
   observeEvent(input$dataset, {
 
-        log_params(resource = "observe:input$dataset",
-               fun = "observeEvent",
+    log_params(resource = "input$dataset",
+               fun = "observer",
                dataset = input$dataset)
 
     # Logging arbitratry named event with value in output
@@ -109,12 +107,12 @@ server <- function(input, output, session) {
 
   observeEvent(input$variable, {
 
-      log_params(resource = "observe:input$variable",
-                 fun = "observeEvent",
-                 dataset = input$dataset)
+    log_params(resource = "input$variable",
+               fun = "observer",
+               dataset = input$dataset)
 
-      log_event(input$variable, name = "Variable was selected")
-      log_value(input$variable)
+    log_event(input$variable, name = "Variable was selected")
+    log_value(input$variable)
 
   })
 
@@ -124,7 +122,7 @@ server <- function(input, output, session) {
     req(input$bins)
 
     log_params(resource = "output$histogram",
-               fun = "renderPlot",
+               fun = "rendering",
                dataset = input$dataset)
 
     # Debugging the error:
@@ -141,7 +139,8 @@ server <- function(input, output, session) {
 
     # Logging inside-app unit test
     # This one logs silent error when variable Species from iris is selected.
-    log_test(testthat::expect_is(x, "numeric"))
+    log_test(testthat::expect_is(x, "numeric"),
+             params = list('variable' = input$variable))
 
     bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
@@ -159,7 +158,7 @@ server <- function(input, output, session) {
    observe({
 
      log_params(resource = "input$bins",
-                fun = "observe",
+                fun = "observer",
                 dataset = input$dataset)
 
      # Logging current input value
@@ -177,40 +176,17 @@ server <- function(input, output, session) {
      if (input$bins >= 40 & input$bins < 50)
        log_warning("Very close to 50 bins!")
 
-     # Logging and rising a critical error
-     if (input$bins == 50) log_error("50 bins are not allowed!")
+     log_test(testthat::expect_lt(input$bins, 50),
+              params = list(bins = input$bins))
+          # Logging and rising a critical error
+     if (input$bins == 50) {
+
+       log_error("50 bins are not allowed!")
+
+     }
 
    })
 
-  output$last_events <- renderTable({
-
-    invalidateLater(2000)
-
-    data <- read_eventlog(
-      last_n = 25,
-      verbose = FALSE,
-      file = system.file("shiny", "demoapp/events.log",
-                         package = "shinyEventLogger")
-      )
-
-    data <- data[, c("event_id", "event_type", "event",
-                     "event_status", "output",
-                     "dataset", "fun", "resource", "build", "logger_ver")]
-
-    # trimming the output length
-    output_length <- 12
-    data$output <-
-      ifelse(nchar(data$output) <= output_length, data$output,
-             paste(strtrim(data$output, width = output_length - 5), "[...]")
-             )
-
-    # removing session id from event id
-    data$event_id <-
-      gsub(data$event_id, pattern = "^.*#", replacement =  "")
-
-    data
-
-  })
 
 } # end of server
 
