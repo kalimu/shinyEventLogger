@@ -12,7 +12,7 @@ log_test <- function(...,
   test_result <-
     tryCatch(expr = {
 
-      eval(...)
+      eval(..., envir = parent.frame())
 
       list(
         status = "SUCCESS",

@@ -78,7 +78,7 @@ read_eventlog <- function(file = getOption("shinyEventLogger.file"),
 
       })
 
-  event_params$x <- NULL
+  event_params$NA_character_. <- NULL
 
   eventlog <- cbind(eventlog, event_params)
 
