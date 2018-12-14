@@ -12,8 +12,7 @@ test_that("logging multiline output events", {capture.output({
         "|#1|OUTPUT|str(mtcars[1:2])|FIRED|\n",
         "|#1|'data.frame':\t32 obs. of  2 variables:\n",
         "|#1| $ mpg: num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...\n",
-        "|#1| $ cyl: num  6 6 4 6 8 6 8 4 4 6 ...\n",
-        "|#1|NULL\n"
+        "|#1| $ cyl: num  6 6 4 6 8 6 8 4 4 6 ...\n"
         )
       )
     ) # end of expect_identical
@@ -39,18 +38,14 @@ test_that("outputs of expressions outside current env", {capture.output({
   env <- new.env()
   env$fun = function(a) {print(a)}
 
-  log_output(env$fun("test"))
-
   expect_message(fixed = TRUE,
-    log_output(str(mtcars[1:2])),
-    "|#2|OUTPUT|str(mtcars[1:2])|FIRED|"
+    log_output(env$fun("test")),
+    '|#1|OUTPUT|env$fun("test")|FIRED|'
     )
 
   expect_output(fixed = TRUE,
-    log_output(str(mtcars[1:2])),
-    "|#3|'data.frame':\t32 obs. of  2 variables:\n",
-    "|#3| $ mpg: num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...\n",
-    "|#3| $ cyl: num  6 6 4 6 8 6 8 4 4 6 ...\n"
+    log_output(env$fun("test")),
+    '|#2|[1] "test"'
     )
 
 })})
