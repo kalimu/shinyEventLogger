@@ -24,7 +24,11 @@ set_logging <- function(r_console  = TRUE,
          new.env(parent = emptyenv()),
          envir = parent.frame())
 
-  if (!r_console & !js_console & (is.logical(file) && !file)) {
+  if (!r_console &&
+      !js_console &&
+      (is.logical(file) && !file) &&
+      (is.logical(database) && !database)
+      ) {
 
     message("All types of logging are disabled!")
     return(FALSE)

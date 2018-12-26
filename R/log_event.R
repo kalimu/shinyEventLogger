@@ -32,7 +32,7 @@ log_event <- function(...,
 
   if (!r_console &
       !js_console &
-      (is.logical(database) && !file) &
+      (is.logical(database) && !database) &
       (is.logical(file) && !file)
       ) {
 
