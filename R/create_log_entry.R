@@ -25,6 +25,8 @@ create_log_entry <- function(event_name = NULL,
 
   if (!is.null(event_params)) {
 
+    event_params <- deparse(event_params, width.cutoff = 500)
+
     log_entry_body <- paste0(
       separator, event_counter,
       separator, "PARAMS",

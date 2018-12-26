@@ -100,22 +100,18 @@ server <- function(input, output, session) {
                          package = "shinyEventLogger")
       )
 
-    data <- data[, c("event_id", "event_type", "event",
-                     "event_status", "output",
+    data <- data[, c("event_counter", "event_type", "event_name",
+                     "event_status", "event_body",
                      "dataset", "fun", "resource", "build", "logger_ver")]
 
     # trimming the output length
     max_output_length <- 12
 
-    data$output <- ifelse(
-      nchar(data$output) <= max_output_length,
-      data$output,
-      paste(strtrim(data$output, width = max_output_length - 5), "[...]")
+    data$event_body <- ifelse(
+      nchar(data$event_body) <= max_output_length,
+      data$event_body,
+      paste(strtrim(data$event_body, width = max_output_length - 5), "[...]")
       )
-
-    # removing session id from event id
-    data$event_id <-
-      gsub(data$event_id, pattern = "^.*#", replacement =  "")
 
     data
 
@@ -190,7 +186,7 @@ server <- function(input, output, session) {
 
         data <-
           eventlog() %>%
-          filter(event == "Dataset was selected" & !is.na(dataset)) %>%
+          filter(event_name == "Dataset was selected" & !is.na(dataset)) %>%
           count(dataset) %>%
           arrange(desc(n)) %>%
           mutate(n = if_else(dataset == "iris", n - n_cases(eventlog()), n))
@@ -208,16 +204,17 @@ server <- function(input, output, session) {
 
        data <-
           eventlog() %>%
-          filter(event == "input$variable" & output != "") %>%
+          filter(event_name == "input$variable" & output != "") %>%
           filter(!is.na(dataset)) %>%
-          count(output, dataset) %>%
+          count(event_body, dataset) %>%
           arrange(desc(n)) %>%
           mutate(
-            n = if_else(output == "Sepal.Length", n - n_cases(eventlog()), n)
+            n = if_else(
+              event_body == "Sepal.Length", n - n_cases(eventlog()), n)
             )
 
         barplot(data$n,
-                names.arg = paste0(data$output, " (", data$dataset, ")"),
+                names.arg = paste0(data$event_body, " (", data$dataset, ")"),
                 col = 'darkgray',
                 border = 'white',
                 main = "Variables most often selected*",
@@ -229,14 +226,14 @@ server <- function(input, output, session) {
 
         data <-
           eventlog() %>%
-          filter(event == "input$bins") %>%
-          count(output) %>%
-          mutate(output = as.integer(output)) %>%
-          arrange(output) %>%
-          mutate(n = if_else(output == 10, n - n_cases(eventlog()), n))
+          filter(event_name == "input$bins") %>%
+          count(event_body) %>%
+          mutate(event_body = as.integer(event_body)) %>%
+          arrange(event_body) %>%
+          mutate(n = if_else(event_body == 10, n - n_cases(eventlog()), n))
 
         barplot(data$n,
-                names.arg = data$output,
+                names.arg = data$event_body,
                 col = 'darkgray',
                 border = 'white',
                 main = "Number of bins most often selected*",
@@ -285,8 +282,9 @@ server <- function(input, output, session) {
 
     eventlog() %>%
       filter(event_type == "TEST") %>%
-      count(event_type, event, event_status, variable, bins, fun, resource) %>%
-      arrange(event_status, event, variable, bins)
+      count(event_type, event_name, event_status,
+            variable, bins, fun, resource) %>%
+      arrange(event_status, event_name, variable, bins)
 
   })
 

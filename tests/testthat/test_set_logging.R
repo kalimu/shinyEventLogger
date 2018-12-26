@@ -24,7 +24,7 @@ test_that("no settings", {
 
 }) # end of test_that
 
-test_that("default settings", {
+test_that("default settings", {capture.output({
 
   expect_message(fixed = TRUE,
     set_logging(),
@@ -38,7 +38,7 @@ test_that("default settings", {
 
   expect_message(fixed = TRUE,
     set_logging(),
-    "Logging to a file:             DISABLED"
+    "Logging to a file:             disabled"
     )
 
   set_logging()
@@ -50,9 +50,9 @@ test_that("default settings", {
 
   expect_identical(getOption("shinyEventLogger.counter"), 1)
 
-}) # end of test_that
+})}) # end of test_that
 
-test_that("creating log file", {
+test_that("creating log file", {capture.output({
 
 
   set_logging(r_console = FALSE, js_console = FALSE, file = TRUE)
@@ -103,5 +103,5 @@ test_that("creating log file", {
 
   unlink(temp_file)
 
-}) # end of test_that
+})}) # end of test_that
 

@@ -11,10 +11,12 @@ log_event <- function(...,
   r_console        <- getOption("shinyEventLogger.r_console")
   js_console       <- getOption("shinyEventLogger.js_console")
   file             <- getOption("shinyEventLogger.file")
+  database         <- getOption("shinyEventLogger.database")
 
   if (any(c(is.null(r_console),
             is.null(js_console),
             is.null(file),
+            is.null(database),
             is.null(event_counter)
             ))) {
 
@@ -30,6 +32,7 @@ log_event <- function(...,
 
   if (!r_console &
       !js_console &
+      (is.logical(database) && !file) &
       (is.logical(file) && !file)
       ) {
 
@@ -88,7 +91,7 @@ log_event <- function(...,
 
   if (NROW(event_params) > 0 || is.environment(event_params)) {
 
-    event_params <- deparse(as.list(event_params), width.cutoff = 500)
+    event_params <- as.list(event_params)
 
   } else {
 
@@ -131,7 +134,7 @@ log_event <- function(...,
 
     result_r_console <-
       log_to_r_console(header = log_entry$header,
-                       body = log_entry$body)
+                       body   = log_entry$body)
 
   } # end if
 
@@ -139,15 +142,51 @@ log_event <- function(...,
 
     result_js_console <-
       log_to_js_console(header = log_entry$header,
-                        body = log_entry$body)
+                        body   = log_entry$body)
 
   } # end if
+
+  session <- shiny::getDefaultReactiveDomain()
+
+  if (!is.null(session)) {
+
+    session_id <- session$token
+
+  } else {
+
+    session_id <- ""
+
+  } # end of if
+
+  event_timestamp <- Sys.time()
+  attr(event_timestamp, "tzone") <- "UTC"
 
   if ((is.logical(file) && file) || is.character(file)) {
 
     result_file <-
-      log_to_file(header = log_entry$header,
-                  body = log_entry$body)
+      log_to_file(header          = log_entry$header,
+                  body            = log_entry$body,
+                  session_id      = session_id,
+                  event_timestamp = event_timestamp
+                  )
+
+  } # end if
+
+  if ((is.logical(database) && database) || is.character(database)) {
+
+    result_databse <-
+      log_to_database(
+        event_counter   = event_counter,
+        event_type      = event_type,
+        event_name      = event_name,
+        event_status    = event_status,
+        event_params    = event_params,
+        event_body      = event_body,
+        event_timestamp = event_timestamp,
+        session_id      = session_id
+
+      )
+
 
   } # end if
 

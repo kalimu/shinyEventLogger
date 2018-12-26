@@ -1,2 +1,3 @@
 events.log
 *_backup_*
+.db_url

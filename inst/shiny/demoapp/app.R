@@ -43,10 +43,11 @@ server <- function(input, output, session) {
     r_console = TRUE,
     js_console = TRUE,
     file = "events.log",
+    database = FALSE,
 
     # Adding global parameters to all events
     logger_ver = as.character(packageVersion("ShinyEventLogger")),
-    build = 022L
+    build = 024L
     )
 
   log_event("App (re)started")

@@ -28,8 +28,8 @@ test_that("logging to a file", {
 
   expect_true(file.exists(temp_file))
 
-  expect_true(log_to_file(header = "test1"))
-  expect_true(log_to_file(header = "test2"))
+  expect_true(log_to_file(header = "test1", event_timestamp = Sys.time()))
+  expect_true(log_to_file(header = "test2", event_timestamp = Sys.time()))
 
   eventlog <- strsplit(x = readLines(con = temp_file),
                        split = "|",

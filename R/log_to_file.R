@@ -1,6 +1,8 @@
 
 log_to_file <- function(header,
-                        body = ""
+                        body = "",
+                        event_timestamp,
+                        session_id = ""
                         ) {
 
   if (missing(header)) stop("A header of log entry is missing.")
@@ -20,20 +22,6 @@ log_to_file <- function(header,
     return(FALSE)
 
   } # end of if
-
-  session <- shiny::getDefaultReactiveDomain()
-
-  if (!is.null(session)) {
-
-    session_id <- session$token
-
-  } else {
-
-    session_id <- ""
-
-  } # end of if
-
-  event_timestamp <- paste0(format(as.numeric(Sys.time()), nsmall = 10))
 
   params <- ""
   output <- ""
