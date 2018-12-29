@@ -7,13 +7,17 @@
 \title{shinyEventLogger: Logging and Analysing Events in Shiny Apps}
 \description{
 Logging dedicated to Shiny apps. You can log different types
-    of events: character string, current value of a variable, 
-    multiline output of a function (eg. str(data.frame) or head(data.frame)), 
-    result of a unit test, errors, warnings, diagnostic messages, etc.
+    of events, for example: character string, current value of a variable, 
+    multi-line output of a function (eg. str(data.frame) or head(data.frame)), 
+    result of a unit test (using testthat), 
+    custom errors, warnings, diagnostic messages, etc.
+    Together with events you can log a custom set of additional parameters, 
+    which are event-specific, scope-specific, 
+    or common for all events from an app.
     Logging can be done simultaneously to R console, 
-    JavaScript console in a browser, or to a file log.
-    Log data can be analysed with the help of dedicated functions 
-    and process-mining techniques.
+    JavaScript console in a browser, to a file log, and to a database (MongoDB).
+    Log data can be analysed with the help of process-mining techniques from 
+    bupaR package.
 }
 \seealso{
 Useful links:
