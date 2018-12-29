@@ -1,11 +1,7 @@
 #' @export
 
 purge_eventlog <- function(file      = NULL,
-                           # TODO: db        = NULL,
-                           # TODO: min_date  = NULL,
-                           min_build = NULL#,
-                           # TODO: last_n    = Inf,
-                           # TODO: verbose   = TRUE
+                           min_build = NULL
                            ) {
 
   if (is.null(min_build)) {

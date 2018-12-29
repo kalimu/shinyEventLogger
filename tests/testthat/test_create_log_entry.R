@@ -16,7 +16,6 @@ test_that("creating log entries", {
       event_type = "NEWTYPE",
       event_name = "Simple event",
       event_status = "STARTED",
-      # event_params = "list(a=1)"
       event_params = list(a = 1)
     ),
     list(
@@ -31,7 +30,6 @@ test_that("creating log entries", {
       event_type = "NEWTYPE",
       event_name = "Multiple-line event",
       event_status = "STARTED",
-      # event_params = "list(a=1)",
       event_params = list(a = 1),
       event_body = "First line\nSecond line"
     ),

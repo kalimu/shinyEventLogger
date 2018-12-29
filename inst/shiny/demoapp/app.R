@@ -47,7 +47,7 @@ server <- function(input, output, session) {
 
     # Adding global parameters to all events
     logger_ver = as.character(packageVersion("ShinyEventLogger")),
-    build = 029L
+    build = 030L
     )
 
   log_event("App (re)started")
