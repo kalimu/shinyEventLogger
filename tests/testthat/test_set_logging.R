@@ -1,6 +1,7 @@
 context("set_logging")
 
 options(shinyEventLogger.file = NULL)
+options(shinyEventLogger.database = NULL)
 options(shinyEventLogger.r_console = NULL)
 options(shinyEventLogger.js_console = NULL)
 options(shinyEventLogger.counter = NULL)
@@ -8,17 +9,20 @@ options(shinyEventLogger.counter = NULL)
 test_that("no settings", {
 
   expect_null(getOption("shinyEventLogger.file"))
+  expect_null(getOption("shinyEventLogger.database"))
   expect_null(getOption("shinyEventLogger.r_console"))
   expect_null(getOption("shinyEventLogger.js_console"))
   expect_null(getOption("shinyEventLogger.counter"))
 
   expect_message(fixed = TRUE,
-    set_logging(r_console = FALSE, js_console = FALSE, file = FALSE),
+    set_logging(r_console = FALSE, js_console = FALSE,
+                file = FALSE, database = FALSE),
     "All types of logging are disabled!"
   )
 
   expect_identical(
-    set_logging(r_console = FALSE, js_console = FALSE, file = FALSE),
+    set_logging(r_console = FALSE, js_console = FALSE,
+                file = FALSE, database = FALSE),
     FALSE
   )
 
@@ -41,12 +45,18 @@ test_that("default settings", {capture.output({
     "Logging to a file:             disabled"
     )
 
+  expect_message(fixed = TRUE,
+    set_logging(),
+    "Logging to a database:         disabled"
+    )
+
   set_logging()
 
   expect_true(getOption("shinyEventLogger.r_console"))
   expect_true(getOption("shinyEventLogger.js_console"))
 
   expect_false(getOption("shinyEventLogger.file"))
+  expect_false(getOption("shinyEventLogger.database"))
 
   expect_identical(getOption("shinyEventLogger.counter"), 1)
 
@@ -55,7 +65,10 @@ test_that("default settings", {capture.output({
 test_that("creating log file", {capture.output({
 
 
-  set_logging(r_console = FALSE, js_console = FALSE, file = TRUE)
+  set_logging(r_console = FALSE,
+              js_console = FALSE,
+              file = TRUE,
+              database = FALSE)
 
   expect_identical(
     getOption("shinyEventLogger.file"),

@@ -1,6 +1,20 @@
 context("log_started_done")
 
-test_that("logging wrapper functions", {capture.output({
+test_that("logging started and done", {capture.output({
+
+  expect_identical(
+    shinyEventLogger:::create_event_id("test1", "test2", name = "test_name"),
+    "test_name"
+  )
+
+  expect_identical(
+    shinyEventLogger:::create_event_id("test1", "test2", name = NULL),
+    "test1 test2"
+  )
+
+})}) # end of test_that
+
+test_that("logging started and done", {capture.output({
 
   set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
 
