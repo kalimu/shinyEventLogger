@@ -1,3 +1,16 @@
+#' Run demo shiny app
+#'
+#' \code{run_demo} runs demo shiny app which logs different types of events.
+#' \code{run_demo_dashboard} runs demo shiny dashboard that allows
+#' for interactive analysis of events from demo app.
+#' The demo app can be also run in background and events fired in the app
+#' can be seen immediately in the demo dashboard.
+#'
+#' @param in_background A logical.
+#'   If \code{TRUE} the demo shiny app is run in the background on port 5555.
+#'   Default is \code{FALSE}.
+#'
+#' @describeIn run_demo Run demo shiny app
 #' @export
 
 run_demo <- function(in_background = FALSE) {
@@ -19,6 +32,7 @@ run_demo <- function(in_background = FALSE) {
 
 } # end of run_demo
 
+#' @describeIn run_demo Run demo shiny dashboard
 #' @export
 
 run_demo_dashboard <- function() {

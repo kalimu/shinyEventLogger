@@ -16,7 +16,52 @@ create_event_id <- function(...,
 } # end of create_event_id
 
 
+
+#' Logging the start of an event
+#'
+#' \code{log_started} logs an event with status \code{"STARTED"}.
+#' \code{log_done} logs the same event with status \code{"DONE"}.
+#' Difference between timestamps of these two log entries can be used
+#' for timing an event. One event can have several instances with
+#' different statuses.
+#' When logging instances of the same event, event \code{name}
+#' or, if \code{name = NULL}, objects passed to \code{...}
+#' must be exactly the same, as they are used to create unique event id.
+#' Started events, their types and counters are registered
+#' in an environment called \code{log_event_register},
+#' which enables creating and timing multiple nested events.
+#'
+#'
+#'
+#' @inheritParams log_event
+#' @param status A character string. A status of the event.
+#'   Default for \code{log_started} is \code{"STARTED"}.
+#'   The \code{status} is always \code{"DONE"} when using \code{log_done}.
+#' @param type A character string. A type of the event.
+#'   Default for \code{log_started} is \code{"EVENT"}.
+#'   The \code{type} logged with \code{log_done} is the same as
+#'   the \code{type} of the event logged with \code{log_started}.
+#'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' if (interactive()) {
+#'   shiny::shinyApp(
+#'     ui = shiny::fluidPage(log_init()),
+#'     server = function(input, output) {
+#'       options(digits.secs = 6)
+#'       set_logging()
+#'         log_started(as.character(Sys.time()), name = "Event 1")
+#'         log_started(as.character(Sys.time()), name = "Event 2")
+#'           log_event(as.character(Sys.time()), name = "Event 3")
+#'            log_done(as.character(Sys.time()), name = "Event 2")
+#'            log_done(as.character(Sys.time()), name = "Event 1")
+#'     }
+#'   )
+#' }
+#' }
 
 log_started <- function(...,
                         name = NULL,
@@ -55,7 +100,7 @@ log_started <- function(...,
 
 } # end of log_started
 
-
+#' @describeIn log_started Logging the end of an event
 #' @export
 
 log_done <- function(...,

@@ -1,4 +1,29 @@
+#' Purging eventlog
+#'
+#' \code{purge_eventlog} removes obsolete event records based
+#' on selected criteria.
+#' Please be careful. If you do not back up your eventlog, purging
+#' operation can be irreversible.
+#'
+#' @param file A character string. Path to a file log.
+#' @param min_build An integer. Minimum build version of the app
+#' that should be kept in the eventlog after purging.
+#'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#'  demo_filelog <- system.file("shiny", "demoapp/events.log",
+#'                              package = "shinyEventLogger")
+#'
+#'  temp_file <- tempfile()
+#'  file_conn <- base::file(temp_file)
+#'  writeLines(readLines(con = demo_filelog), file_conn)
+#'  close(file_conn)
+#'
+#'  purge_eventlog(file = temp_file, min_build = 23)
+#' }
 
 purge_eventlog <- function(file      = NULL,
                            min_build = NULL

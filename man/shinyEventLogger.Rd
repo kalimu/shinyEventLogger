@@ -4,11 +4,11 @@
 \name{shinyEventLogger}
 \alias{shinyEventLogger}
 \alias{shinyEventLogger-package}
-\title{shinyEventLogger: Logging and Analysing Events in Shiny Apps}
+\title{shinyEventLogger: Logging and Analyzing Events in Complex Shiny Apps}
 \description{
 Logging dedicated to Shiny apps. You can log different types
     of events, for example: character string, current value of a variable, 
-    multi-line output of a function (eg. str(data.frame) or head(data.frame)), 
+    multi-line output of a function (e.g. str(data.frame) or head(data.frame)), 
     result of a unit test (using testthat), 
     custom errors, warnings, diagnostic messages, etc.
     Together with events you can log a custom set of additional parameters, 
@@ -16,13 +16,14 @@ Logging dedicated to Shiny apps. You can log different types
     or common for all events from an app.
     Logging can be done simultaneously to R console, 
     JavaScript console in a browser, to a file log, and to a database (MongoDB).
-    Log data can be analysed with the help of process-mining techniques from 
+    Log data can be analyzed with the help of process-mining techniques from 
     bupaR package.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/kalimu/shinyEventLogger}
+  \item \url{https://github.com/kalimu/shinyEventLogger#readme}
+  \item \url{https://kalimu.github.io}
   \item Report bugs at \url{https://github.com/kalimu/shinyEventLogger/issues}
 }
 

@@ -1,4 +1,14 @@
-
+#' Create log entry
+#'
+#' \code{create_log_entry} creates a standardized log entry.
+#'
+#' Function \code{create_log_entry} takes as arguments
+#' different information about a single event and
+#' creates standardized log entry header and body
+#' used to be displayed in R console, browser JavaScript console,
+#' or as a one-line log record in the log file
+#' (after additional conversion from multi-line output).
+#'
 
 create_log_entry <- function(event_name = NULL,
                              event_body = NULL,

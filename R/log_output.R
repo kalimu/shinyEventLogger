@@ -1,7 +1,33 @@
-#' Logging Output of a Function
+#' Logging output of a function
 #'
+#' \code{log_output} logs output of a function into log entry body
+#' and uses deparsed function call as the event name.
+#'
+#' @inheritParams log_event
+#' @param type A character string. A type of the event.
+#'   Default is \code{"OUTPUT"}.
+#' @param ... A function call that is evaluated, coerced into character string,
+#'   collapsed and pasted as multi-line text into log entry body.
+#'   Deparsed function call is used as the event name in log entry header.
 #'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' if (interactive()) {
+#'
+#'   shiny::shinyApp(
+#'     ui = shiny::fluidPage(log_init()),
+#'     server = function(input, output) {
+#'       set_logging()
+#'       log_output(NROW(mtcars))
+#'       log_output(head(mtcars))
+#'     }
+#'   )
+#'
+#' }
+#' }
 
 log_output <- function(...,
                        type   = "OUTPUT",

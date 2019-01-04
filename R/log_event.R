@@ -1,4 +1,42 @@
+#' Logging an event
+#'
+#' \code{log_event} logs an event into R console, browser JavaScript console,
+#' file, or database
+#' depending on user's settings (see \code{\link{set_logging}}).
+#'
+#' @param ... Objects that are evaluated, coerced into character string,
+#'   collapsed and pasted into log entry body
+#'   (or header if \code{name} is \code{NULL}).
+#' @param name A character string. The name of the event.
+#' @param type A character string. A type of the event.
+#'   Default is \code{"EVENT"}.
+#' @param status A character string. A status of the event.
+#'   Default is \code{"FIRED"}.
+#' @param params A list of additional named event-specific parameters.
+#'   Default is \code{NULL}.
+#' @param event_counter An integer. The number of the event.
+#' By default current value of the \code{shinyEventLogger.counter} option
+#' which stores the number of last logged event in the session.
+#'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' if (interactive()) {
+#'   shiny::shinyApp(
+#'     ui = shiny::fluidPage(log_init()),
+#'     server = function(input, output) {
+#'       set_logging()
+#'       log_event("Event 1")
+#'       log_event("Event 2 body", name = "Event 2")
+#'       log_event("Event 3", type = "NewTYPE")
+#'       log_event("Event 4", status = "EXECUTED")
+#'       log_event("Event 5", event_counter = 123)
+#'     }
+#'   )
+#' }
+#' }
 
 log_event <- function(...,
                      name = NULL,

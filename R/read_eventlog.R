@@ -1,4 +1,30 @@
+#' Reading eventlog
+#'
+#' \code{read_eventlog} reads eventlog stored in a file or in a database.
+#'
+#' @return An object of class \code{eventlog} which is a data frame with
+#' appropriate case, activity and timestamp classifiers specified.
+#' The \code{eventlog} object is a result of
+#' \code{\link[bupaR:eventlog]{bupaR:eventlog}} function from \code{bupaR}
+#' package and it is suitable for further process-mining analysis.
+#'
+#' @param file A character string. Path to a file log.
+#' @param db A character string. Connection string to a mongo database.
+#' @param last_n An integer. How many last event records should be return?
+#'   Default is \code{Inf} which returns the whole eventlog.
+#' @param verbose A logical value. Should the function print addition messages?
+#'   Default is TRUE.
+#'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' read_eventlog(
+#'  last_n = 25,
+#'  file = system.file("shiny", "demoapp/events.log",
+#'                      package = "shinyEventLogger"))
+#' }
 
 read_eventlog <- function(file    = NULL,
                           db      = NULL,

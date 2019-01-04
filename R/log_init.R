@@ -1,5 +1,26 @@
-
+#' Initialize logging to JavaScript console
+#'
+#' \code{log_init} should be put into the \code{shiny} \code{ui}
+#' to initialize JavaScript code that enables logging to JavaScript console
+#' in an Internet browser.
+#'
+#' @return A \code{tagList} with \code{script} tag inside \code{head} tag.
+#'
 #' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' if (interactive()) {
+#'   shiny::shinyApp(
+#'     ui = shiny::fluidPage(log_init()),
+#'     server = function(input, output) {
+#'       set_logging(js_console = TRUE)
+#'       log_event("See browser JavaScript console (CTRL + SHIFT + I)")
+#'     }
+#'   )
+#' }
+#' }
 
 log_init <- function() {
 
