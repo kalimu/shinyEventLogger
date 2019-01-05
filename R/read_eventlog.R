@@ -15,6 +15,10 @@
 #' @param verbose A logical value. Should the function print addition messages?
 #'   Default is TRUE.
 #'
+#' @seealso
+#'   \code{\link{purge_eventlog}},
+#'   \code{\link{run_demo}}.
+#'
 #' @export
 #'
 #' @examples

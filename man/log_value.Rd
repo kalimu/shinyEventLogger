@@ -41,3 +41,9 @@ if (interactive()) {
 }
 }
 }
+\seealso{
+Other logging events functions: \code{\link{log_event}},
+  \code{\link{log_message}}, \code{\link{log_output}},
+  \code{\link{log_started}}, \code{\link{log_test}}
+}
+\concept{logging events functions}

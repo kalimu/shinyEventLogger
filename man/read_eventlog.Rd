@@ -36,3 +36,7 @@ read_eventlog(
                      package = "shinyEventLogger"))
 }
 }
+\seealso{
+\code{\link{purge_eventlog}},
+  \code{\link{run_demo}}.
+}

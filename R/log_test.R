@@ -16,6 +16,8 @@
 #'   Default for \code{log_test} is \code{"TEST"}.
 #' @param ... An unit test function call that is evaluated and logged.
 #'
+#' @family logging events functions
+#'
 #' @export
 #'
 #' @examples

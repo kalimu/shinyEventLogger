@@ -18,6 +18,13 @@
 #' By default current value of the \code{shinyEventLogger.counter} option
 #' which stores the number of last logged event in the session.
 #'
+#' @family logging events functions
+#' @seealso
+#'   \code{\link{set_logging}} for setting event logging,
+#'   \code{\link{log_init}} for initilize JavaScript logging in shiny app,
+#'   \code{\link{log_params}} for setting scope-specific event params,
+#'   \code{\link{read_eventlog}} for reading eventlog from a file or a database.
+#'
 #' @export
 #'
 #' @examples

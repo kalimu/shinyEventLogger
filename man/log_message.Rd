@@ -28,6 +28,8 @@ and it can stop the whole shiny app.
 }
 \section{Functions}{
 \itemize{
+\item \code{log_message}: Logging a message
+
 \item \code{log_warning}: Logging a warning
 
 \item \code{log_error}: Logging an error
@@ -50,3 +52,9 @@ if (interactive()) {
 }
 }
 }
+\seealso{
+Other logging events functions: \code{\link{log_event}},
+  \code{\link{log_output}}, \code{\link{log_started}},
+  \code{\link{log_test}}, \code{\link{log_value}}
+}
+\concept{logging events functions}

@@ -13,6 +13,9 @@
 #' The character string is also passed to the
 #' message, warning, or error raised.
 #'
+#' @describeIn log_message Logging a message
+#' @family logging events functions
+#'
 #' @export
 #'
 #' @examples

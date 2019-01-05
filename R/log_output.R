@@ -10,6 +10,8 @@
 #'   collapsed and pasted as multi-line text into log entry body.
 #'   Deparsed function call is used as the event name in log entry header.
 #'
+#' @family logging events functions
+#'
 #' @export
 #'
 #' @examples

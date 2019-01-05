@@ -44,6 +44,8 @@ which enables creating and timing multiple nested events.
 }
 \section{Functions}{
 \itemize{
+\item \code{log_started}: Logging the start of an event
+
 \item \code{log_done}: Logging the end of an event
 }}
 
@@ -66,3 +68,9 @@ if (interactive()) {
 }
 }
 }
+\seealso{
+Other logging events functions: \code{\link{log_event}},
+  \code{\link{log_message}}, \code{\link{log_output}},
+  \code{\link{log_test}}, \code{\link{log_value}}
+}
+\concept{logging events functions}

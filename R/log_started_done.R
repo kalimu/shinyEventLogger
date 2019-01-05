@@ -42,6 +42,10 @@ create_event_id <- function(...,
 #'   The \code{type} logged with \code{log_done} is the same as
 #'   the \code{type} of the event logged with \code{log_started}.
 #'
+#' @describeIn log_started Logging the start of an event
+#'
+#' @family logging events functions
+#'
 #' @export
 #'
 #' @examples

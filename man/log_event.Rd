@@ -50,3 +50,14 @@ if (interactive()) {
 }
 }
 }
+\seealso{
+\code{\link{set_logging}} for setting event logging,
+  \code{\link{log_init}} for initilize JavaScript logging in shiny app,
+  \code{\link{log_params}} for setting scope-specific event params,
+  \code{\link{read_eventlog}} for reading eventlog from a file or a database.
+
+Other logging events functions: \code{\link{log_message}},
+  \code{\link{log_output}}, \code{\link{log_started}},
+  \code{\link{log_test}}, \code{\link{log_value}}
+}
+\concept{logging events functions}
