@@ -1,6 +1,6 @@
 context("read_eventlog")
 
-test_that("reading valid eventlog file", {
+test_that("reading valid eventlog file", {capture.output({
 
   demo_filelog <- system.file("shiny", "demoapp/events.log",
                               package = "shinyEventLogger")
@@ -34,5 +34,5 @@ test_that("reading valid eventlog file", {
   expect_is(eventlog, "eventlog")
   expect_is(eventlog, "tbl_df")
 
-})
+})})
 

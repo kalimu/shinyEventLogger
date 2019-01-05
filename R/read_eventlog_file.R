@@ -1,3 +1,4 @@
+#' @importFrom R.utils countLines
 
 read_eventlog_file <- function(file = getOption("shinyEventLogger.file"),
                                last_n = Inf,

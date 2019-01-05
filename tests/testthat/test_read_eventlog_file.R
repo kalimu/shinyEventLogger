@@ -1,6 +1,6 @@
 context("read_eventlog_file")
 
-test_that("reading invalid eventlog file", {
+test_that("reading invalid eventlog file", {capture.output({
 
   temp_file <- tempfile()
 
@@ -24,9 +24,9 @@ test_that("reading invalid eventlog file", {
 
   unlink(temp_file)
 
-}) # end of test_that
+})}) # end of test_that
 
-test_that("reading valid eventlog file", {
+test_that("reading valid eventlog file", {capture.output({
 
   demo_filelog <- system.file("shiny", "demoapp/events.log",
                               package = "shinyEventLogger")
@@ -56,5 +56,5 @@ test_that("reading valid eventlog file", {
   expect_is(eventlog$event_timestamp, "POSIXt")
   expect_is(eventlog$build, "integer")
 
-})
+})})
 

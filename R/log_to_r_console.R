@@ -1,4 +1,4 @@
-
+#' @family low-level logging functions
 
 log_to_r_console <- function(header,
                              body = ""
@@ -10,14 +10,12 @@ log_to_r_console <- function(header,
 
   if (body != "") {
 
-    cat(file = stdout(),
-        body)
+    cat(file = stdout(), body)
 
   } # end of if
 
   return(
-    paste0(header,
-           ifelse(body != "", paste0("\n", body), "")
+    paste0(header, ifelse(body != "", paste0("\n", body), "")
     )
   )
 

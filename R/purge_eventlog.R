@@ -9,6 +9,8 @@
 #' @param min_build An integer. Minimum build version of the app
 #' that should be kept in the eventlog after purging.
 #'
+#' @importFrom stringr str_extract
+#'
 #' @export
 #'
 #' @examples

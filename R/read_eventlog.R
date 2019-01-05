@@ -19,6 +19,8 @@
 #'   \code{\link{purge_eventlog}},
 #'   \code{\link{run_demo}}.
 #'
+#' @importFrom bupaR eventlog
+#'
 #' @export
 #'
 #' @examples

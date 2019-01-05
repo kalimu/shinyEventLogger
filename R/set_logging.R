@@ -30,6 +30,11 @@
 #'   Default is \code{FALSE}.
 #'   If \code{TRUE} or \code{"mongoDB"} the connection URL to the database
 #'   will be read from the first line of a text file named \code{".db_url"}.
+#' @param ... a set of named objects
+#'   (usually of type character, numeric, or date)
+#'  to be logged as parameters common to all events.
+#'
+#' @importFrom mongolite mongo
 #'
 #' @export
 #'

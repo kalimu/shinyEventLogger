@@ -13,6 +13,7 @@
 #'
 #' @param ... a set of named objects
 #'   (usually of type character, numeric, or date)
+#'  to be logged as event parameters.
 #'
 #' @export
 

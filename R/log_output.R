@@ -12,6 +12,8 @@
 #'
 #' @family logging events functions
 #'
+#' @importFrom utils capture.output
+#'
 #' @export
 #'
 #' @examples

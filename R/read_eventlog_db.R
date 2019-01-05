@@ -1,3 +1,4 @@
+#' @importFrom mongolite mongo
 
 read_eventlog_db <- function(db = readLines(".db_url")[1],
                              last_n = Inf,

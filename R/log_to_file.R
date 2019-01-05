@@ -1,3 +1,4 @@
+#' @family low-level logging functions
 
 log_to_file <- function(header,
                         body = "",

@@ -8,7 +8,8 @@ log_params(...)
 }
 \arguments{
 \item{...}{a set of named objects
-(usually of type character, numeric, or date)}
+ (usually of type character, numeric, or date)
+to be logged as event parameters.}
 }
 \description{
 With \code{log_params} you can define a set of named parameters,

@@ -1,5 +1,5 @@
 
-
+#' @family low-level logging functions
 
 log_to_js_console <- function(header,
                               body = ""

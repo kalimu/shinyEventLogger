@@ -1,3 +1,12 @@
+#' Logging to database
+#'
+#' @inheritParams create_log_entry
+#' @param event_timestamp A POSIXct or object convertable to POSIXct.
+#' @param session_id A character string.
+#'
+#' @family low-level logging functions
+#'
+#' @importFrom jsonlite toJSON
 
 log_to_database <- function(event_counter,
                             event_type,

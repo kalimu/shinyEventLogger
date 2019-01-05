@@ -9,6 +9,26 @@
 #' or as a one-line log record in the log file
 #' (after additional conversion from multi-line output).
 #'
+#' @param event_name A character string or \code{NULL}.
+#'   The name of the event.
+#'   Default is \code{NULL}.
+#' @param event_body A character string or \code{NULL}.
+#'   The body of the entry in the eventlog.
+#'   Default is \code{NULL}.
+#' @param event_type A character string.
+#'   The type of an event.
+#'   Default is \code{"EVENT"}.
+#' @param event_status A character string.
+#'   The status of an event.
+#'   Default is \code{"DONE"}.
+#' @param event_params A list or \code{NULL}.
+#'   List of event-specific parameters.
+#'   Default is \code{NULL}.
+#' @param event_counter An integer.
+#'   The counter of events.
+#'   Default is \code{-1}.
+#' @param separator A character that separates fields in eventlog entry.
+#'   Default is \code{"|"}.
 
 create_log_entry <- function(event_name = NULL,
                              event_body = NULL,

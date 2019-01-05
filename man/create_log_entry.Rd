@@ -8,6 +8,34 @@ create_log_entry(event_name = NULL, event_body = NULL,
   event_type = "EVENT", event_status = "DONE", event_params = NULL,
   event_counter = -1, separator = "|")
 }
+\arguments{
+\item{event_name}{A character string or \code{NULL}.
+The name of the event.
+Default is \code{NULL}.}
+
+\item{event_body}{A character string or \code{NULL}.
+The body of the entry in the eventlog.
+Default is \code{NULL}.}
+
+\item{event_type}{A character string.
+The type of an event.
+Default is \code{"EVENT"}.}
+
+\item{event_status}{A character string.
+The status of an event.
+Default is \code{"DONE"}.}
+
+\item{event_params}{A list or \code{NULL}.
+List of event-specific parameters.
+Default is \code{NULL}.}
+
+\item{event_counter}{An integer.
+The counter of events.
+Default is \code{-1}.}
+
+\item{separator}{A character that separates fields in eventlog entry.
+Default is \code{"|"}.}
+}
 \description{
 \code{create_log_entry} creates a standardized log entry.
 }

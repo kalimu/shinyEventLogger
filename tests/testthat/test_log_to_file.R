@@ -1,6 +1,6 @@
 context("log_to_file")
 
-test_that("missing params", {
+test_that("missing params", {capture.output({
 
   expect_error(fixed = TRUE,
     shinyEventLogger:::log_to_file(),
@@ -18,9 +18,9 @@ test_that("missing params", {
     "File log 'nonexisting_file.log' does NOT exist!"
     )
 
-}) # end of test_that
+})}) # end of test_that
 
-test_that("logging to a file", {
+test_that("logging to a file", {capture.output({
 
   temp_file <- tempfile()
 
@@ -42,4 +42,4 @@ test_that("logging to a file", {
 
   unlink(temp_file)
 
-}) # end of test_that
+})}) # end of test_that

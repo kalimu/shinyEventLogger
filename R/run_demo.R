@@ -11,6 +11,9 @@
 #'   Default is \code{FALSE}.
 #'
 #' @describeIn run_demo Run demo shiny app
+#'
+#' @import shiny
+#'
 #' @export
 
 run_demo <- function(in_background = FALSE) {

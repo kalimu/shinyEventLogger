@@ -28,6 +28,11 @@ Encoding: UTF-8
 Language: en-US
 Imports:
     shiny,
+    jsonlite,
+    mongolite,
+    R.utils,
+    utils,
+    stringr,
     purrr,
     bupaR
 Suggests:
