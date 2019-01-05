@@ -32,7 +32,8 @@ Default is \code{NULL}.}
 The body of the entry in the eventlog.
 Default is \code{NULL}.}
 
-\item{event_timestamp}{A POSIXct or object convertable to POSIXct.}
+\item{event_timestamp}{A \code{POSIXct}
+or object convertible to \code{POSIXct}.}
 
 \item{session_id}{A character string.}
 }

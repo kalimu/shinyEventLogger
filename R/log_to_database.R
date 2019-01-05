@@ -1,7 +1,8 @@
 #' Logging to database
 #'
 #' @inheritParams create_log_entry
-#' @param event_timestamp A POSIXct or object convertable to POSIXct.
+#' @param event_timestamp A \code{POSIXct}
+#'   or object convertible to \code{POSIXct}.
 #' @param session_id A character string.
 #'
 #' @family low-level logging functions
