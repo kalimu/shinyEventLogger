@@ -92,7 +92,8 @@ log_started <- function(...,
     list(
       status = status,
       type = type,
-      counter = event_counter
+      counter = event_counter,
+      timestamp = Sys.time()
     )
 
   log_event(...,
@@ -117,6 +118,20 @@ log_done <- function(...,
   log_event_register <- get('log_event_register', envir = parent.frame())
 
   register <- log_event_register[[event_id]]
+
+  timing <- list(
+    "secs" = round(as.numeric(Sys.time() - register$timestamp), 2)
+    )
+
+  if (is.null(params)) {
+
+    params <- timing
+
+    } else {
+
+    params <- c(timing, params)
+
+    }
 
   log_event(...,
             name = name,
