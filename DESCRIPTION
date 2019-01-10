@@ -6,7 +6,7 @@ Authors@R: c(
     person(given = "Kamil", family = "Wais", 
            email = "kamil.wais@gmail.com",
            role = c("aut", "cre"),
-           comment = c("ORICID = 0000-0002-4062-055X")
+           comment = c(ORCID = "0000-0002-4062-055X")
            )
     )
 Description: Logging framework dedicated for complex shiny apps. 
