@@ -11,7 +11,7 @@ spelling::get_wordlist(pkg = ".")
 # package = "shinyEventLogger"))[1], last_n = 20, verbose  = F)
 
 
-
+goodpractice::gp()
 
 
 
