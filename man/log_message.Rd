@@ -42,7 +42,6 @@ if (interactive()) {
   shiny::shinyApp(
     ui = shiny::fluidPage(log_init()),
     server = function(input, output) {
-      options(digits.secs = 6)
       set_logging()
       log_message("Example of a message")
       log_warning("Example of a warning")

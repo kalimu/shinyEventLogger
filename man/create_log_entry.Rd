@@ -47,3 +47,4 @@ used to be displayed in R console, browser JavaScript console,
 or as a one-line log record in the log file
 (after additional conversion from multi-line output).
 }
+\keyword{internal}

@@ -56,7 +56,6 @@ if (interactive()) {
   shiny::shinyApp(
     ui = shiny::fluidPage(log_init()),
     server = function(input, output) {
-      options(digits.secs = 6)
       set_logging()
         log_started(as.character(Sys.time()), name = "Event 1")
         log_started(as.character(Sys.time()), name = "Event 2")

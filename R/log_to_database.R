@@ -7,6 +7,8 @@
 #'
 #' @family low-level logging functions
 #'
+#' @keywords internal
+#'
 #' @importFrom jsonlite toJSON
 
 log_to_database <- function(event_counter,

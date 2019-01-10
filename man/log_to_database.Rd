@@ -41,3 +41,4 @@ or object convertible to \code{POSIXct}.}
 Logging to database
 }
 \concept{low-level logging functions}
+\keyword{internal}

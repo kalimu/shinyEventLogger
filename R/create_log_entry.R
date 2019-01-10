@@ -29,6 +29,8 @@
 #'   Default is \code{-1}.
 #' @param separator A character that separates fields in eventlog entry.
 #'   Default is \code{"|"}.
+#'
+#' @keywords internal
 
 create_log_entry <- function(event_name = NULL,
                              event_body = NULL,
