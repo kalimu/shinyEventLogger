@@ -3,7 +3,7 @@ library(shinyEventLogger)
 
 ui <- fluidPage(
 
-  # Initiate shinyEventLogger (JavaScripts)
+  # Initiate shinyEventLogger JavaScripts
   log_init(),
 
   titlePanel("ShinyEventLogger: DEMO APP"),
@@ -20,7 +20,9 @@ ui <- fluidPage(
                   choices = ""),
 
       sliderInput("bins", "Number of bins:",
-                  min = 1, max = 50, value = 10)
+                  min = 1, max = 50, value = 10),
+
+      p(style = "height: 400px")
 
     ),
 
@@ -37,17 +39,17 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-
   set_logging(
-    # Setting up different kinds of logging
-    r_console = TRUE,
+    # Logging to R console
+    r_console  = TRUE,
+    # Logging to browser JavaScript console
     js_console = TRUE,
-    file = "events.log",
-    database = FALSE,
-
-    # Adding global parameters to all events
-    logger_ver = as.character(packageVersion("ShinyEventLogger")),
-    build = 030L
+    # Logging to file if exists
+    file       = ifelse(file.exists("events.log"), TRUE, FALSE),
+    # Logging to database if exists
+    database   = ifelse(file.exists(".db_url"),    TRUE, FALSE),
+    # Adding app build version as a global parameter to all events
+    build      = 101L
     )
 
   log_event("App (re)started")
@@ -192,4 +194,3 @@ server <- function(input, output, session) {
 } # end of server
 
 shinyApp(ui = ui, server = server)
-
