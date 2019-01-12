@@ -22,10 +22,15 @@ run_demo <- function(in_background = FALSE) {
 
   if (in_background) {
 
-    system("R -e \"shiny::runApp('inst/shiny/demoapp', port = 5555)\"",
-           wait = FALSE)
+    system(
+      paste0("R -e \"shiny::runApp('",
+             app_path,
+             "', port = 5555), display.mode = 'normal'\""),
+      wait = FALSE
+      )
 
     message("The App is available on 127.0.0.1:5555")
+    browseURL("http://127.0.0.1:5555")
 
   } else {
 
