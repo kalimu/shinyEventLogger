@@ -25,7 +25,7 @@ run_demo <- function(in_background = FALSE) {
     system(
       paste0("R -e \"shiny::runApp('",
              app_path,
-             "', port = 5555), display.mode = 'normal'\""),
+             "', port = 5555, display.mode = 'normal') \""),
       wait = FALSE
       )
 
