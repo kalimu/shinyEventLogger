@@ -30,7 +30,7 @@ log_to_database <- function(event_counter,
 
   }
 
-  log_db <- dynGet('log_db', minframe = 6L, inherits = TRUE)
+  log_db <- dynGet('log_db', minframe = 0L, inherits = TRUE)
 
   event_body <- ifelse(is.null(event_body), NA, event_body)
 

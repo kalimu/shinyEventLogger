@@ -4,7 +4,7 @@ get_event_counter <- function() {
 
   log_event_register <-
     dynGet("log_event_register",
-           minframe = 6L,
+           minframe = 0L,
            inherits = TRUE,
            ifnotfound = stop(paste0(
              "'log_event_register' not found. ",
@@ -13,18 +13,17 @@ get_event_counter <- function() {
 
   log_event_register$event_counter
 
-
 } # end of get_event_counter
 
 increment_event_counter <- function() {
 
   log_event_register <-
     dynGet("log_event_register",
-           minframe = 6L,
+           # minframe = 6L,
+           minframe = 0L,
            inherits = TRUE)
 
   log_event_register$event_counter <-
     log_event_register$event_counter + 1
 
-
-}
+} # end of increment_event_counter

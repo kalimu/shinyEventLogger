@@ -61,8 +61,7 @@ log_event <- function(...,
   if (any(c(is.null(r_console),
             is.null(js_console),
             is.null(file),
-            is.null(database),
-            is.null(event_counter)
+            is.null(database)
             ))) {
 
    stop("Use set_logging() before logging events.")
@@ -106,36 +105,25 @@ log_event <- function(...,
 
   add_parent_params <- function(envir_name, event_params) {
 
-    if (exists(envir_name, envir = parent.frame(1))) {
+    params_to_add <- dynGet(envir_name,
+                            minframe = 0L,
+                            inherits = TRUE,
+                            ifnotfound = NULL)
 
-      event_params <- c(event_params,
-                        as.list(get(envir_name, envir = parent.frame(1))))
+    event_params <- c(event_params, as.list(params_to_add))
 
-    } else if (exists(envir_name, envir = parent.frame(2))) {
-
-      event_params <- c(event_params,
-                        as.list(get(envir_name, envir = parent.frame(2))))
-
-    } else if (exists(envir_name, envir = parent.frame(3))) {
-
-      event_params <- c(event_params,
-                        as.list(get(envir_name, envir = parent.frame(3))))
-
-    } # end if
-
-      event_params
+    event_params
 
   } # end of add_parent_params
 
-  event_params <- add_parent_params(envir_name = "log_settings",
-                                    event_params)
+  event_params <-
+    add_parent_params(envir_name = "log_settings", event_params)
 
-  event_params <- add_parent_params(envir_name = "log_settings_session",
-                                    event_params)
+  event_params <-
+    add_parent_params(envir_name = "log_settings_session", event_params)
 
-  event_params <- add_parent_params(envir_name = "log_settings_global",
-                                    event_params)
-
+  event_params <-
+    add_parent_params(envir_name = "log_settings_global", event_params)
 
   if (NROW(event_params) > 0 || is.environment(event_params)) {
 
