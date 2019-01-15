@@ -23,7 +23,9 @@ test_that("reading invalid eventlog file", {
     )
 
   expect_message(fixed = TRUE,
-    purge_eventlog(file = temp_file, min_build = max(as.integer(builds$Var1))),
+    purge_eventlog(file = temp_file, min_build = max(as.integer(builds$Var1),
+                                                     na.rm = TRUE)
+                   ),
     "Removing eventlog records..."
     )
 

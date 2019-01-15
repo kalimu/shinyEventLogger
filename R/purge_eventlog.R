@@ -27,7 +27,7 @@
 #'  purge_eventlog(file = temp_file, min_build = 23)
 #' }
 
-purge_eventlog <- function(file      = NULL,
+purge_eventlog <- function(file      = "events.log",
                            min_build = NULL
                            ) {
 
@@ -59,10 +59,10 @@ purge_eventlog <- function(file      = NULL,
     build <- stringr::str_extract(string = eventlog_item,
                                   pattern = "build = [0-9]{1,}")
 
-    build <- as.integer(
-      stringr::str_extract(string = build,
-                           pattern = "[0-9]{1,}")
-      )
+    build <- as.integer(stringr::str_extract(string = build,
+                                             pattern = "[0-9]{1,}"))
+
+    build <- ifelse(is.na(build), -1, build)
 
   } # end of while
 
