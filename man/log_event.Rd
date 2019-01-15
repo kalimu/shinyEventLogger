@@ -5,7 +5,7 @@
 \title{Logging an event}
 \usage{
 log_event(..., name = NULL, type = "EVENT", status = "FIRED",
-  params = NULL, event_counter = getOption("shinyEventLogger.counter"))
+  params = NULL, event_counter = get_event_counter())
 }
 \arguments{
 \item{...}{Objects that are evaluated, coerced into character string,
@@ -24,8 +24,8 @@ Default is \code{"FIRED"}.}
 Default is \code{NULL}.}
 
 \item{event_counter}{An integer. The number of the event.
-By default current value of the \code{shinyEventLogger.counter} option
-which stores the number of last logged event in the session.}
+By default current value of the counter is returned by
+the internal getter function \code{get_event_counter}.}
 }
 \description{
 \code{log_event} logs an event into R console, browser JavaScript console,

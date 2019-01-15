@@ -7,9 +7,9 @@
 debug_objects(...)
 }
 \arguments{
-\item{...}{Named objects to be copy to global environment.
+\item{...}{Named objects to be copy to the global environment.
 If there is only one unnamed object, its name in the global environment
-will be deparsed and the same as the name passed to \code{...}.}
+will be the same as the name of the object passed to \code{...}.}
 }
 \description{
 With \code{debug_objects} you can copy an object to the global environment

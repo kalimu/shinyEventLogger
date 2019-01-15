@@ -5,7 +5,7 @@
 #'
 #' @param ... Named objects to be copy to the global environment.
 #' If there is only one unnamed object, its name in the global environment
-#' will be the same as the name passed to \code{...}.
+#' will be the same as the name of the object passed to \code{...}.
 #'
 #' @export
 #'

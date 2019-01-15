@@ -21,8 +21,8 @@ and logged within the same log entry.
 \details{
 The function takes all objects passed inside \code{...} argument,
 evaluates them, and stores them in a new environment called
-\code{log_setting} which is assigned to the environment from which the
-\code{log_params} function was called for.
+\code{log_setting} which is assigned to the parent environment
+from which the \code{log_params} function was called.
 }
 \examples{
 \dontrun{
@@ -45,3 +45,8 @@ if (interactive()) {
 }
 }
 }
+\seealso{
+Other setting up logging parameters functions: \code{\link{set_logging_session}},
+  \code{\link{set_logging}}
+}
+\concept{setting up logging parameters functions}

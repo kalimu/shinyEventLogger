@@ -73,7 +73,7 @@ log_started <- function(...,
                         params = NULL
                         ) {
 
-  event_counter <- getOption("shinyEventLogger.counter")
+  event_counter <- get_event_counter()
 
   event_id <- create_event_id(..., name = name)
 

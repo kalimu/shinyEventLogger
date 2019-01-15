@@ -8,12 +8,14 @@
 #'
 #' The function takes all objects passed inside \code{...} argument,
 #' evaluates them, and stores them in a new environment called
-#' \code{log_setting} which is assigned to the environment from which the
-#' \code{log_params} function was called for.
+#' \code{log_setting} which is assigned to the parent environment
+#' from which the \code{log_params} function was called.
 #'
 #' @param ... a set of named objects
 #'   (usually of type character, numeric, or date)
 #'  to be logged as event parameters.
+#'
+#' @family setting up logging parameters functions
 #'
 #' @export
 

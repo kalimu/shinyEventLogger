@@ -15,8 +15,8 @@
 #' @param params A list of additional named event-specific parameters.
 #'   Default is \code{NULL}.
 #' @param event_counter An integer. The number of the event.
-#' By default current value of the \code{shinyEventLogger.counter} option
-#' which stores the number of last logged event in the session.
+#' By default current value of the counter is returned by
+#' the internal getter function \code{get_event_counter}.
 #'
 #' @family logging events functions
 #' @seealso
@@ -50,7 +50,7 @@ log_event <- function(...,
                      type = "EVENT",
                      status = "FIRED",
                      params = NULL,
-                     event_counter = getOption("shinyEventLogger.counter")
+                     event_counter = get_event_counter()
                      ) {
 
   r_console        <- getOption("shinyEventLogger.r_console")
@@ -128,6 +128,9 @@ log_event <- function(...,
   } # end of add_parent_params
 
   event_params <- add_parent_params(envir_name = "log_settings",
+                                    event_params)
+
+  event_params <- add_parent_params(envir_name = "log_settings_session",
                                     event_params)
 
   event_params <- add_parent_params(envir_name = "log_settings_global",
@@ -238,12 +241,9 @@ log_event <- function(...,
   to_return$counter <- event_counter
   to_return$entry   <- result_r_console
 
-  if (event_counter == getOption("shinyEventLogger.counter")) {
+  if (event_counter == get_event_counter()) {
 
-    options(
-      'shinyEventLogger.counter' =
-        getOption("shinyEventLogger.counter") + 1
-      )
+    increment_event_counter()
 
   } # end of if
 

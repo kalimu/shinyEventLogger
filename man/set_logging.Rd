@@ -2,7 +2,7 @@
 % Please edit documentation in R/set_logging.R
 \name{set_logging}
 \alias{set_logging}
-\title{Setting events logging}
+\title{Settings for event logging}
 \usage{
 set_logging(r_console = TRUE, js_console = TRUE, file = FALSE,
   database = FALSE, ...)
@@ -31,36 +31,43 @@ Should events be logged into a database?
 to be logged as parameters common to all events.}
 }
 \description{
-\code{set_logging} should be used at the beginning of
-the shiny server function to define where the logging should be done.
+\code{set_logging} should be used outside ui and server functions,
+possibly in \code{global.R}, to be used only once to define
+where the logging should be done.
 Events can be sent to R console, browser JavaScript console,
 a eventlog file, or a database (or any combination of these).
 By default logging is done to the R console and JavaScript console.
-\code{set_logging} also sets event counter to 1 and can be used
+\code{set_logging} also can be used
 to define global event parameters - named objects passed to \code{...}
 that will be evaluated and added to lists of parameters of all events.
 }
 \details{
-\code{set_logging} also assigns two new environments to the parent frame:
-\code{log_settings_global} for storing global event parameters
-and \code{log_event_register} for storing information about multiple
-instances of the same event (see \code{\link{log_started}}).
+\code{set_logging} assigns to the parent frame a new environment
+\code{log_settings_global} for storing global event parameters.
 If \code{database = TRUE} additional database connection object
-named \code{log_db} is assigned to the parent frame.
+named \code{log_db} is assigned to the parent frame as well.
 }
 \examples{
 \dontrun{
 if (interactive()) {
 
+  set_logging(r_console = TRUE,
+              js_console = FALSE,
+              "param_1" = 1,
+              "param_2" = "A")
+
   shiny::shinyApp(
-    ui = shiny::fluidPage(log_init()),
+    ui = shiny::fluidPage(),
     server = function(input, output) {
-      set_logging(r_console = TRUE, js_console = FALSE,
-                  "param_1" = 1,
-                  "param_2" = "A")
-      log_event("Event with global param")
+      set_logging_session()
+      log_event("Event with global params")
     }
   )
 }
 }
 }
+\seealso{
+Other setting up logging parameters functions: \code{\link{log_params}},
+  \code{\link{set_logging_session}}
+}
+\concept{setting up logging parameters functions}
