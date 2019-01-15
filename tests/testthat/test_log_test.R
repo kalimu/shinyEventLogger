@@ -4,7 +4,7 @@ test_that("logging wrapper functions", {capture.output({
 
   set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
 
-  # options("shinyEventLogger.counter" = 4)
+  set_logging_session()
 
   expect_message(fixed = TRUE,
     log_test(expect_true(FALSE)),

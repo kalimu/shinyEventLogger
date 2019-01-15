@@ -2,7 +2,12 @@ context("log_output")
 
 test_that("logging multiline output events", {capture.output({
 
-  set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
+  set_logging(r_console = TRUE,
+              js_console = FALSE,
+              file = FALSE,
+              database = FALSE)
+
+  set_logging_session()
 
   expect_identical(
     log_output(str(mtcars[1:2])),
@@ -33,7 +38,12 @@ test_that("logging multiline output events", {capture.output({
 
 test_that("outputs of expressions outside current env", {capture.output({
 
-  set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
+  set_logging(r_console = TRUE,
+              js_console = FALSE,
+              file = FALSE,
+              database = FALSE)
+
+  set_logging_session()
 
   env <- new.env()
   env$fun = function(a) {print(a)}
@@ -52,7 +62,12 @@ test_that("outputs of expressions outside current env", {capture.output({
 
 test_that("logging output with different params", {capture.output({
 
-  set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
+  set_logging(r_console = TRUE,
+              js_console = FALSE,
+              file = FALSE,
+              database = FALSE)
+
+  set_logging_session()
 
   expect_message(fixed = TRUE,
     log_output(str(mtcars[1:2]),

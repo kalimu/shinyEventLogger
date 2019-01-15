@@ -17,6 +17,7 @@ test_that("logging started and done", {capture.output({
 test_that("logging started and done", {capture.output({
 
   set_logging(r_console = TRUE, js_console = FALSE, file = FALSE)
+  set_logging_session()
 
   expect_error(fixed = TRUE,
     log_started(),
