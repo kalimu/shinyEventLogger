@@ -25,13 +25,21 @@ read_eventlog_db <- function(db = readLines(".db_url")[1],
 
   event_params <- eventlog$event_params
 
-  event_params <-
-    purrr::map_dfr(event_params, function(x) {
+  event_params <- Map(function(param) {
 
-      x[sapply(x, is.null)] <- NA
-      unlist(x)
+    null_params <- vapply(param, is.null, FUN.VALUE = logical(1))
 
-    })
+    if (any(null_params)) {
+
+      param[null_params] <- NA
+
+    }
+
+    unlist(param)
+
+  }, event_params)
+
+  event_params <- as.data.frame(event_params, stringsAsFactors = FALSE)
 
   eventlog <- cbind(eventlog, event_params)
 
