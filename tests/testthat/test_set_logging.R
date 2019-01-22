@@ -4,7 +4,6 @@ options(shinyEventLogger.file = NULL)
 options(shinyEventLogger.database = NULL)
 options(shinyEventLogger.r_console = NULL)
 options(shinyEventLogger.js_console = NULL)
-options(shinyEventLogger.counter = NULL)
 
 test_that("no settings", {
 
@@ -12,7 +11,6 @@ test_that("no settings", {
   expect_null(getOption("shinyEventLogger.database"))
   expect_null(getOption("shinyEventLogger.r_console"))
   expect_null(getOption("shinyEventLogger.js_console"))
-  expect_null(getOption("shinyEventLogger.counter"))
 
   expect_message(fixed = TRUE,
     set_logging(r_console = FALSE, js_console = FALSE,
@@ -57,8 +55,6 @@ test_that("default settings", {capture.output({
 
   expect_false(getOption("shinyEventLogger.file"))
   expect_false(getOption("shinyEventLogger.database"))
-
-  expect_identical(getOption("shinyEventLogger.counter"), 1)
 
 })}) # end of test_that
 
