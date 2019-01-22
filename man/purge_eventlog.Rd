@@ -4,7 +4,7 @@
 \alias{purge_eventlog}
 \title{Purging eventlog}
 \usage{
-purge_eventlog(file = NULL, min_build = NULL)
+purge_eventlog(file = "events.log", min_build = NULL)
 }
 \arguments{
 \item{file}{A character string. Path to a file log.}
