@@ -48,8 +48,8 @@ debug_objects <- function(...) {
 
   }
 
-  walk2(objects, object_names,
-        function(object, object_name) {
+  Map(objects, object_names,
+        f = function(object, object_name) {
 
           assign(object_name, value = object, envir = .GlobalEnv)
 
@@ -58,4 +58,14 @@ debug_objects <- function(...) {
 
   }) # end of walk2
 
+  TRUE
+
 } # end of debug_objects()
+
+#' @export
+debug_object <- function(...) {
+
+  debug_objects(...)
+
+
+}
