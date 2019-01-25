@@ -1,0 +1,7 @@
+shiny/demoapp/\.db_url$
+shiny/demoapp/\.db_url_admin$
+shiny/demoapp/\.gitignore$
+shiny/dashboardapp/\.db_url$
+shiny/dashboardapp/\.db_url_admin$
+shiny/dashboardapp/\.gitignore$
+
