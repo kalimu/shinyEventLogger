@@ -93,16 +93,26 @@ server <- function(input, output, session) {
 
     invalidateLater(2000)
 
-    data <- read_eventlog(
-      last_n = 25,
-      verbose = FALSE,
-      file = system.file("shiny", "demoapp/events.log",
-                         package = "shinyEventLogger")
-      )
+    if (file.exists(".db_url")) {
+
+      data <- read_eventlog(db = readLines(".db_url")[1],
+                            last_n = 25,
+                            verbose  = FALSE)
+
+    } else {
+
+      data <- read_eventlog(
+        last_n = 25,
+        verbose = FALSE,
+        file = system.file("shiny", "demoapp/events.log",
+                           package = "shinyEventLogger")
+        )
+
+    }
 
     data <- data[, c("event_counter", "event_type", "event_name",
                      "event_status", "event_body",
-                     "dataset", "fun", "resource", "build", "logger_ver")]
+                     "dataset", "fun", "resource", "build")]
 
     # trimming the output length
     max_output_length <- 12
@@ -122,10 +132,22 @@ server <- function(input, output, session) {
 
     input$reload_eventlog
 
-    read_eventlog(
-      verbose = FALSE,
-      file = system.file("shiny", "demoapp/events.log",
-                         package = "shinyEventLogger"))
+    if (file.exists(".db_url")) {
+
+      message("Loading data from mongoDB...")
+      data <- read_eventlog(db = readLines(".db_url")[1],
+                            verbose  = FALSE)
+
+    } else {
+
+      message("Loading data from a filelog...")
+      data <- read_eventlog(
+        verbose = FALSE,
+        file = system.file("shiny", "demoapp/events.log",
+                           package = "shinyEventLogger")
+        )
+
+    }
 
   })
 
@@ -447,7 +469,7 @@ server <- function(input, output, session) {
   # resource_analysis --------------------------------------------------------
   output$resource_analysis <- renderUI({
 
-    plot_height = 600
+    plot_height <- 600
 
     fluidRow(
       column(width = 6,

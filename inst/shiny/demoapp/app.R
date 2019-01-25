@@ -1,6 +1,20 @@
 library(shiny)
 library(shinyEventLogger)
 
+  set_logging(
+    # Logging to R console
+    r_console  = TRUE,
+    # Logging to browser JavaScript console
+    js_console = TRUE,
+    # Logging to file if exists
+    file       = ifelse(file.exists("events.log"), TRUE, FALSE),
+    # Logging to database if exists
+    database   = ifelse(file.exists(".db_url"),    TRUE, FALSE),
+
+    # Adding app build version as a global parameter to all events
+    build      = 134L
+    )
+
 ui <- fluidPage(
 
   # Initiate shinyEventLogger JavaScripts
@@ -39,17 +53,9 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-  set_logging(
-    # Logging to R console
-    r_console  = TRUE,
-    # Logging to browser JavaScript console
-    js_console = TRUE,
-    # Logging to file if exists
-    file       = ifelse(file.exists("events.log"), TRUE, FALSE),
-    # Logging to database if exists
-    database   = ifelse(file.exists(".db_url"),    TRUE, FALSE),
-    # Adding app build version as a global parameter to all events
-    build      = 101L
+  set_logging_session(
+    # Logging unique session ID
+    this_session = shiny::getDefaultReactiveDomain()$token
     )
 
   log_event("App (re)started")
@@ -68,7 +74,7 @@ server <- function(input, output, session) {
 
       if (input$dataset == "random") {
 
-        dataset <- data.frame("RandomValue" = rnorm(n = 50000000))
+        dataset <- data.frame("RandomValue" = rnorm(n = 500000))
 
       } else {
 
