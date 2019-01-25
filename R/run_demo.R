@@ -13,6 +13,7 @@
 #' @describeIn run_demo Run demo shiny app
 #'
 #' @import shiny
+#' @importFrom utils browseURL
 #'
 #' @export
 
@@ -23,14 +24,14 @@ run_demo <- function(in_background = FALSE) {
   if (in_background) {
 
     system(
-      paste0("R -e \"shiny::runApp('",
-             app_path,
+      paste0("R -e \"shiny::runApp('", app_path,
              "', port = 5555, display.mode = 'normal') \""),
-      wait = FALSE
+      wait = FALSE,
+      invisible = TRUE
       )
 
     message("The App is available on 127.0.0.1:5555")
-    browseURL("http://127.0.0.1:5555")
+    utils::browseURL("http://127.0.0.1:5555")
 
   } else {
 

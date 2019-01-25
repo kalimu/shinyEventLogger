@@ -62,6 +62,12 @@ debug_objects <- function(...) {
 
 } # end of debug_objects()
 
+#' Copying objects to global environment
+#'
+#' Convienient wrapper for \code{\link{debug_objects}}.
+#'
+#' @inheritParams debug_objects
+#'
 #' @export
 debug_object <- function(...) {
 
