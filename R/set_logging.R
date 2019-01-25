@@ -170,7 +170,7 @@ set_logging <- function(r_console  = TRUE,
 
     }
 
-    db_url_file = ".db_url"
+    db_url_file <- ".db_url"
 
     if (!file.exists(db_url_file)) {
 

@@ -7,7 +7,7 @@ test_that("logging multiline output events", {capture.output({
   set_logging_session()
 
   env <- new.env()
-  env$a = 23
+  env$a <- 23
 
   expect_message(fixed = TRUE,
     log_value(env$a),

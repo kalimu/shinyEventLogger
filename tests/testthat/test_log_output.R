@@ -46,7 +46,7 @@ test_that("outputs of expressions outside current env", {capture.output({
   set_logging_session()
 
   env <- new.env()
-  env$fun = function(a) {print(a)}
+  env$fun <- function(a) {print(a)}
 
   expect_message(fixed = TRUE,
     log_output(env$fun("test")),

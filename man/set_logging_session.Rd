@@ -17,8 +17,8 @@ of the shiny server function to define session-specific event parameters.
 \code{set_logging_session} also sets event counter to 1.
 }
 \details{
-\code{set_logging_session} assings to the parent frame new environments:
-\code{log_settings_session} for stroing session-specific event parameters
+\code{set_logging_session} assigns to the parent frame new environments:
+\code{log_settings_session} for storing session-specific event parameters
 and \code{log_event_register} for storing information about multiple
 instances of the same event (see \code{\link{log_started}}).
 }

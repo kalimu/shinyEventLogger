@@ -13,7 +13,7 @@ read_eventlog_db <- function(db = readLines(".db_url")[1],
      log_db$find(sort = '{"_id": -1}', limit = last_n)
 
    eventlog <-
-      eventlog[order(1:NROW(eventlog), decreasing = TRUE), ]
+      eventlog[order(seq_len(NROW(eventlog)), decreasing = TRUE), ]
 
   } else {
 
