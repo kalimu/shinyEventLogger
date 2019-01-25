@@ -1,7 +1,7 @@
 Package: shinyEventLogger
 Type: Package
 Title: Logging Events in Complex Shiny Apps
-Version: 0.0.0.9100
+Version: 0.0.0.9200
 Authors@R: c(
     person(given = "Kamil", family = "Wais", 
            email = "kamil.wais@gmail.com",
@@ -35,6 +35,7 @@ Imports:
     bupaR
 Suggests:
     spelling,
+    DiagrammeR,
     testthat,
     knitr,
     rmarkdown
