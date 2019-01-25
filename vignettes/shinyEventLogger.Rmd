@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-> R package `shinyEventLogger` is a logging framework especially usefull
+> R package `shinyEventLogger` is a logging framework especially useful
 for developing, testing and debugging complex shiny apps.
 
 ## Start logging
@@ -38,16 +38,10 @@ library(shinyEventLogger)
 
 Before logging anything you need to use `set_logging()` to tell the logger
 where you want to log events from your app. The `set_logging()` function
-should be used before any `log_*` function calls, possibly at the beginning 
-of the shiny `server` function.
+should be used before any `log_*` function calls, possibly outside the shiny `server` and `ui` functions.
 
 ```{r}
-shinyApp(
-  ui = fluidPage(),
-  server = function(input, output) {
-    set_logging()
- }
-)
+set_logging()
 ```
 
 You should be able to see in the R console the following messages:
@@ -57,25 +51,31 @@ You should be able to see in the R console the following messages:
     Logging to a file:             disabled
     Logging to a database:         disabled
 
-Logging to R console is enabled so you can log your first event.
+To be able to log session specific events you need to use `set_logging_session()` at the beginning of the `serwer` function.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(),
   server = function(input, output) {
-    set_logging()
+    set_logging_session() 
+ }
+)
+```
+Logging to R console is enabled so you can log your first event.
+
+```{r}
+set_logging()
+shinyApp(
+  ui = fluidPage(),
+  server = function(input, output) {
+    set_logging_session() 
     log_event("Hello World!")
  }
 )
 ```
 
 In the R console you should be able to see something like this:
-
-    Listening on http://127.0.0.1:7082
-    Logging to R console:          ENABLED
-    Logging to JavaScript console: ENABLED
-    Logging to a file:             disabled
-    Logging to a database:         disabled
 
     |#1|EVENT|Hello World!|FIRED|
 
@@ -87,12 +87,13 @@ Logging to JS console needs also registering some JavaScript code,
 which can be done with the `log_init()` inside `ui` function.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(
     log_init()
   ),
   server = function(input, output) {
-    set_logging()
+    set_logging_session() 
     log_event("Hello World!")
     log_event("See browser JavaScript console (CTRL + SHIFT + I)")
  }
@@ -109,15 +110,16 @@ Each event instance has a name, type, and status defined by a user.
 It could also have some additional parameters which are
 logged together with the event as a list.
 Each event has also an event counter - a number that increments every time
-any event is fired in the given session. Using `set_logging()` resets the counter.
+any event is fired in the given session. Using `set_logging_session()` resets the counter.
 
 Let's log an event with some unusual parameters.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(log_init()),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_event("Event body", 
               name   = "Event name",
               type   = "NEWTYPE", 
@@ -156,13 +158,14 @@ Currently, the following logging function are available:
  `log_event()` is a generic function for logging all kinds of events. Default event type is `EVENT` and event status is `FIRED`.
  
 If there is no event name defined, objects passed to `...` argument
-are evaluated nad coerced into event name.
+are evaluated and coerced into event name.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(log_init()),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_event("Event body", name   = "Event name")
     log_event("Event without name")
     log_event(paste("Event", "without", "name"))
@@ -186,13 +189,14 @@ With `log_value()` you can log current value of a non-reactive function
 or reactive value or expression (inside reactive context).
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(
     log_init(),
     selectInput("number", "Select number", choices = c(1, 2, 3), selected = 2)
     ),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_value(NROW(mtcars))
     observe({
       log_value(input$number)
@@ -213,10 +217,11 @@ function evaluation.
 It is especially useful for logging multi-line outputs of irregular structure.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(log_init()),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_output(head(mtcars))
     log_output(str(mtcars))
  }
@@ -251,10 +256,11 @@ With `log_test()` you can log a unit test placed inside your
 shiny app. 
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(log_init()),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_test(testthat::expect_true(TRUE))
     log_test(testthat::expect_true(FALSE))
     log_test(testthat::expect_true(TRUE))
@@ -267,7 +273,7 @@ shinyApp(
     |#2|Error: FALSE isn't true.
     |#3|TEST|testthat::expect_true(TRUE)|SUCCESS|
 
-As you can see, in case a unit test is not successfull, 
+As you can see, in case a unit test is not successful, 
 error is raised silently and doesn't break the app.
 
 ### Diagnostic messages
@@ -277,10 +283,11 @@ For classic diagnostic messages you can use wrappers like
 
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(log_init()),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_message("Example of a message")
     log_warning("Example of a warning")
     log_error("Example of an error")
@@ -313,17 +320,18 @@ This can be used for quick timing an event and save into `secs` parameter
 how many seconds passed since the event started.
 
 ```{r}
-  shiny::shinyApp(
-    ui = shiny::fluidPage(log_init()),
-    server = function(input, output) {
-      options(digits.secs = 6)
-      set_logging(js_console = FALSE)
-        log_started("Event 1")
-          log_event("Sleeping for 3 secs...")
-          Sys.sleep(3)
-        log_done("Event 1")
-    }
-  )
+set_logging(js_console = FALSE)
+shinyApp(
+  ui = shiny::fluidPage(log_init()),
+  server = function(input, output) {
+    options(digits.secs = 6)
+    set_logging_session()
+      log_started("Event 1")
+        log_event("Sleeping for 3 secs...")
+        Sys.sleep(3)
+      log_done("Event 1")
+  }
+)
 ```
 
     |#1|EVENT|Event 1|STARTED|
@@ -338,19 +346,20 @@ Events can be also nested within other, more general events.
 
 
 ```{r}
-  shiny::shinyApp(
-    ui = shiny::fluidPage(),
-    server = function(input, output) {
-      set_logging(js_console = FALSE)
-      log_started("Event 1")
+set_logging(js_console = FALSE)
+shinyApp(
+  ui = shiny::fluidPage(),
+  server = function(input, output) {
+    set_logging_session()
+    log_started("Event 1")
+      Sys.sleep(1)
+        log_started("Event 2")
         Sys.sleep(1)
-          log_started("Event 2")
-          Sys.sleep(1)
-          log_done("Event 2")
-        Sys.sleep(1)
-      log_done("Event 1")
-    }
-  )
+        log_done("Event 2")
+      Sys.sleep(1)
+    log_done("Event 1")
+  }
+)
 ```
 
     |#1|EVENT|Event 1|STARTED|
@@ -374,13 +383,14 @@ You can use:
 Each event can be logged with a list of additional parameters.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(
     log_init(),
     selectInput("number", "Select number", choices = c(1, 2, 3), selected = 2)
     ),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_event("mtcars", params = list(dim = dim(mtcars)))
     observe({
       log_event("number changed", params = list(number = input$number))
@@ -404,13 +414,14 @@ Using `log_params()` allows you to define those parameters only once,
 and not to repeat the same list of parameters with each event.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(
     log_init(),
     selectInput("number", "Select number", choices = c(1, 2, 3), selected = 2)
     ),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_event("mtcars", params = list(dim = dim(mtcars)))
     observe({
       log_params(number = input$number)
@@ -427,23 +438,21 @@ shinyApp(
     |#2|PARAMS|list(number = "2")
     |#3|EVENT|number changed indeed|FIRED|
     |#3|PARAMS|list(number = "2")
+    
+### Session-wide parameters
 
-### App-wide parameters
-
-With `set_logging()` you can also set event parameters that are
-common for all events in the app.
+With `set_logging_session()` you can set event parameters that are
+common for all events within the same shiny session.
 
 ```{r}
+set_logging()
 shinyApp(
   ui = fluidPage(
     log_init(),
     selectInput("number", "Select number", choices = c(1, 2, 3), selected = 2)
     ),
   server = function(input, output) {
-    set_logging(
-      logger_ver = as.character(packageVersion("ShinyEventLogger")),
-      build = 123L
-    )
+    set_logging_session(unique_id = runif(1))
     log_event("mtcars", params = list(dim = dim(mtcars)))
     observe({
       log_params(number = input$number)
@@ -455,11 +464,45 @@ shinyApp(
 ```
 
     |#1|EVENT|mtcars|FIRED|
-    |#1|PARAMS|list(dim = c(32L, 11L), build = 123L, logger_ver = "0.0.0.9100")
+    |#1|PARAMS|list(dim = c(32L, 11L), unique_id = 0.0305952038615942)
     |#2|EVENT|number changed|FIRED|
-    |#2|PARAMS|list(number = "2", build = 123L, logger_ver = "0.0.0.9100")
+    |#2|PARAMS|list(number = "2", unique_id = 0.0305952038615942)
     |#3|EVENT|number changed indeed|FIRED|
-    |#3|PARAMS|list(number = "2", build = 123L, logger_ver = "0.0.0.9100")
+    |#3|PARAMS|list(number = "2", unique_id = 0.0305952038615942)
+
+### App-wide parameters
+
+With `set_logging()` you can also set event parameters that are
+common for all events in the app.
+
+```{r}
+set_logging(
+  logger_ver = as.character(packageVersion("ShinyEventLogger")),
+  build = 123L
+)
+shinyApp(
+  ui = fluidPage(
+    log_init(),
+    selectInput("number", "Select number", choices = c(1, 2, 3), selected = 2)
+    ),
+  server = function(input, output) {
+    set_logging_session(unique_id = runif(1))
+    log_event("mtcars", params = list(dim = dim(mtcars)))
+    observe({
+      log_params(number = input$number)
+      log_event("number changed")
+      log_event("number changed indeed")
+    })
+  }
+)
+```
+
+    |#1|EVENT|mtcars|FIRED|
+    |#1|PARAMS|list(dim = c(32L, 11L), unique_id = 0.891702918568626, build = 123L, logger_ver = "0.0.0.9100")
+    |#2|EVENT|number changed|FIRED|
+    |#2|PARAMS|list(number = "2", unique_id = 0.891702918568626, build = 123L, logger_ver = "0.0.0.9100")
+    |#3|EVENT|number changed indeed|FIRED|
+    |#3|PARAMS|list(number = "2", unique_id = 0.891702918568626, build = 123L, logger_ver = "0.0.0.9100")
 
 
 
