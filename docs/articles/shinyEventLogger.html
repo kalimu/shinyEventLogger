@@ -74,7 +74,7 @@
       <h1>Introduction to Logging Events in Shiny Apps</h1>
                         <h4 class="author">Kamil Wais</h4>
             
-            <h4 class="date">2019-01-10</h4>
+            <h4 class="date">2019-01-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/kalimu/shinyEventLogger/blob/master/vignettes/shinyEventLogger.Rmd"><code>vignettes/shinyEventLogger.Rmd</code></a></small>
       <div class="hidden name"><code>shinyEventLogger.Rmd</code></div>
@@ -84,7 +84,7 @@
     
     
 <blockquote>
-<p>R package <code>shinyEventLogger</code> is a logging framework especially usefull for developing, testing and debugging complex shiny apps.</p>
+<p>R package <code>shinyEventLogger</code> is a logging framework especially useful for developing, testing and debugging complex shiny apps.</p>
 </blockquote>
 <div id="start-logging" class="section level2">
 <h2 class="hasAnchor">
@@ -95,45 +95,44 @@
 <div id="logging-to-r-console" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logging-to-r-console" class="anchor"></a>Logging to R console</h3>
-<p>Before logging anything you need to use <code><a href="../reference/set_logging.html">set_logging()</a></code> to tell the logger where you want to log events from your app. The <code><a href="../reference/set_logging.html">set_logging()</a></code> function should be used before any <code>log_*</code> function calls, possibly at the beginning of the shiny <code>server</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
-  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(),
-  <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
- }
-)</code></pre></div>
+<p>Before logging anything you need to use <code><a href="../reference/set_logging.html">set_logging()</a></code> to tell the logger where you want to log events from your app. The <code><a href="../reference/set_logging.html">set_logging()</a></code> function should be used before any <code>log_*</code> function calls, possibly outside the shiny <code>server</code> and <code>ui</code> functions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()</code></pre></div>
 <p>You should be able to see in the R console the following messages:</p>
 <pre><code>Logging to R console:          ENABLED
 Logging to JavaScript console: ENABLED
 Logging to a file:             disabled
 Logging to a database:         disabled</code></pre>
-<p>Logging to R console is enabled so you can log your first event.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<p>To be able to log session specific events you need to use <code><a href="../reference/set_logging_session.html">set_logging_session()</a></code> at the beginning of the <code>serwer</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>() 
+ }
+)</code></pre></div>
+<p>Logging to R console is enabled so you can log your first event.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
+  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(),
+  <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>() 
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"Hello World!"</span>)
  }
 )</code></pre></div>
 <p>In the R console you should be able to see something like this:</p>
-<pre><code>Listening on http://127.0.0.1:7082
-Logging to R console:          ENABLED
-Logging to JavaScript console: ENABLED
-Logging to a file:             disabled
-Logging to a database:         disabled
-
-|#1|EVENT|Hello World!|FIRED|</code></pre>
+<pre><code>|#1|EVENT|Hello World!|FIRED|</code></pre>
 </div>
 <div id="logging-to-js-console" class="section level3">
 <h3 class="hasAnchor">
 <a href="#logging-to-js-console" class="anchor"></a>Logging to JS console</h3>
 <p>By default logging will be done to both the R console and to browser JavaScript (JS) console. Logging to JS console needs also registering some JavaScript code, which can be done with the <code><a href="../reference/log_init.html">log_init()</a></code> inside <code>ui</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(
     <span class="kw"><a href="../reference/log_init.html">log_init</a></span>()
   ),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>() 
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"Hello World!"</span>)
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"See browser JavaScript console (CTRL + SHIFT + I)"</span>)
  }
@@ -144,12 +143,13 @@ Logging to a database:         disabled
 <div id="event-structure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#event-structure" class="anchor"></a>Event structure</h2>
-<p>Each event instance has a name, type, and status defined by a user. It could also have some additional parameters which are logged together with the event as a list. Each event has also an event counter - a number that increments every time any event is fired in the given session. Using <code><a href="../reference/set_logging.html">set_logging()</a></code> resets the counter.</p>
+<p>Each event instance has a name, type, and status defined by a user. It could also have some additional parameters which are logged together with the event as a list. Each event has also an event counter - a number that increments every time any event is fired in the given session. Using <code><a href="../reference/set_logging_session.html">set_logging_session()</a></code> resets the counter.</p>
 <p>Let’s log an event with some unusual parameters.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw"><a href="../reference/log_init.html">log_init</a></span>()),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"Event body"</span>, 
               <span class="dt">name   =</span> <span class="st">"Event name"</span>,
               <span class="dt">type   =</span> <span class="st">"NEWTYPE"</span>, 
@@ -182,11 +182,12 @@ Logging to a database:         disabled
 <h3 class="hasAnchor">
 <a href="#generic-events" class="anchor"></a>Generic events</h3>
 <p><code><a href="../reference/log_event.html">log_event()</a></code> is a generic function for logging all kinds of events. Default event type is <code>EVENT</code> and event status is <code>FIRED</code>.</p>
-<p>If there is no event name defined, objects passed to <code>...</code> argument are evaluated nad coerced into event name.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<p>If there is no event name defined, objects passed to <code>...</code> argument are evaluated and coerced into event name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw"><a href="../reference/log_init.html">log_init</a></span>()),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"Event body"</span>, <span class="dt">name   =</span> <span class="st">"Event name"</span>)
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"Event without name"</span>)
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"Event"</span>, <span class="st">"without"</span>, <span class="st">"name"</span>))
@@ -204,13 +205,14 @@ Logging to a database:         disabled
 <h3 class="hasAnchor">
 <a href="#values" class="anchor"></a>Values</h3>
 <p>With <code><a href="../reference/log_value.html">log_value()</a></code> you can log current value of a non-reactive function or reactive value or expression (inside reactive context).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(
     <span class="kw"><a href="../reference/log_init.html">log_init</a></span>(),
     <span class="kw">selectInput</span>(<span class="st">"number"</span>, <span class="st">"Select number"</span>, <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">selected =</span> <span class="dv">2</span>)
     ),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_value.html">log_value</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">NROW</a></span>(mtcars))
     <span class="kw">observe</span>({
       <span class="kw"><a href="../reference/log_value.html">log_value</a></span>(input<span class="op">$</span>number)
@@ -226,10 +228,11 @@ Logging to a database:         disabled
 <h3 class="hasAnchor">
 <a href="#outputs" class="anchor"></a>Outputs</h3>
 <p>With <code><a href="../reference/log_output.html">log_output()</a></code> you can capture the output which is the result of function evaluation. It is especially useful for logging multi-line outputs of irregular structure.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw"><a href="../reference/log_init.html">log_init</a></span>()),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_output.html">log_output</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(mtcars))
     <span class="kw"><a href="../reference/log_output.html">log_output</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(mtcars))
  }
@@ -260,10 +263,11 @@ Logging to a database:         disabled
 <h3 class="hasAnchor">
 <a href="#unit-tests" class="anchor"></a>Unit tests</h3>
 <p>With <code><a href="../reference/log_test.html">log_test()</a></code> you can log a unit test placed inside your shiny app.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw"><a href="../reference/log_init.html">log_init</a></span>()),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_test.html">log_test</a></span>(testthat<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/testthat/topics/logical-expectations">expect_true</a></span>(<span class="ot">TRUE</span>))
     <span class="kw"><a href="../reference/log_test.html">log_test</a></span>(testthat<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/testthat/topics/logical-expectations">expect_true</a></span>(<span class="ot">FALSE</span>))
     <span class="kw"><a href="../reference/log_test.html">log_test</a></span>(testthat<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/testthat/topics/logical-expectations">expect_true</a></span>(<span class="ot">TRUE</span>))
@@ -273,16 +277,17 @@ Logging to a database:         disabled
 |#2|TEST|testthat::expect_true(FALSE)|ERROR|
 |#2|Error: FALSE isn't true.
 |#3|TEST|testthat::expect_true(TRUE)|SUCCESS|</code></pre>
-<p>As you can see, in case a unit test is not successfull, error is raised silently and doesn’t break the app.</p>
+<p>As you can see, in case a unit test is not successful, error is raised silently and doesn’t break the app.</p>
 </div>
 <div id="diagnostic-messages" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnostic-messages" class="anchor"></a>Diagnostic messages</h3>
 <p>For classic diagnostic messages you can use wrappers like <code><a href="../reference/log_message.html">log_message()</a></code>, <code><a href="../reference/log_message.html">log_warning()</a></code>, and <code><a href="../reference/log_message.html">log_error()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw"><a href="../reference/log_init.html">log_init</a></span>()),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_message.html">log_message</a></span>(<span class="st">"Example of a message"</span>)
     <span class="kw"><a href="../reference/log_message.html">log_warning</a></span>(<span class="st">"Example of a warning"</span>)
     <span class="kw"><a href="../reference/log_message.html">log_error</a></span>(<span class="st">"Example of an error"</span>)
@@ -305,36 +310,38 @@ Error in log_error("Example of an error") : Example of an error</code></pre>
 <h2 class="hasAnchor">
 <a href="#timing-events" class="anchor"></a>Timing events</h2>
 <p>Events can last for some time. You can start an instance of an event with <code><a href="../reference/log_started.html">log_started()</a></code> and log when event finishes with <code><a href="../reference/log_started.html">log_done()</a></code>. This can be used for quick timing an event and save into <code>secs</code> parameter how many seconds passed since the event started.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  shiny<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(
-    <span class="dt">ui =</span> shiny<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/fluidPage">fluidPage</a></span>(<span class="kw"><a href="../reference/log_init.html">log_init</a></span>()),
-    <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">digits.secs =</span> <span class="dv">6</span>)
-      <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>(<span class="dt">js_console =</span> <span class="ot">FALSE</span>)
-        <span class="kw"><a href="../reference/log_started.html">log_started</a></span>(<span class="st">"Event 1"</span>)
-          <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"Sleeping for 3 secs..."</span>)
-          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.sleep">Sys.sleep</a></span>(<span class="dv">3</span>)
-        <span class="kw"><a href="../reference/log_started.html">log_done</a></span>(<span class="st">"Event 1"</span>)
-    }
-  )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>(<span class="dt">js_console =</span> <span class="ot">FALSE</span>)
+<span class="kw">shinyApp</span>(
+  <span class="dt">ui =</span> shiny<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/fluidPage">fluidPage</a></span>(<span class="kw"><a href="../reference/log_init.html">log_init</a></span>()),
+  <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
+    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">digits.secs =</span> <span class="dv">6</span>)
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
+      <span class="kw"><a href="../reference/log_started.html">log_started</a></span>(<span class="st">"Event 1"</span>)
+        <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"Sleeping for 3 secs..."</span>)
+        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.sleep">Sys.sleep</a></span>(<span class="dv">3</span>)
+      <span class="kw"><a href="../reference/log_started.html">log_done</a></span>(<span class="st">"Event 1"</span>)
+  }
+)</code></pre></div>
 <pre><code>|#1|EVENT|Event 1|STARTED|
 |#2|EVENT|Sleeping for 3 secs...|FIRED|
 |#1|EVENT|Event 1|DONE|
 |#1|PARAMS|list(secs = 3.03)</code></pre>
 <p>Please note, that instances of the same event have the same value of event counter.</p>
 <p>Events can be also nested within other, more general events.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  shiny<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/shinyApp">shinyApp</a></span>(
-    <span class="dt">ui =</span> shiny<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/fluidPage">fluidPage</a></span>(),
-    <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-      <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>(<span class="dt">js_console =</span> <span class="ot">FALSE</span>)
-      <span class="kw"><a href="../reference/log_started.html">log_started</a></span>(<span class="st">"Event 1"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>(<span class="dt">js_console =</span> <span class="ot">FALSE</span>)
+<span class="kw">shinyApp</span>(
+  <span class="dt">ui =</span> shiny<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/shiny/topics/fluidPage">fluidPage</a></span>(),
+  <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
+    <span class="kw"><a href="../reference/log_started.html">log_started</a></span>(<span class="st">"Event 1"</span>)
+      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.sleep">Sys.sleep</a></span>(<span class="dv">1</span>)
+        <span class="kw"><a href="../reference/log_started.html">log_started</a></span>(<span class="st">"Event 2"</span>)
         <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.sleep">Sys.sleep</a></span>(<span class="dv">1</span>)
-          <span class="kw"><a href="../reference/log_started.html">log_started</a></span>(<span class="st">"Event 2"</span>)
-          <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.sleep">Sys.sleep</a></span>(<span class="dv">1</span>)
-          <span class="kw"><a href="../reference/log_started.html">log_done</a></span>(<span class="st">"Event 2"</span>)
-        <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.sleep">Sys.sleep</a></span>(<span class="dv">1</span>)
-      <span class="kw"><a href="../reference/log_started.html">log_done</a></span>(<span class="st">"Event 1"</span>)
-    }
-  )</code></pre></div>
+        <span class="kw"><a href="../reference/log_started.html">log_done</a></span>(<span class="st">"Event 2"</span>)
+      <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.sleep">Sys.sleep</a></span>(<span class="dv">1</span>)
+    <span class="kw"><a href="../reference/log_started.html">log_done</a></span>(<span class="st">"Event 1"</span>)
+  }
+)</code></pre></div>
 <pre><code>|#1|EVENT|Event 1|STARTED|
 |#2|EVENT|Event 2|STARTED|
 |#2|EVENT|Event 2|DONE|
@@ -355,13 +362,14 @@ Error in log_error("Example of an error") : Example of an error</code></pre>
 <h3 class="hasAnchor">
 <a href="#event-specific-parameters" class="anchor"></a>Event-specific parameters</h3>
 <p>Each event can be logged with a list of additional parameters.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(
     <span class="kw"><a href="../reference/log_init.html">log_init</a></span>(),
     <span class="kw">selectInput</span>(<span class="st">"number"</span>, <span class="st">"Select number"</span>, <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">selected =</span> <span class="dv">2</span>)
     ),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"mtcars"</span>, <span class="dt">params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">dim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(mtcars)))
     <span class="kw">observe</span>({
       <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"number changed"</span>, <span class="dt">params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">number =</span> input<span class="op">$</span>number))
@@ -377,13 +385,14 @@ Error in log_error("Example of an error") : Example of an error</code></pre>
 <h3 class="hasAnchor">
 <a href="#scope-specific-parameters" class="anchor"></a>Scope-specific parameters</h3>
 <p>If you have several events within the same scope (for example, within the same observer) you can set some additional parameters that are common to all those events. Using <code><a href="../reference/log_params.html">log_params()</a></code> allows you to define those parameters only once, and not to repeat the same list of parameters with each event.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(
     <span class="kw"><a href="../reference/log_init.html">log_init</a></span>(),
     <span class="kw">selectInput</span>(<span class="st">"number"</span>, <span class="st">"Select number"</span>, <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">selected =</span> <span class="dv">2</span>)
     ),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"mtcars"</span>, <span class="dt">params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">dim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(mtcars)))
     <span class="kw">observe</span>({
       <span class="kw"><a href="../reference/log_params.html">log_params</a></span>(<span class="dt">number =</span> input<span class="op">$</span>number)
@@ -399,20 +408,18 @@ Error in log_error("Example of an error") : Example of an error</code></pre>
 |#3|EVENT|number changed indeed|FIRED|
 |#3|PARAMS|list(number = "2")</code></pre>
 </div>
-<div id="app-wide-parameters" class="section level3">
+<div id="session-wide-parameters" class="section level3">
 <h3 class="hasAnchor">
-<a href="#app-wide-parameters" class="anchor"></a>App-wide parameters</h3>
-<p>With <code><a href="../reference/set_logging.html">set_logging()</a></code> you can also set event parameters which are common for all events in the app.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shinyApp</span>(
+<a href="#session-wide-parameters" class="anchor"></a>Session-wide parameters</h3>
+<p>With <code><a href="../reference/set_logging_session.html">set_logging_session()</a></code> you can set event parameters that are common for all events within the same shiny session.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>()
+<span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(
     <span class="kw"><a href="../reference/log_init.html">log_init</a></span>(),
     <span class="kw">selectInput</span>(<span class="st">"number"</span>, <span class="st">"Select number"</span>, <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">selected =</span> <span class="dv">2</span>)
     ),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>(
-      <span class="dt">logger_ver =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/packageDescription">packageVersion</a></span>(<span class="st">"ShinyEventLogger"</span>)),
-      <span class="dt">build =</span> 123L
-    )
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>(<span class="dt">unique_id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>))
     <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"mtcars"</span>, <span class="dt">params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">dim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(mtcars)))
     <span class="kw">observe</span>({
       <span class="kw"><a href="../reference/log_params.html">log_params</a></span>(<span class="dt">number =</span> input<span class="op">$</span>number)
@@ -422,11 +429,41 @@ Error in log_error("Example of an error") : Example of an error</code></pre>
   }
 )</code></pre></div>
 <pre><code>|#1|EVENT|mtcars|FIRED|
-|#1|PARAMS|list(dim = c(32L, 11L), build = 123L, logger_ver = "0.0.0.9100")
+|#1|PARAMS|list(dim = c(32L, 11L), unique_id = 0.0305952038615942)
 |#2|EVENT|number changed|FIRED|
-|#2|PARAMS|list(number = "2", build = 123L, logger_ver = "0.0.0.9100")
+|#2|PARAMS|list(number = "2", unique_id = 0.0305952038615942)
 |#3|EVENT|number changed indeed|FIRED|
-|#3|PARAMS|list(number = "2", build = 123L, logger_ver = "0.0.0.9100")</code></pre>
+|#3|PARAMS|list(number = "2", unique_id = 0.0305952038615942)</code></pre>
+</div>
+<div id="app-wide-parameters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#app-wide-parameters" class="anchor"></a>App-wide parameters</h3>
+<p>With <code><a href="../reference/set_logging.html">set_logging()</a></code> you can also set event parameters that are common for all events in the app.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_logging.html">set_logging</a></span>(
+  <span class="dt">logger_ver =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/character">as.character</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/packageDescription">packageVersion</a></span>(<span class="st">"ShinyEventLogger"</span>)),
+  <span class="dt">build =</span> 123L
+)
+<span class="kw">shinyApp</span>(
+  <span class="dt">ui =</span> <span class="kw">fluidPage</span>(
+    <span class="kw"><a href="../reference/log_init.html">log_init</a></span>(),
+    <span class="kw">selectInput</span>(<span class="st">"number"</span>, <span class="st">"Select number"</span>, <span class="dt">choices =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">selected =</span> <span class="dv">2</span>)
+    ),
+  <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
+    <span class="kw"><a href="../reference/set_logging_session.html">set_logging_session</a></span>(<span class="dt">unique_id =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">1</span>))
+    <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"mtcars"</span>, <span class="dt">params =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">dim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/dim">dim</a></span>(mtcars)))
+    <span class="kw">observe</span>({
+      <span class="kw"><a href="../reference/log_params.html">log_params</a></span>(<span class="dt">number =</span> input<span class="op">$</span>number)
+      <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"number changed"</span>)
+      <span class="kw"><a href="../reference/log_event.html">log_event</a></span>(<span class="st">"number changed indeed"</span>)
+    })
+  }
+)</code></pre></div>
+<pre><code>|#1|EVENT|mtcars|FIRED|
+|#1|PARAMS|list(dim = c(32L, 11L), unique_id = 0.891702918568626, build = 123L, logger_ver = "0.0.0.9100")
+|#2|EVENT|number changed|FIRED|
+|#2|PARAMS|list(number = "2", unique_id = 0.891702918568626, build = 123L, logger_ver = "0.0.0.9100")
+|#3|EVENT|number changed indeed|FIRED|
+|#3|PARAMS|list(number = "2", unique_id = 0.891702918568626, build = 123L, logger_ver = "0.0.0.9100")</code></pre>
 </div>
 </div>
   </div>
@@ -457,6 +494,7 @@ Error in log_error("Example of an error") : Example of an error</code></pre>
 <a href="#logging-events-with-parameters">Logging events with parameters</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#event-specific-parameters">Event-specific parameters</a></li>
       <li><a href="#scope-specific-parameters">Scope-specific parameters</a></li>
+      <li><a href="#session-wide-parameters">Session-wide parameters</a></li>
       <li><a href="#app-wide-parameters">App-wide parameters</a></li>
       </ul>
 </li>

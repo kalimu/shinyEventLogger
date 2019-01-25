@@ -120,27 +120,22 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <a href="#hello-world" class="anchor"></a>Hello World</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shiny)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(shinyEventLogger)
+<span class="kw"><a href="reference/set_logging.html">set_logging</a></span>()
 <span class="kw">shinyApp</span>(
   <span class="dt">ui =</span> <span class="kw">fluidPage</span>(<span class="kw"><a href="reference/log_init.html">log_init</a></span>()),
   <span class="dt">server =</span> <span class="cf">function</span>(input, output) {
-    <span class="kw"><a href="reference/set_logging.html">set_logging</a></span>()
+    <span class="kw"><a href="reference/set_logging_session.html">set_logging_session</a></span>()
     <span class="kw"><a href="reference/log_event.html">log_event</a></span>(<span class="st">"Hello World"</span>)
  }
 )</code></pre></div>
 <p>Executing the code above you should see in the console something like this:</p>
-<pre><code>Logging to R console:          ENABLED
-Logging to JavaScript console: ENABLED
-Logging to a file:             disabled
-Logging to a database:         disabled
-
-|#1|EVENT|Hello World|FIRED|</code></pre>
+<pre><code>|#1|EVENT|Hello World|FIRED|</code></pre>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>Project description: <a href="https://kalimu.github.io/shinyEventLogger/" class="uri">https://kalimu.github.io/shinyEventLogger/</a></p>
-<p>Package pkgdown homepage:</p>
-<p>Vignettes: * TODO</p>
+<p>Package docs (<code>pkgdown</code>): <a href="https://kalimu.github.io/shinyEventLogger/index.html" class="uri">https://kalimu.github.io/shinyEventLogger/index.html</a></p>
+<p>Project description (on homepage): <a href="https://kalimu.github.io/shinyEventLogger/" class="uri">https://kalimu.github.io/shinyEventLogger/</a></p>
 </div>
 </div>
   </div>

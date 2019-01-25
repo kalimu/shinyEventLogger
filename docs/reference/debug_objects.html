@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Logging scope-specific parameters of events — log_params • shinyEventLogger</title>
+<title>Copying objects to global environment — debug_objects • shinyEventLogger</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,10 @@
 
 
 
-<meta property="og:title" content="Logging scope-specific parameters of events — log_params" />
+<meta property="og:title" content="Copying objects to global environment — debug_objects" />
 
-<meta property="og:description" content="With log_params you can define a set of named parameters,
-which are common for events from the same scope
-(for example inside an observer).
-These parameters will be added to event-specific parameters
-and logged within the same log entry." />
+<meta property="og:description" content="With debug_objects you can copy an object to the global environment
+for further debugging or developing." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -109,64 +106,45 @@ and logged within the same log entry." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Logging scope-specific parameters of events</h1>
-    <small class="dont-index">Source: <a href='https://github.com/kalimu/shinyEventLogger/blob/master/R/log_params.R'><code>R/log_params.R</code></a></small>
-    <div class="hidden name"><code>log_params.Rd</code></div>
+    <h1>Copying objects to global environment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/kalimu/shinyEventLogger/blob/master/R/debug_object.R'><code>R/debug_object.R</code></a></small>
+    <div class="hidden name"><code>debug_objects.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>With <code>log_params</code> you can define a set of named parameters,
-which are common for events from the same scope
-(for example inside an observer).
-These parameters will be added to event-specific parameters
-and logged within the same log entry.</p>
+    <p>With <code>debug_objects</code> you can copy an object to the global environment
+for further debugging or developing.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>log_params</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>debug_objects</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>a set of named objects
- (usually of type character, numeric, or date)
-to be logged as event parameters.</p></td>
+      <td><p>Named objects to be copy to the global environment.
+If there is only one unnamed object, its name in the global environment
+will be the same as the name of the object passed to <code>...</code>.</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The function takes all objects passed inside <code>...</code> argument,
-evaluates them, and stores them in a new environment called
-<code>log_setting</code> which is assigned to the parent environment
-from which the <code>log_params</code> function was called.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other setting up logging parameters functions: <code><a href='set_logging_session.html'>set_logging_session</a></code>,
-  <code><a href='set_logging.html'>set_logging</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
+
   <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(
     <span class='kw'>ui</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(<span class='fu'><a href='log_init.html'>log_init</a></span>()),
     <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
       <span class='fu'><a href='set_logging.html'>set_logging</a></span>()
-      <span class='fu'>observe</span>({
-        <span class='fu'>log_params</span>(<span class='st'>"observer"</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-        <span class='fu'><a href='log_event.html'>log_event</a></span>(<span class='st'>"Event 1"</span>)
-      })
-      <span class='fu'>observe</span>({
-        <span class='fu'>log_params</span>(<span class='st'>"observer"</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-        <span class='fu'><a href='log_event.html'>log_event</a></span>(<span class='st'>"Event 1"</span>)
-      })
+      <span class='fu'>debug_objects</span>(<span class='no'>mtcars</span>)
+      <span class='fu'>debug_objects</span>(<span class='kw'>df1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>mtcars</span>), <span class='kw'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>iris</span>))
     }
   )
+
 }
 <span class='co'># }</span></pre>
   </div>
@@ -174,11 +152,7 @@ from which the <code>log_params</code> function was called.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
