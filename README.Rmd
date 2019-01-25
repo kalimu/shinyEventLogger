@@ -79,10 +79,11 @@ shinyEventLogger::run_demo_dashboard()
 ```{r, echo=TRUE, eval=FALSE, cache=FALSE}
 library(shiny)
 library(shinyEventLogger)
+set_logging()
 shinyApp(
   ui = fluidPage(log_init()),
   server = function(input, output) {
-    set_logging()
+    set_logging_session()
     log_event("Hello World")
  }
 )
@@ -90,21 +91,15 @@ shinyApp(
 
 Executing the code above you should see in the console something like this:
 
-    Logging to R console:          ENABLED
-    Logging to JavaScript console: ENABLED
-    Logging to a file:             disabled
-    Logging to a database:         disabled
-
     |#1|EVENT|Hello World|FIRED|
 
 ## Documentation
 
-Project description: [https://kalimu.github.io/shinyEventLogger/](https://kalimu.github.io/shinyEventLogger/)
+Package docs (`pkgdown`): 
+[https://kalimu.github.io/shinyEventLogger/index.html](https://kalimu.github.io/shinyEventLogger/index.html)
 
-Package pkgdown homepage:
-
-Vignettes:
-* TODO
+Project description (on homepage): 
+[https://kalimu.github.io/shinyEventLogger/](https://kalimu.github.io/shinyEventLogger/)
 
 
 
