@@ -11,11 +11,11 @@ get_event_counter <- function() {
              "Have you call 'set_logging_session'?"
            )))
 
-  log_event_register$event_counter
+  as.list(log_event_register)$event_counter
 
 } # end of get_event_counter
 
-increment_event_counter <- function() {
+increment_event_counter <- function(current_counter) {
 
   log_event_register <-
     dynGet("log_event_register",
@@ -23,7 +23,6 @@ increment_event_counter <- function() {
            minframe = 0L,
            inherits = TRUE)
 
-  log_event_register$event_counter <-
-    log_event_register$event_counter + 1
+  log_event_register$event_counter <- current_counter + 1
 
 } # end of increment_event_counter

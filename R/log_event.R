@@ -231,7 +231,7 @@ log_event <- function(...,
 
   # if (event_counter == get_event_counter()) {
 
-    increment_event_counter()
+    increment_event_counter(event_counter)
 
   # } # end of if
 
