@@ -1,6 +1,6 @@
 #' Copying objects to global environment
 #'
-#' With \code{debug_objects} you can copy an object to the global environment
+#' With \code{inspect_objects} you can copy an object to the global environment
 #' for further debugging or developing.
 #'
 #' @param ... Named objects to be copy to the global environment.
@@ -18,15 +18,15 @@
 #'     ui = shiny::fluidPage(log_init()),
 #'     server = function(input, output) {
 #'       set_logging()
-#'       debug_objects(mtcars)
-#'       debug_objects(df1 = head(mtcars), df2 = head(iris))
+#'       inspect_objects(mtcars)
+#'       inspect_objects(df1 = head(mtcars), df2 = head(iris))
 #'     }
 #'   )
 #'
 #' }
 #' }
 
-debug_objects <- function(...) {
+inspect_objects <- function(...) {
 
   session <- shiny::getDefaultReactiveDomain()
   input <- session$input
@@ -51,7 +51,9 @@ debug_objects <- function(...) {
   Map(objects, object_names,
         f = function(object, object_name) {
 
-          assign(object_name, value = object, envir = .GlobalEnv)
+          # assign(object_name, value = object, envir = .GlobalEnv)
+          pos <- 1
+          assign(object_name, value = object, envir = as.environment(pos))
 
           message("Object named `", object_name,
                   "` was assigned to the global environment for debugging.\n")
@@ -60,18 +62,18 @@ debug_objects <- function(...) {
 
   TRUE
 
-} # end of debug_objects()
+} # end of inspect_objects()
 
 #' Copying objects to global environment
 #'
-#' Convienient wrapper for \code{\link{debug_objects}}.
+#' Convenient wrapper for \code{\link{inspect_objects}}.
 #'
-#' @inheritParams debug_objects
+#' @inheritParams inspect_objects
 #'
 #' @export
-debug_object <- function(...) {
+inspect_object <- function(...) {
 
-  debug_objects(...)
+  inspect_objects(...)
 
 
 }

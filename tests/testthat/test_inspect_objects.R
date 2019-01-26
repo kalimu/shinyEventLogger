@@ -1,12 +1,12 @@
-context("debug_object")
+context("inspect_objects")
 
-test_that("debug_object", {
+test_that("inspect_objects", {
 
-  expect_true(debug_object())
-  expect_true(debug_objects())
+  expect_true(inspect_object())
+  expect_true(inspect_objects())
 
   expect_message(fixed = TRUE,
-    debug_object(object1 = mtcars),
+    inspect_objects(object1 = mtcars),
 "Object named `object1` was assigned to the global environment for debugging."
   )
 
@@ -15,7 +15,7 @@ test_that("debug_object", {
 
   rm(object1, envir = .GlobalEnv)
 
-  local(debug_object(object1 = mtcars))
+  local(inspect_objects(object1 = mtcars))
 
   expect_true(exists('object1'))
   expect_identical(object1, mtcars)
