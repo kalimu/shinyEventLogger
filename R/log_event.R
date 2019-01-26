@@ -229,11 +229,11 @@ log_event <- function(...,
   to_return$counter <- event_counter
   to_return$entry   <- result_r_console
 
-  if (event_counter == get_event_counter()) {
+  # if (event_counter == get_event_counter()) {
 
     increment_event_counter()
 
-  } # end of if
+  # } # end of if
 
   return(to_return)
 
