@@ -90,27 +90,50 @@ log_event <- function(...,
   # event_counter #############################################################
 
   # registered_event_couter <- get_event_counter()
-  registered_event_couter <-
-     as.list(dynGet("log_event_register",
-           minframe = 0L,
-           inherits = T,
-           ifnotfound = stop(paste0(
-             "'log_event_register' not found. ",
-             "Have you call 'set_logging_session'?"
-           ))))$event_counter
+
+  get_event_counter <- function() {
+
+    event_registe <-
+      dynGet("log_event_register",
+             minframe = 1L,
+             inherits = TRUE,
+             ifnotfound = stop(paste0(
+               "'log_event_register' not found. ",
+               "Have you call 'set_logging_session'?"
+             )))
+
+    as.list(event_registe)$event_counter
+
+  } # end of get_event_counter
+
+  #   add_parent_params <- function(envir_name, event_params) {
+  #
+  #   params_to_add <- dynGet(envir_name,
+  #                           minframe = 0L,
+  #                           inherits = TRUE,
+  #                           ifnotfound = NULL)
+  #
+  #   event_params <- c(event_params, as.list(params_to_add))
+  #
+  #   event_params
+  #
+  # } # end of add_parent_params
+
+
+  registered_event_couter <- get_event_counter()
+     # as.list(dynGet("log_event_register",
+     #       minframe = 0L,
+     #       inherits = T,
+     #       ifnotfound = stop(paste0(
+     #         "'log_event_register' not found. ",
+     #         "Have you call 'set_logging_session'?"
+     #       ))))$event_counter
 
   if (is.null(registered_event_couter))
     warning("registered_event_couter is null")
 
   if (is.null(event_counter)) {
-      event_counter <-
-     as.list(dynGet("log_event_register",
-           minframe = 0L,
-           inherits = T,
-           ifnotfound = stop(paste0(
-             "'log_event_register' not found. ",
-             "Have you call 'set_logging_session'?"
-           ))))$event_counter
+      event_counter <-registered_event_couter
 
   }
 
