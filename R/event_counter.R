@@ -21,7 +21,7 @@ increment_event_counter <- function() {
     dynGet("log_event_register",
            # minframe = 6L,
            minframe = 1L,
-           inherits = FALSE)
+           inherits = T)
 
   event_counter <-
     as.list(log_event_register)$event_counter
