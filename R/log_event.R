@@ -50,7 +50,8 @@ log_event <- function(...,
                      type = "EVENT",
                      status = "FIRED",
                      params = NULL,
-                     event_counter = get_event_counter()
+                     event_counter = get_event_counter(),
+                     registered_event_couter = get_event_counter()
                      ) {
 
   r_console        <- getOption("shinyEventLogger.r_console")
@@ -231,7 +232,7 @@ log_event <- function(...,
 
   # event_counter ------------------------------------------------------------
 
-  registered_event_couter <- get_event_counter()
+  # registered_event_couter <- get_event_counter()
   # registered_event_couter <-
   #    as.list(dynGet("log_event_register",
   #          minframe = 0L,
