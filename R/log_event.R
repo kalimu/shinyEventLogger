@@ -122,16 +122,16 @@ log_event <- function(...,
   # registered_event_counter <- get_event_counter()
   # registered_event_counter <- add_parent_params(envir_name = "log_settings_session", event_params = NULL)$server
   registered_event_counter <-
-  #   add_parent_params(envir_name = "log_settings_session",
-  #                     event_params = NULL)$event_counter
-  #    # as.list(dynGet("log_event_register",
-     as.list(dynGet("log_settings_session",
-           minframe = 0L,
-           inherits = T,
-           ifnotfound = stop(paste0(
-             "'log_event_register' not found. ",
-             "Have you call 'set_logging_session'?"
-           ))))$event_counter
+
+get_event_counter()
+
+     # as.list(dynGet("log_settings_session",
+     #       minframe = 0L,
+     #       inherits = T,
+     #       ifnotfound = stop(paste0(
+     #         "'log_event_register' not found. ",
+     #         "Have you call 'set_logging_session'?"
+     #       ))))$event_counter
 
   if (is.null(registered_event_counter))
     warning("registered_event_counter is null")
@@ -299,16 +299,16 @@ log_event <- function(...,
   # if (event_counter == get_event_counter()) {
   if (event_counter == registered_event_counter) {
 
-    # increment_event_counter()
-      settings_session <-
-    dynGet("log_settings_session",
-           # minframe = 6L,
-           minframe = 1L,
-           inherits = TRUE)
-
-
-  settings_session$event_counter <-
-    event_counter + 1
+    increment_event_counter()
+      # settings_session <-
+  #   dynGet("log_settings_session",
+  #          # minframe = 6L,
+  #          minframe = 1L,
+  #          inherits = TRUE)
+  #
+  #
+  # settings_session$event_counter <-
+  #   event_counter + 1
 
   }
 
