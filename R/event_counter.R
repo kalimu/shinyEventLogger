@@ -23,7 +23,10 @@ increment_event_counter <- function() {
            minframe = 1L,
            inherits = FALSE)
 
+  event_counter <-
+    as.list(log_event_register)$event_counter
+
   log_event_register$event_counter <-
-    log_event_register$event_counter + 1
+    event_counter + 1
 
 } # end of increment_event_counter
