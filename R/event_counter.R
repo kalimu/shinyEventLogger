@@ -2,7 +2,7 @@
 
 get_event_counter <- function() {
 
-  log_event_register <-
+ event_register <-
     dynGet("log_event_register",
            minframe = 1L,
            inherits = TRUE,
@@ -11,22 +11,29 @@ get_event_counter <- function() {
              "Have you call 'set_logging_session'?"
            )))
 
-  as.list(log_event_register)$event_counter
+   event_register <-
+  as.list(event_register)
+
+  event_register$event_counter
 
 } # end of get_event_counter
 
-increment_event_counter <- function() {
+increment_event_counter <- function(event_counter) {
 
-  log_event_register <-
+  event_register <-
     dynGet("log_event_register",
            # minframe = 6L,
            minframe = 1L,
            inherits = TRUE)
 
-  event_counter <-
-    as.list(log_event_register)$event_counter
+  event_counter_registered <-
+    as.list(event_register)$event_counter
 
-  log_event_register$event_counter <-
-    event_counter + 1
+  if (event_counter == event_counter_registered) {
+
+  event_register$event_counter <- event_counter_registered + 1
+
+  }
+
 
 } # end of increment_event_counter

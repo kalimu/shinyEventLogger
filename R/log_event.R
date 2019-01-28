@@ -285,11 +285,11 @@ log_event <- function(...,
 
   } # end if
 
-  if (event_counter == registered_event_counter) {
+  # if (event_counter == registered_event_counter) {
 
-    increment_event_counter()
+    increment_event_counter(event_counter)
 
-  } # end of if
+  # } # end of if
 
 
 
