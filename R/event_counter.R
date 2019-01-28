@@ -5,7 +5,7 @@ get_event_counter <- function() {
   log_event_register <-
     dynGet("log_event_register",
            minframe = 0L,
-           inherits = TRUE,
+           inherits = FALSE,
            ifnotfound = stop(paste0(
              "'log_event_register' not found. ",
              "Have you call 'set_logging_session'?"
