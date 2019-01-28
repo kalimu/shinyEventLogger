@@ -91,16 +91,13 @@ log_event <- function(...,
 
   # registered_event_couter <- get_event_counter()
 
-  get_event_counter <- function() {
+  get_event_counter <- function(envir_name = "log_event_register") {
 
     event_register <-
-      dynGet("log_event_register",
+      dynGet(envir_name,
              minframe = 0L,
              inherits = TRUE,
-             ifnotfound = stop(paste0(
-               "'log_event_register' not found. ",
-               "Have you call 'set_logging_session'?"
-             )))
+             ifnotfound = NULL)
 
     event_register <- as.list(event_register)
 
@@ -135,7 +132,7 @@ log_event <- function(...,
     warning("registered_event_counter is null")
 
   if (is.null(event_counter)) {
-      event_counter <-registered_event_counter
+      event_counter <- registered_event_counter
 
   }
 
