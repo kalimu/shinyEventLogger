@@ -15,14 +15,15 @@ get_event_counter <- function() {
 
 } # end of get_event_counter
 
-increment_event_counter <- function(current_counter) {
+increment_event_counter <- function() {
 
   log_event_register <-
     dynGet("log_event_register",
            # minframe = 6L,
            minframe = 0L,
-           inherits = TRUE)
+           inherits = FALSE)
 
-  log_event_register$event_counter <- current_counter + 1
+  log_event_register$event_counter <-
+    log_event_register$event_counter + 1
 
 } # end of increment_event_counter
