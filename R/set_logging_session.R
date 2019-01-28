@@ -43,7 +43,7 @@ set_logging_session <- function(...) {
          list2env(params),
          pos = parent.frame())
 
-  register <- list(event_counter = 1)
+  register <- eval(list(event_counter = 1))
 
   assign("log_event_register",
          # new.env(parent = emptyenv()),

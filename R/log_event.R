@@ -93,16 +93,18 @@ log_event <- function(...,
 
   get_event_counter <- function() {
 
-    event_registe <-
+    event_register <-
       dynGet("log_event_register",
-             minframe = 1L,
+             minframe = 0L,
              inherits = TRUE,
              ifnotfound = stop(paste0(
                "'log_event_register' not found. ",
                "Have you call 'set_logging_session'?"
              )))
 
-    as.list(event_registe)$event_counter
+    event_register <- as.list(event_register)
+
+    event_register$event_counter
 
   } # end of get_event_counter
 
@@ -120,7 +122,7 @@ log_event <- function(...,
   # } # end of add_parent_params
 
 
-  registered_event_couter <- get_event_counter()
+  registered_event_counter <- get_event_counter()
      # as.list(dynGet("log_event_register",
      #       minframe = 0L,
      #       inherits = T,
@@ -129,11 +131,11 @@ log_event <- function(...,
      #         "Have you call 'set_logging_session'?"
      #       ))))$event_counter
 
-  if (is.null(registered_event_couter))
-    warning("registered_event_couter is null")
+  if (is.null(registered_event_counter))
+    warning("registered_event_counter is null")
 
   if (is.null(event_counter)) {
-      event_counter <-registered_event_couter
+      event_counter <-registered_event_counter
 
   }
 
@@ -284,7 +286,7 @@ log_event <- function(...,
 
   } # end if
 
-  if (event_counter == registered_event_couter) {
+  if (event_counter == registered_event_counter) {
 
     increment_event_counter()
 
