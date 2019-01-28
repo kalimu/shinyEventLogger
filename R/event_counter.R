@@ -29,11 +29,11 @@ increment_event_counter <- function(event_counter) {
   event_counter_registered <-
     as.list(event_register)$event_counter
 
-  if (event_counter == event_counter_registered) {
+  # if (event_counter == event_counter_registered) {
 
   event_register$event_counter <- event_counter_registered + 1
 
-  }
+  # }
 
 
 } # end of increment_event_counter
