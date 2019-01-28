@@ -122,8 +122,8 @@ log_event <- function(...,
   # registered_event_counter <- get_event_counter()
   # registered_event_counter <- add_parent_params(envir_name = "log_settings_session", event_params = NULL)$server
   registered_event_counter <-
-    add_parent_params(envir_name = "log_event_register",
-                      event_params = NULL)$test_val
+    add_parent_params(envir_name = "log_settings_session",
+                      event_params = NULL)$event_counter
      # as.list(dynGet("log_event_register",
      # as.list(dynGet("log_event_register",
      #       minframe = 0L,
