@@ -233,13 +233,13 @@ log_event <- function(...,
 
   # registered_event_couter <- get_event_counter()
   registered_event_couter <-
-     dynGet("log_event_register",
-           minframe = 1L,
-           inherits = FALSE,
+     as.list(dynGet("log_event_register",
+           minframe = 0L,
+           inherits = T,
            ifnotfound = stop(paste0(
              "'log_event_register' not found. ",
              "Have you call 'set_logging_session'?"
-           )))$event_counter
+           ))))$event_counter
 
   if (is.null(registered_event_couter))
     warning("registered_event_couter is null")
