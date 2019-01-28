@@ -229,9 +229,19 @@ log_event <- function(...,
   to_return$counter <- event_counter
   to_return$entry   <- result_r_console
 
-  if (event_counter == get_event_counter()) {
+  # event_counter ------------------------------------------------------------
 
-    increment_event_counter(event_counter)
+  registered_event_couter <- get_event_counter()
+
+  if (is.null(registered_event_couter))
+    warning("registered_event_couter is null")
+
+  if (is.null(event_counter))
+    warning("event_counter is null")
+
+  if (event_counter == registered_event_couter) {
+
+    increment_event_counter(registered_event_couter)
 
   } # end of if
 
