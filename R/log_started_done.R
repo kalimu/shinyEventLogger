@@ -84,9 +84,10 @@ log_started <- function(...,
 
   }
 
-  log_event_register <- get('log_event_register', envir = parent.frame())
+  # log_event_register <- get('log_event_register', envir = parent.frame())
+  log_event_register <- get('log_settings_session', envir = parent.frame())
 
-  log_event_register[[event_id]] <-
+  log_event_register[['register']][[event_id]] <-
 
     list(
       status = status,
@@ -114,9 +115,9 @@ log_done <- function(...,
 
   event_id <- create_event_id(..., name = name)
 
-  log_event_register <- get('log_event_register', envir = parent.frame())
+  log_event_register <- get('log_settings_session', envir = parent.frame())
 
-  register <- log_event_register[[event_id]]
+  register <- log_event_register[['register']][[event_id]]
 
   timing <- list(
     "secs" = round(as.numeric(Sys.time() - register$timestamp), 2)

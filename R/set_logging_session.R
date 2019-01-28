@@ -51,6 +51,7 @@ set_logging_session <- function(...) {
          # list2env(params),
          list2env(list(
            params = params,
+           register = list(),
            event_counter = 1
            )),
          pos = parent.frame())

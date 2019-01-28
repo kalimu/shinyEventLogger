@@ -50,7 +50,7 @@ log_event <- function(...,
                      type = "EVENT",
                      status = "FIRED",
                      params = NULL,
-                     event_counter = NULL#get_event_counter(),
+                     event_counter = get_event_counter()#NULL#get_event_counter(),
                      #registered_event_couter = get_event_counter()
                      ) {
 
@@ -89,42 +89,42 @@ log_event <- function(...,
 
   # event_counter #############################################################
 
-  # registered_event_couter <- get_event_counter()
+  # registered_event_counter <- get_event_counter()
 
-  get_event_counter <- function(envir_name = "log_event_register") {
+  # get_event_counter <- function(envir_name = "log_event_register") {
+  #
+  #   event_register <-
+  #     dynGet(envir_name,
+  #            minframe = 0L,
+  #            inherits = TRUE,
+  #            ifnotfound = NULL)
+  #
+  #   event_register <- as.list(event_register)
+  #
+  #   event_register$event_counter
+  #
+  # } # end of get_event_counter
 
-    event_register <-
-      dynGet(envir_name,
-             minframe = 0L,
-             inherits = TRUE,
-             ifnotfound = NULL)
-
-    event_register <- as.list(event_register)
-
-    event_register$event_counter
-
-  } # end of get_event_counter
-
-    add_parent_params <- function(envir_name, event_params) {
-
-    params_to_add <- dynGet(envir_name,
-                            minframe = 0L,
-                            inherits = TRUE,
-                            ifnotfound = NULL)
-
-    event_params <- c(event_params, as.list(params_to_add))
-
-    event_params
-
-  } # end of add_parent_params
+  #   add_parent_params <- function(envir_name, event_params) {
+  #
+  #   params_to_add <- dynGet(envir_name,
+  #                           minframe = 0L,
+  #                           inherits = TRUE,
+  #                           ifnotfound = NULL)
+  #
+  #   event_params <- c(event_params, as.list(params_to_add))
+  #
+  #   event_params
+  #
+  # } # end of add_parent_params
 
 
   # registered_event_counter <- get_event_counter()
   # registered_event_counter <- add_parent_params(envir_name = "log_settings_session", event_params = NULL)$server
-  registered_event_counter <-
-    add_parent_params(envir_name = "log_settings_session",
-                      event_params = NULL)$event_counter
-     # as.list(dynGet("log_event_register",
+  # registered_event_counter <-
+  #   add_parent_params(envir_name = "log_settings_session",
+  #                     event_params = NULL)$event_counter
+  #    # as.list(dynGet("log_event_register",
      # as.list(dynGet("log_event_register",
      #       minframe = 0L,
      #       inherits = T,
@@ -133,16 +133,16 @@ log_event <- function(...,
      #         "Have you call 'set_logging_session'?"
      #       ))))$event_counter
 
-  if (is.null(registered_event_counter))
-    warning("registered_event_counter is null")
-
-  if (is.null(event_counter)) {
-      event_counter <- registered_event_counter
-
-  }
-
-    if (is.null(event_counter)) {
-    warning("event_counter is null")}
+  # if (is.null(registered_event_counter))
+  #   warning("registered_event_counter is null")
+  #
+  # if (is.null(event_counter)) {
+  #     event_counter <- registered_event_counter
+  #
+  # }
+  #
+  #   if (is.null(event_counter)) {
+  #   warning("event_counter is null")}
 
 
 
@@ -172,7 +172,15 @@ log_event <- function(...,
                             inherits = TRUE,
                             ifnotfound = NULL)
 
-    event_params <- c(event_params, as.list(params_to_add))
+    if (envir_name == "log_settings_session") {
+
+      event_params <- c(event_params, as.list(params_to_add$params))
+
+    } else {
+
+      event_params <- c(event_params, as.list(params_to_add))
+
+    }
 
     event_params
 
@@ -288,13 +296,11 @@ log_event <- function(...,
 
   } # end if
 
-  # if (event_counter == registered_event_counter) {
+  if (event_counter == get_event_counter()) {
 
-    increment_event_counter(event_counter)
+    increment_event_counter()
 
-  # } # end of if
-
-
+  }
 
   to_return$counter <- event_counter
   to_return$entry   <- result_r_console
