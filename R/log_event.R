@@ -105,21 +105,23 @@ log_event <- function(...,
 
   } # end of get_event_counter
 
-  #   add_parent_params <- function(envir_name, event_params) {
-  #
-  #   params_to_add <- dynGet(envir_name,
-  #                           minframe = 0L,
-  #                           inherits = TRUE,
-  #                           ifnotfound = NULL)
-  #
-  #   event_params <- c(event_params, as.list(params_to_add))
-  #
-  #   event_params
-  #
-  # } # end of add_parent_params
+    add_parent_params <- function(envir_name, event_params) {
+
+    params_to_add <- dynGet(envir_name,
+                            minframe = 0L,
+                            inherits = TRUE,
+                            ifnotfound = NULL)
+
+    event_params <- c(event_params, as.list(params_to_add))
+
+    event_params
+
+  } # end of add_parent_params
 
 
-  registered_event_counter <- get_event_counter()
+  # registered_event_counter <- get_event_counter()
+  registered_event_counter <- add_parent_params(envir_name = "log_event_register", event_params = NULL)$event_counter
+     # as.list(dynGet("log_event_register",
      # as.list(dynGet("log_event_register",
      #       minframe = 0L,
      #       inherits = T,
