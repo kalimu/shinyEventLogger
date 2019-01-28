@@ -50,8 +50,8 @@ log_event <- function(...,
                      type = "EVENT",
                      status = "FIRED",
                      params = NULL,
-                     event_counter = get_event_counter(),
-                     registered_event_couter = get_event_counter()
+                     event_counter = NULL#get_event_counter(),
+                     #registered_event_couter = get_event_counter()
                      ) {
 
   r_console        <- getOption("shinyEventLogger.r_console")
@@ -84,6 +84,40 @@ log_event <- function(...,
     return(to_return)
 
   } # end if
+
+
+
+  # event_counter #############################################################
+
+  # registered_event_couter <- get_event_counter()
+  registered_event_couter <-
+     as.list(dynGet("log_event_register",
+           minframe = 0L,
+           inherits = T,
+           ifnotfound = stop(paste0(
+             "'log_event_register' not found. ",
+             "Have you call 'set_logging_session'?"
+           ))))$event_counter
+
+  if (is.null(registered_event_couter))
+    warning("registered_event_couter is null")
+
+  if (is.null(event_counter)) {
+      event_counter <-
+     as.list(dynGet("log_event_register",
+           minframe = 0L,
+           inherits = T,
+           ifnotfound = stop(paste0(
+             "'log_event_register' not found. ",
+             "Have you call 'set_logging_session'?"
+           ))))$event_counter
+
+  }
+
+    if (is.null(event_counter)) {
+    warning("event_counter is null")}
+
+
 
   # event_body ###############################################################
   args <- list(...)
@@ -227,32 +261,16 @@ log_event <- function(...,
 
   } # end if
 
-  to_return$counter <- event_counter
-  to_return$entry   <- result_r_console
-
-  # event_counter ------------------------------------------------------------
-
-  # registered_event_couter <- get_event_counter()
-  # registered_event_couter <-
-  #    as.list(dynGet("log_event_register",
-  #          minframe = 0L,
-  #          inherits = T,
-  #          ifnotfound = stop(paste0(
-  #            "'log_event_register' not found. ",
-  #            "Have you call 'set_logging_session'?"
-  #          ))))$event_counter
-
-  if (is.null(registered_event_couter))
-    warning("registered_event_couter is null")
-
-  if (is.null(event_counter))
-    warning("event_counter is null")
-
   if (event_counter == registered_event_couter) {
 
     increment_event_counter()
 
   } # end of if
+
+
+
+  to_return$counter <- event_counter
+  to_return$entry   <- result_r_console
 
   return(to_return)
 
