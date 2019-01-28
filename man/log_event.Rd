@@ -5,7 +5,7 @@
 \title{Logging an event}
 \usage{
 log_event(..., name = NULL, type = "EVENT", status = "FIRED",
-  params = NULL, event_counter = get_event_counter())
+  params = NULL, event_counter = NULL)
 }
 \arguments{
 \item{...}{Objects that are evaluated, coerced into character string,
