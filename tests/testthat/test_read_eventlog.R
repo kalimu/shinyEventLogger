@@ -19,7 +19,7 @@ test_that("reading valid eventlog file", {capture.output({
     names(eventlog),
     c("event_counter", "event_type", "event_name", "event_status",
       "session_id", "event_timestamp", "event_body", "event_id",
-      "this_session", "build",
+      "build",
       "dataset", "fun", "resource",
       "secs",
       "n_rows", "bins", "variable",
