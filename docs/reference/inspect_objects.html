@@ -64,7 +64,7 @@ for further debugging or developing." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">shinyEventLogger</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9313</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -136,10 +136,11 @@ will be the same as the name of the object passed to <code>...</code>.</p></td>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
 
+  <span class='fu'><a href='set_logging.html'>set_logging</a></span>()
   <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(
     <span class='kw'>ui</span> <span class='kw'>=</span> <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/fluidPage'>fluidPage</a></span>(<span class='fu'><a href='log_init.html'>log_init</a></span>()),
     <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
-      <span class='fu'><a href='set_logging.html'>set_logging</a></span>()
+      <span class='fu'><a href='set_logging_session.html'>set_logging_session</a></span>()
       <span class='fu'>inspect_objects</span>(<span class='no'>mtcars</span>)
       <span class='fu'>inspect_objects</span>(<span class='kw'>df1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>mtcars</span>), <span class='kw'>df2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>iris</span>))
     }

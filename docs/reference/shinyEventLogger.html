@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>shinyEventLogger: Logging Events in Complex Shiny Apps — shinyEventLogger • shinyEventLogger</title>
+<title>shinyEventLogger: Logging Events in Shiny Apps — shinyEventLogger • shinyEventLogger</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,16 +30,16 @@
 
 
 
-<meta property="og:title" content="shinyEventLogger: Logging Events in Complex Shiny Apps — shinyEventLogger" />
+<meta property="og:title" content="shinyEventLogger: Logging Events in Shiny Apps — shinyEventLogger" />
 
 <meta property="og:description" content="Logging framework dedicated for complex shiny apps. 
-    Different types of events can be logged (character string, 
-    value of a variable, multi-line output of a function,
+    Different types of events can be logged 
+    (value of a variable, multi-line output of a function,
     result of a unit test, custom error, warning, or diagnostic message).
     Each event can be logged with a list of parameters that are event-specific, 
-    common for a group of events, or common for all app events.
+    common for events within the same scope, session-specific, or app-wide.
     Logging can be done simultaneously to R console, 
-    browser JavaScript console, a file log, and a database (currently MongoDB).
+    browser JavaScript console, a file log, and a database (MongoDB).
     Log data can be further analyzed with the help of process-mining techniques 
     from 'bupaR' package." />
 <meta name="twitter:card" content="summary" />
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">shinyEventLogger</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9313</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>shinyEventLogger: Logging Events in Complex Shiny Apps</h1>
+    <h1>shinyEventLogger: Logging Events in Shiny Apps</h1>
     <small class="dont-index">Source: <a href='https://github.com/kalimu/shinyEventLogger/blob/master/R/shinyEventLogger.R'><code>R/shinyEventLogger.R</code></a></small>
     <div class="hidden name"><code>shinyEventLogger.Rd</code></div>
     </div>
@@ -122,13 +122,13 @@
     <div class="ref-description">
     
     <p>Logging framework dedicated for complex shiny apps. 
-    Different types of events can be logged (character string, 
-    value of a variable, multi-line output of a function,
+    Different types of events can be logged 
+    (value of a variable, multi-line output of a function,
     result of a unit test, custom error, warning, or diagnostic message).
     Each event can be logged with a list of parameters that are event-specific, 
-    common for a group of events, or common for all app events.
+    common for events within the same scope, session-specific, or app-wide.
     Logging can be done simultaneously to R console, 
-    browser JavaScript console, a file log, and a database (currently MongoDB).
+    browser JavaScript console, a file log, and a database (MongoDB).
     Log data can be further analyzed with the help of process-mining techniques 
     from 'bupaR' package.</p>
     
@@ -139,7 +139,7 @@
 
     <div class='dont-index'><p>Useful links:</p><ul>
 <li><p><a href='https://github.com/kalimu/shinyEventLogger#readme'>https://github.com/kalimu/shinyEventLogger#readme</a></p></li>
-<li><p><a href='https://kalimu.github.io'>https://kalimu.github.io</a></p></li>
+<li><p><a href='https://kalimu.github.io/project/shinyeventlogger/'>https://kalimu.github.io/project/shinyeventlogger/</a></p></li>
 <li><p>Report bugs at <a href='https://github.com/kalimu/shinyEventLogger/issues'>https://github.com/kalimu/shinyEventLogger/issues</a></p></li>
 </ul></div>
     

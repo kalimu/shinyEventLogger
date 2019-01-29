@@ -12,7 +12,7 @@ library(shinyEventLogger)
     database   = ifelse(file.exists(".db_url"),    TRUE, FALSE),
 
     # Adding app build version as a global parameter to all events
-    build      = 138L
+    build      = 140L
     )
 
 ui <- fluidPage(
@@ -53,10 +53,7 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-  set_logging_session(
-    # Logging unique session ID
-    this_session = shiny::getDefaultReactiveDomain()$token
-    )
+  set_logging_session()
 
   log_event("App (re)started")
 
