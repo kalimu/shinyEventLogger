@@ -28,3 +28,9 @@ rsconnect::deployApp(appFiles = c("app.R", "DESCRIPTION", "Readme.md", ".db_url"
 setwd("~/# Rscripts/shinyEventLogger/inst/shiny/dashboardapp")
 dir()
 rsconnect::deployApp(appFiles = c("app.R", ".db_url"), forceUpdate = TRUE)
+
+devtools::check()
+
+devtools::check_win_release()
+devtools::check_win_devel()
+

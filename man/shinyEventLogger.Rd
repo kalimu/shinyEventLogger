@@ -4,16 +4,16 @@
 \name{shinyEventLogger}
 \alias{shinyEventLogger}
 \alias{shinyEventLogger-package}
-\title{shinyEventLogger: Logging Events in Complex Shiny Apps}
+\title{shinyEventLogger: Logging Events in Shiny Apps}
 \description{
 Logging framework dedicated for complex shiny apps. 
-    Different types of events can be logged (character string, 
-    value of a variable, multi-line output of a function,
+    Different types of events can be logged 
+    (value of a variable, multi-line output of a function,
     result of a unit test, custom error, warning, or diagnostic message).
     Each event can be logged with a list of parameters that are event-specific, 
-    common for a group of events, or common for all app events.
+    common for events within the same scope, session-specific, or app-wide.
     Logging can be done simultaneously to R console, 
-    browser JavaScript console, a file log, and a database (currently MongoDB).
+    browser JavaScript console, a file log, and a database (MongoDB).
     Log data can be further analyzed with the help of process-mining techniques 
     from 'bupaR' package.
 }

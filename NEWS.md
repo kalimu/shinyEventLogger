@@ -1,7 +1,6 @@
 # shinyEventLogger 0.1.0
 
-* preparing for first CRAN release
-* preparing for first official release ver. 0.1.0
+* preparing for first CRAN release ver. 0.1.0
 
 ## [added]
 
