@@ -15,4 +15,4 @@
 ^inst/shiny/demoapp/\.db_url_admin$
 ^inst/shiny/dashboardapp/\.db_url$
 ^inst/shiny/dashboardapp/\.db_url_admin$
-
+^cran-comments.md$
