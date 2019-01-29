@@ -2,6 +2,8 @@
 devtools::install_github("kalimu/shinyEventLogger", force = TRUE)
 library(shinyEventLogger)
 
+# devtools::use_travis()
+
 # run_demo(in_background = TRUE)
 
 devtools::document(roclets = c('rd', 'collate', 'namespace', 'vignette'))
@@ -13,8 +15,10 @@ spelling::spell_check_package(".")
 
 goodpractice::gp()
 
+setwd("~/# Rscripts/shinyEventLogger")
 pkgdown:::build_site_external()
 
+devtools::install_github("kalimu/shinyEventLogger", force = TRUE)
 options(rsconnect.check.certificate = FALSE)
 setwd("~/# Rscripts/shinyEventLogger/inst/shiny/demoapp")
 dir()
