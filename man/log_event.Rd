@@ -37,10 +37,11 @@ depending on user's settings (see \code{\link{set_logging}}).
 \dontrun{
 
 if (interactive()) {
+  set_logging()
   shiny::shinyApp(
     ui = shiny::fluidPage(log_init()),
     server = function(input, output) {
-      set_logging()
+      set_logging_session()
       log_event("Event 1")
       log_event("Event 2 body", name = "Event 2")
       log_event("Event 3", type = "NewTYPE")

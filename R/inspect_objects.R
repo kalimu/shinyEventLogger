@@ -14,10 +14,11 @@
 #'
 #' if (interactive()) {
 #'
+#'   set_logging()
 #'   shiny::shinyApp(
 #'     ui = shiny::fluidPage(log_init()),
 #'     server = function(input, output) {
-#'       set_logging()
+#'       set_logging_session()
 #'       inspect_objects(mtcars)
 #'       inspect_objects(df1 = head(mtcars), df2 = head(iris))
 #'     }

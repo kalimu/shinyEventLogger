@@ -39,10 +39,11 @@ and it can stop the whole shiny app.
 \dontrun{
 
 if (interactive()) {
+  set_logging()
   shiny::shinyApp(
     ui = shiny::fluidPage(log_init()),
     server = function(input, output) {
-      set_logging()
+      set_logging_session()
       log_message("Example of a message")
       log_warning("Example of a warning")
       log_error("Example of an error")

@@ -19,7 +19,8 @@ Description: Logging framework dedicated for complex shiny apps.
     browser JavaScript console, a file log, and a database (currently MongoDB).
     Log data can be further analyzed with the help of process-mining techniques 
     from 'bupaR' package.
-URL: https://github.com/kalimu/shinyEventLogger#readme, https://kalimu.github.io
+URL: https://github.com/kalimu/shinyEventLogger#readme, 
+    https://kalimu.github.io/project/shinyeventlogger/
 BugReports: https://github.com/kalimu/shinyEventLogger/issues
 License: MIT + file LICENSE
 Encoding: UTF-8

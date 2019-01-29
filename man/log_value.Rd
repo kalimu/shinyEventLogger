@@ -29,11 +29,11 @@ and uses deparsed function call as the event name.
 \dontrun{
 
 if (interactive()) {
-
+  set_logging()
   shiny::shinyApp(
     ui = shiny::fluidPage(log_init()),
     server = function(input, output) {
-      set_logging()
+      set_logging_session()
       log_value(NROW(mtcars))
     }
   )

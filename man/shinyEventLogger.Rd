@@ -21,7 +21,7 @@ Logging framework dedicated for complex shiny apps.
 Useful links:
 \itemize{
   \item \url{https://github.com/kalimu/shinyEventLogger#readme}
-  \item \url{https://kalimu.github.io}
+  \item \url{https://kalimu.github.io/project/shinyeventlogger/}
   \item Report bugs at \url{https://github.com/kalimu/shinyEventLogger/issues}
 }
 

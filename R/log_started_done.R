@@ -52,10 +52,11 @@ create_event_id <- function(...,
 #' \dontrun{
 #'
 #' if (interactive()) {
+#'   set_logging()
 #'   shiny::shinyApp(
 #'     ui = shiny::fluidPage(log_init()),
 #'     server = function(input, output) {
-#'       set_logging()
+#'       set_logging_session()
 #'         log_started(as.character(Sys.time()), name = "Event 1")
 #'         log_started(as.character(Sys.time()), name = "Event 2")
 #'           log_event(as.character(Sys.time()), name = "Event 3")

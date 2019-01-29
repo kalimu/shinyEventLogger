@@ -27,14 +27,14 @@ instances of the same event (see \code{\link{log_started}}).
 if (interactive()) {
 
   set_logging()
-
   shiny::shinyApp(
     ui = shiny::fluidPage(log_init()),
     server = function(input, output) {
       set_logging_session(
         session_id = shiny::getDefaultReactiveDomain()$token
         )
-      log_event("Event with global params")
+      log_event("Event 1 with session parameter")
+      log_event("Event 2 with session parameter")
     }
   )
   # You can open app in the browser and duplicate tab to see different
