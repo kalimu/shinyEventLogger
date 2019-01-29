@@ -12,7 +12,7 @@ library(shinyEventLogger)
     database   = ifelse(file.exists(".db_url"),    TRUE, FALSE),
 
     # Adding app build version as a global parameter to all events
-    build      = 134L
+    build      = 138L
     )
 
 ui <- fluidPage(
