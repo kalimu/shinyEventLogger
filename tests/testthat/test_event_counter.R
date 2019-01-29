@@ -4,7 +4,7 @@ test_that("get_event_counter", {
 
   expect_error(fixed = TRUE,
     get_event_counter(),
-    "'log_event_register' not found. Have you call 'set_logging_session'?"
+    "'log_settings_session' not found. Have you call 'set_logging_session'?"
   )
 
   set_logging_session()

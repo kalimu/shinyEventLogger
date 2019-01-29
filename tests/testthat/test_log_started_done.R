@@ -25,35 +25,53 @@ test_that("logging started and done", {capture.output({
            "or body passed to the '...' argument.")
     )
 
+  expect_identical(log_settings_session$event_counter, 1)
+
   expect_message(fixed = TRUE,
     log_started("test_event_1"),
     "|#1|EVENT|test_event_1|STARTED|"
     )
+
+  expect_identical(log_settings_session$event_counter, 2)
 
   expect_message(fixed = TRUE,
     log_started("test_event_2"),
     "|#2|EVENT|test_event_2|STARTED|"
     )
 
+  expect_identical(log_settings_session$event_counter, 3)
+
   expect_message(fixed = TRUE,
     log_started("test_event_3"),
     "|#3|EVENT|test_event_3|STARTED|"
     )
+
+  expect_identical(log_settings_session$event_counter, 4)
 
   expect_message(fixed = TRUE,
     log_done("test_event_3"),
     "|#3|EVENT|test_event_3|DONE|"
     )
 
+  expect_identical(log_settings_session$event_counter, 4)
+
   expect_message(fixed = TRUE,
     log_done("test_event_2"),
     "|#2|EVENT|test_event_2|DONE|"
     )
 
+  expect_identical(log_settings_session$event_counter, 4)
+
   expect_message(fixed = TRUE,
     log_done("test_event_1"),
     "|#1|EVENT|test_event_1|DONE|"
     )
+
+  expect_identical(log_settings_session$event_counter, 4)
+
+  log_event("test_event_4")
+
+  expect_identical(log_settings_session$event_counter, 5)
 
 })})
 
