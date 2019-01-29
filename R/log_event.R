@@ -15,7 +15,8 @@
 #' @param params A list of additional named event-specific parameters.
 #'   Default is \code{NULL}.
 #' @param event_counter An integer. The number of the event.
-#' By default current value of the counter is returned by
+#' Default is \code{NULL} which will be replaced by the current value
+#' of the counter returned by
 #' the internal getter function \code{get_event_counter}.
 #'
 #' @family logging events functions
@@ -50,8 +51,7 @@ log_event <- function(...,
                      type = "EVENT",
                      status = "FIRED",
                      params = NULL,
-                     event_counter = NULL#get_event_counter(),
-                     #registered_event_couter = get_event_counter()
+                     event_counter = NULL
                      ) {
 
   r_console        <- getOption("shinyEventLogger.r_console")
@@ -85,53 +85,8 @@ log_event <- function(...,
 
   } # end if
 
-
-
   # event_counter #############################################################
-
-  # registered_event_counter <- get_event_counter()
-
-  # get_event_counter <- function(envir_name = "log_event_register") {
-  #
-  #   event_register <-
-  #     dynGet(envir_name,
-  #            minframe = 0L,
-  #            inherits = TRUE,
-  #            ifnotfound = NULL)
-  #
-  #   event_register <- as.list(event_register)
-  #
-  #   event_register$event_counter
-  #
-  # } # end of get_event_counter
-
-  #   add_parent_params <- function(envir_name, event_params) {
-  #
-  #   params_to_add <- dynGet(envir_name,
-  #                           minframe = 0L,
-  #                           inherits = TRUE,
-  #                           ifnotfound = NULL)
-  #
-  #   event_params <- c(event_params, as.list(params_to_add))
-  #
-  #   event_params
-  #
-  # } # end of add_parent_params
-
-
-  # registered_event_counter <- get_event_counter()
-  # registered_event_counter <- add_parent_params(envir_name = "log_settings_session", event_params = NULL)$server
-  registered_event_counter <-
-
-get_event_counter()
-
-     # as.list(dynGet("log_settings_session",
-     #       minframe = 0L,
-     #       inherits = T,
-     #       ifnotfound = stop(paste0(
-     #         "'log_event_register' not found. ",
-     #         "Have you call 'set_logging_session'?"
-     #       ))))$event_counter
+  registered_event_counter <- get_event_counter()
 
   if (is.null(registered_event_counter))
     warning("registered_event_counter is null")
@@ -141,10 +96,8 @@ get_event_counter()
 
   }
 
-    if (is.null(event_counter)) {
-    warning("event_counter is null")}
-
-
+  if (is.null(event_counter))
+    warning("event_counter is null")
 
   # event_body ###############################################################
   args <- list(...)
@@ -296,21 +249,11 @@ get_event_counter()
 
   } # end if
 
-  # if (event_counter == get_event_counter()) {
   if (event_counter == registered_event_counter) {
 
     increment_event_counter()
-      # settings_session <-
-  #   dynGet("log_settings_session",
-  #          # minframe = 6L,
-  #          minframe = 1L,
-  #          inherits = TRUE)
-  #
-  #
-  # settings_session$event_counter <-
-  #   event_counter + 1
 
-  }
+  } # end if
 
   to_return$counter <- event_counter
   to_return$entry   <- result_r_console

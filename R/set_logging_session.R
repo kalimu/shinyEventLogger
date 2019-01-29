@@ -4,9 +4,9 @@
 #' of the shiny server function to define session-specific event parameters.
 #' \code{set_logging_session} also sets event counter to 1.
 #'
-#' \code{set_logging_session} assigns to the parent frame new environments:
+#' \code{set_logging_session} assigns to the parent frame new environment:
 #' \code{log_settings_session} for storing session-specific event parameters
-#' and \code{log_event_register} for storing information about multiple
+#' and information about multiple
 #' instances of the same event (see \code{\link{log_started}}).
 #'
 #' @family setting up logging parameters functions
@@ -37,18 +37,9 @@
 
 set_logging_session <- function(...) {
 
-  # register <- eval(list(event_counter = 1, test_val = 100))
-
-  # assign("log_event_register",
-  #        # new.env(parent = emptyenv()),
-  #        list2env(register),
-  #        # envir = parent.frame())
-  #        pos = parent.frame())
-
   params <- eval(list(...))
 
   assign("log_settings_session",
-         # list2env(params),
          list2env(list(
            params = params,
            register = list(),

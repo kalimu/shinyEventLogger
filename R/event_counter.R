@@ -1,12 +1,8 @@
-
-
 get_event_counter <- function() {
 
  settings_session <-
-    # dynGet("log_event_register",
     dynGet("log_settings_session",
-           # minframe = 1L,
-           minframe = 2L,
+           minframe = 1L,
            inherits = TRUE,
            ifnotfound = stop(paste0(
              "'log_settings_session' not found. ",
@@ -21,11 +17,8 @@ increment_event_counter <- function() {
 
   settings_session <-
     dynGet("log_settings_session",
-           # minframe = 6L,
-           # minframe = 1L,
-           minframe = 2L,
+           minframe = 1L,
            inherits = TRUE)
-
 
   settings_session$event_counter <-
     settings_session$event_counter + 1

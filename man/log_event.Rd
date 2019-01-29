@@ -24,7 +24,8 @@ Default is \code{"FIRED"}.}
 Default is \code{NULL}.}
 
 \item{event_counter}{An integer. The number of the event.
-By default current value of the counter is returned by
+Default is \code{NULL} which will be replaced by the current value
+of the counter returned by
 the internal getter function \code{get_event_counter}.}
 }
 \description{
