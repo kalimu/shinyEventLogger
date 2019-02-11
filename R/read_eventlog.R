@@ -24,13 +24,10 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
 #' read_eventlog(
 #'  last_n = 25,
 #'  file = system.file("shiny", "demoapp/events.log",
 #'                      package = "shinyEventLogger"))
-#' }
 
 read_eventlog <- function(file    = NULL,
                           db      = NULL,

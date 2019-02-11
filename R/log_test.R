@@ -21,8 +21,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
+#' \donttest{
 #' if (interactive()) {
 #'   set_logging()
 #'   shiny::shinyApp(

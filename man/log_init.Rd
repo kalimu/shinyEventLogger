@@ -15,8 +15,6 @@ to initialize JavaScript code that enables logging to JavaScript console
 in an Internet browser.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
   set_logging(js_console = TRUE)
   shiny::shinyApp(
@@ -26,6 +24,5 @@ if (interactive()) {
       log_event("See browser JavaScript console (CTRL + SHIFT + I)")
     }
   )
-}
 }
 }

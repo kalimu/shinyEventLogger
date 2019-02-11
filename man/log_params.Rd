@@ -25,8 +25,6 @@ evaluates them, and stores them in a new environment called
 from which the \code{log_params} function was called.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
   set_logging()
   shiny::shinyApp(
@@ -45,7 +43,6 @@ if (interactive()) {
       })
     }
   )
-}
 }
 }
 \seealso{

@@ -50,8 +50,6 @@ which enables creating and timing multiple nested events.
 }}
 
 \examples{
-\dontrun{
-
 if (interactive()) {
   set_logging()
   shiny::shinyApp(
@@ -59,13 +57,14 @@ if (interactive()) {
     server = function(input, output) {
       set_logging_session()
         log_started(as.character(Sys.time()), name = "Event 1")
-        log_started(as.character(Sys.time()), name = "Event 2")
-          log_event(as.character(Sys.time()), name = "Event 3")
-           log_done(as.character(Sys.time()), name = "Event 2")
-           log_done(as.character(Sys.time()), name = "Event 1")
+        Sys.sleep(0.5)
+          log_started(as.character(Sys.time()), name = "Event 2")
+            log_event(as.character(Sys.time()), name = "Event 3")
+            Sys.sleep(0.5)
+          log_done(as.character(Sys.time()), name = "Event 2")
+        log_done(as.character(Sys.time()), name = "Event 1")
     }
   )
-}
 }
 }
 \seealso{

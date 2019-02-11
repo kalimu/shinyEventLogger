@@ -10,8 +10,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
 #' if (interactive()) {
 #'
 #'   set_logging()
@@ -24,7 +22,6 @@
 #'     }
 #'   )
 #'
-#' }
 #' }
 
 inspect_objects <- function(...) {

@@ -23,7 +23,6 @@ and information about multiple
 instances of the same event (see \code{\link{log_started}}).
 }
 \examples{
-\dontrun{
 if (interactive()) {
 
   set_logging()
@@ -39,7 +38,6 @@ if (interactive()) {
   )
   # You can open app in the browser and duplicate tab to see different
   # unique session ids in event parameters.
-}
 }
 }
 \seealso{

@@ -29,8 +29,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
 #' if (interactive()) {
 #'   set_logging()
 #'   shiny::shinyApp(
@@ -44,7 +42,6 @@
 #'       log_event("Event 5", event_counter = 123)
 #'     }
 #'   )
-#' }
 #' }
 
 log_event <- function(...,

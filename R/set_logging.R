@@ -40,7 +40,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' if (interactive()) {
 #'
 #'   set_logging(r_console = TRUE,
@@ -55,7 +54,6 @@
 #'       log_event("Event with global params")
 #'     }
 #'   )
-#' }
 #' }
 
 set_logging <- function(r_console  = TRUE,

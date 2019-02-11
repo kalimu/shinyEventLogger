@@ -34,8 +34,6 @@ file, or database
 depending on user's settings (see \code{\link{set_logging}}).
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
   set_logging()
   shiny::shinyApp(
@@ -49,7 +47,6 @@ if (interactive()) {
       log_event("Event 5", event_counter = 123)
     }
   )
-}
 }
 }
 \seealso{

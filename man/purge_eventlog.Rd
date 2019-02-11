@@ -19,7 +19,7 @@ Please be careful. If you do not back up your eventlog, purging
 operation can be irreversible.
 }
 \examples{
-\dontrun{
+\donttest{
 
  demo_filelog <- system.file("shiny", "demoapp/events.log",
                              package = "shinyEventLogger")

@@ -9,8 +9,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
 #' if (interactive()) {
 #'   set_logging(js_console = TRUE)
 #'   shiny::shinyApp(
@@ -20,7 +18,6 @@
 #'       log_event("See browser JavaScript console (CTRL + SHIFT + I)")
 #'     }
 #'   )
-#' }
 #' }
 
 log_init <- function() {

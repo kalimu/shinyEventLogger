@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #'
 #'  demo_filelog <- system.file("shiny", "demoapp/events.log",
 #'                              package = "shinyEventLogger")

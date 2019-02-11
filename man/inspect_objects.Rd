@@ -16,8 +16,6 @@ With \code{inspect_objects} you can copy an object to the global environment
 for further debugging or developing.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
 
   set_logging()
@@ -30,6 +28,5 @@ if (interactive()) {
     }
   )
 
-}
 }
 }

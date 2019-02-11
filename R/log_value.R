@@ -16,8 +16,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
 #' if (interactive()) {
 #'   set_logging()
 #'   shiny::shinyApp(
@@ -28,7 +26,6 @@
 #'     }
 #'   )
 #'
-#' }
 #' }
 
 log_value <- function(...,

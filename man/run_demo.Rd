@@ -28,3 +28,11 @@ can be seen immediately in the demo dashboard.
 \item \code{run_demo_dashboard}: Run demo shiny dashboard
 }}
 
+\examples{
+\donttest{
+if (interactive()) {
+  run_demo(in_background = TRUE)
+  run_demo_dashboard()
+}
+}
+}

@@ -16,7 +16,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' if (interactive()) {
 #'
 #'   set_logging()
@@ -32,7 +31,6 @@
 #'   )
 #'   # You can open app in the browser and duplicate tab to see different
 #'   # unique session ids in event parameters.
-#' }
 #' }
 
 set_logging_session <- function(...) {

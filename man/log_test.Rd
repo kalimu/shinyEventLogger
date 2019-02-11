@@ -27,8 +27,7 @@ Deparsed unit test function call is logged
 as an event name in a log entry header.
 }
 \examples{
-\dontrun{
-
+\donttest{
 if (interactive()) {
   set_logging()
   shiny::shinyApp(

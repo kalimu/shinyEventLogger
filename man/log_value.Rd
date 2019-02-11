@@ -26,8 +26,6 @@ Default is \code{NULL}.}
 and uses deparsed function call as the event name.
 }
 \examples{
-\dontrun{
-
 if (interactive()) {
   set_logging()
   shiny::shinyApp(
@@ -38,7 +36,6 @@ if (interactive()) {
     }
   )
 
-}
 }
 }
 \seealso{

@@ -36,8 +36,6 @@ and it can stop the whole shiny app.
 }}
 
 \examples{
-\dontrun{
-
 if (interactive()) {
   set_logging()
   shiny::shinyApp(
@@ -49,7 +47,6 @@ if (interactive()) {
       log_error("Example of an error")
     }
   )
-}
 }
 }
 \seealso{

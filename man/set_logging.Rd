@@ -48,7 +48,6 @@ If \code{database = TRUE} additional database connection object
 named \code{log_db} is assigned to the parent frame as well.
 }
 \examples{
-\dontrun{
 if (interactive()) {
 
   set_logging(r_console = TRUE,
@@ -63,7 +62,6 @@ if (interactive()) {
       log_event("Event with global params")
     }
   )
-}
 }
 }
 \seealso{

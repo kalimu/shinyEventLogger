@@ -28,13 +28,10 @@ package and it is suitable for further process-mining analysis.
 \code{read_eventlog} reads eventlog stored in a file or in a database.
 }
 \examples{
-\dontrun{
-
 read_eventlog(
  last_n = 25,
  file = system.file("shiny", "demoapp/events.log",
                      package = "shinyEventLogger"))
-}
 }
 \seealso{
 \code{\link{purge_eventlog}},

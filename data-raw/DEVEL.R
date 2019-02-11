@@ -6,7 +6,9 @@ library(shinyEventLogger)
 
 # run_demo(in_background = TRUE)
 
-devtools::document(roclets = c('rd', 'collate', 'namespace', 'vignette'))
+# devtools::document(roclets = c('rd', 'collate', 'namespace', 'vignette'))
+
+setwd("~/# Rscripts/shinyEventLogger")
 spelling::spell_check_package(".")
 
 # spelling::get_wordlist(pkg = ".")
@@ -34,4 +36,4 @@ devtools::check()
 devtools::check_win_release()
 devtools::check_win_devel()
 
-
+# devtools::release(check = TRUE)

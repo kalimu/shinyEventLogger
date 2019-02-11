@@ -1,3 +1,10 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* added missing examples to all exported functions,
+* removed \dontrun{} from most examples,
+* replaced \dontrun{} with \donttest{} in few function examples (like run_demo())
+
 ## Test environments
 * Win7 64-bit (local), R version 3.5.2
 * Travis-ci (release, devel)

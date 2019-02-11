@@ -1,3 +1,9 @@
+# shinyEventLogger 0.1.1
+
+## Minor changes:
+
+* improved examples in Rd files
+
 # shinyEventLogger 0.1.0
 
 * preparing for first CRAN release ver. 0.1.0

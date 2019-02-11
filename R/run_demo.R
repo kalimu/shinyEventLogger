@@ -16,6 +16,13 @@
 #' @importFrom utils browseURL
 #'
 #' @export
+#' @examples
+#' \donttest{
+#' if (interactive()) {
+#'   run_demo(in_background = TRUE)
+#'   run_demo_dashboard()
+#' }
+#' }
 
 run_demo <- function(in_background = FALSE) {
 
