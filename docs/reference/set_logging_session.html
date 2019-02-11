@@ -65,7 +65,7 @@ set_logging_session also sets event counter to 1." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">shinyEventLogger</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -147,8 +147,7 @@ instances of the same event (see <code><a href='log_started.html'>log_started</a
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
 
   <span class='fu'><a href='set_logging.html'>set_logging</a></span>()
   <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(
@@ -163,8 +162,7 @@ instances of the same event (see <code><a href='log_started.html'>log_started</a
   )
   <span class='co'># You can open app in the browser and duplicate tab to see different</span>
   <span class='co'># unique session ids in event parameters.</span>
-}
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

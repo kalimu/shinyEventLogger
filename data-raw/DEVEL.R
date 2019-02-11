@@ -37,3 +37,5 @@ devtools::check_win_release()
 devtools::check_win_devel()
 
 # devtools::release(check = TRUE)
+# devtools::submit_cran()
+

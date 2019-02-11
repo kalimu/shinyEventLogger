@@ -60,9 +60,17 @@ Executing the code above you should see in the console something like this:
 
     |#1|EVENT|Hello World|FIRED|
 
+Demo Shiny Apps
+---------------
+
+-   [DemoApp](https://kalimu.shinyapps.io/demoapp/) -- demo shiny app logging different types of events.
+-   [DashboardApp](https://kalimu.shinyapps.io/dashboardapp/) -- demo dashboard showing examples how logged events from the `DemoApp` can be analyzed
+
 Documentation
 -------------
 
 Package docs (`pkgdown`): <https://kalimu.github.io/shinyEventLogger/index.html>
 
-Project description (on homepage): <https://kalimu.github.io/shinyEventLogger/>
+Project description (on homepage): <https://kalimu.github.io/project/shinyeventlogger/>
+
+For other logging packages see: <https://github.com/daroczig/logger>

@@ -66,7 +66,7 @@ operation can be irreversible." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">shinyEventLogger</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@ that should be kept in the eventlog after purging.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>
  <span class='no'>demo_filelog</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"shiny"</span>, <span class='st'>"demoapp/events.log"</span>,
                              <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"shinyEventLogger"</span>)
 
@@ -149,8 +149,7 @@ that should be kept in the eventlog after purging.</p></td>
  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/writeLines'>writeLines</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/readLines'>readLines</a></span>(<span class='kw'>con</span> <span class='kw'>=</span> <span class='no'>demo_filelog</span>), <span class='no'>file_conn</span>)
  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/connections'>close</a></span>(<span class='no'>file_conn</span>)
 
- <span class='fu'>purge_eventlog</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>temp_file</span>, <span class='kw'>min_build</span> <span class='kw'>=</span> <span class='fl'>23</span>)
-<span class='co'># }</span></pre>
+ <span class='fu'>purge_eventlog</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>temp_file</span>, <span class='kw'>min_build</span> <span class='kw'>=</span> <span class='fl'>23</span>)</div><div class='output co'>#&gt; <span class='message'>Nothing to do. Build version found at the beginning of the eventlog file: 139</span></div><div class='output co'>#&gt; NULL</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">shinyEventLogger</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -156,12 +156,33 @@ package and it is suitable for further process-mining analysis.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>read_eventlog</span>(
+    <pre class="examples"><div class='input'><span class='fu'>read_eventlog</span>(
  <span class='kw'>last_n</span> <span class='kw'>=</span> <span class='fl'>25</span>,
  <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"shiny"</span>, <span class='st'>"demoapp/events.log"</span>,
-                     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"shinyEventLogger"</span>))
-<span class='co'># }</span></pre>
+                     <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"shinyEventLogger"</span>))</div><div class='output co'>#&gt; <span class='message'>Reading log file: D:/_users/_docs/# Rscripts/shinyEventLogger/inst/shiny/demoapp/events.log</span></div><div class='output co'>#&gt; <span class='message'>The last event is at the top.</span></div><div class='output co'>#&gt; Event log consisting of:
+#&gt; 25 events
+#&gt; 2 traces
+#&gt; 2 cases
+#&gt; 14 activities
+#&gt; 23 activity instances
+#&gt; 
+#&gt; <span style='color: #555555;'># A tibble: 25 x 17</span><span>
+#&gt;    event_counter event_type event_name event_status session_id
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
+#&gt; </span><span style='color: #555555;'> 1</span><span> #12           TEST       testthat:~ SUCCESS      55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 2</span><span> #11           EVENT      Number of~ FIRED        55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 3</span><span> #10           VALUE      input$bins FIRED        55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 4</span><span> #9            VALUE      input$var~ FIRED        55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 5</span><span> #8            EVENT      Variable ~ FIRED        55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 6</span><span> #7            OUTPUT     head(data~ FIRED        55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 7</span><span> #6            OUTPUT     str(datas~ FIRED        55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 8</span><span> #5            VALUE      NROW(data~ FIRED        55ae1cf97~
+#&gt; </span><span style='color: #555555;'> 9</span><span> #4            EVENT      Loading d~ DONE         55ae1cf97~
+#&gt; </span><span style='color: #555555;'>10</span><span> #4            EVENT      Loading d~ STARTED      55ae1cf97~
+#&gt; </span><span style='color: #555555;'># ... with 15 more rows, and 12 more variables: event_timestamp </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span style='color: #555555;'>,
+#&gt; #   event_body </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, event_id </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, dataset </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, fun </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, resource </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span style='color: #555555;'>,
+#&gt; #   build </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, secs </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, n_rows </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, bins </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span style='color: #555555;'>, variable </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   .order </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
