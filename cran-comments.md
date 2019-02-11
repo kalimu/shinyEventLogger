@@ -4,6 +4,7 @@ This is a resubmission. In this version I have:
 * added missing examples to all exported functions,
 * removed \dontrun{} from most examples,
 * replaced \dontrun{} with \donttest{} in few function examples (like run_demo())
+* updated links in Readme and added links to demo apps hosted on shinyapps.io
 
 ## Test environments
 * Win7 64-bit (local), R version 3.5.2

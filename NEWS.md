@@ -3,6 +3,7 @@
 ## Minor changes:
 
 * improved examples in Rd files
+* updated links in Readme and added links to demo apps
 
 # shinyEventLogger 0.1.0
 
