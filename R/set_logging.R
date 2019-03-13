@@ -192,8 +192,8 @@ set_logging <- function(r_console  = TRUE,
 
       assign("log_db",
              mongolite::mongo(
-                collection = mongo_collection,
-                db = mongo_database,
+                collection = database_collection,
+                db = database_db,
                 url = readLines(db_url_file)[1]
                ),
              envir = parent.frame()
