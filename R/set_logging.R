@@ -60,6 +60,8 @@ set_logging <- function(r_console  = TRUE,
                         js_console = TRUE,
                         file       = FALSE,
                         database   = FALSE,
+                        database_db = "test",
+                        database_collection = "demo",
                         ...
                         ) {
 
@@ -189,7 +191,11 @@ set_logging <- function(r_console  = TRUE,
     } else {
 
       assign("log_db",
-             mongolite::mongo("demo", url = readLines(db_url_file)[1]),
+             mongolite::mongo(
+                collection = mongo_collection,
+                db = mongo_database,
+                url = readLines(db_url_file)[1]
+               ),
              envir = parent.frame()
              )
 
