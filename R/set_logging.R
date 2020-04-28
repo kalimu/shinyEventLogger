@@ -189,7 +189,7 @@ set_logging <- function(r_console  = TRUE,
     } else {
 
       assign("log_db",
-             mongolite::mongo("demo", url = readLines(db_url_file)[1]),
+             mongolite::mongo("shiny_logs", url = readLines(db_url_file)[1]),
              envir = parent.frame()
              )
 
